@@ -66,16 +66,16 @@ public extension Network.Service {
             .eraseToAnyPublisher()
     }
 
-    /// Create a new publisher that contains a bool value if the HTTP response status code succeeds with code 200 ..< 300
+    /// Create a new publisher that contains the HTTP status code
     /// - parameters:
     ///     - request: The request to send over the network
     ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with a bool value that determines if the request succeeded
-    func responsePublisher(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<Bool, Error> {
+    func responsePublisher(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<HTTP.StatusCode, Error> {
         try dataTaskPublisher(request, logResponse: logResponse)
             .compactMap { $0.response as? HTTPURLResponse }
-            .map { 200 ..< 300 ~= $0.statusCode }
+            .map { $0.status }
             .eraseToAnyPublisher()
     }
 }
