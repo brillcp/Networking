@@ -33,10 +33,10 @@ public extension Requestable {
     ///     - logRequest: A boolean value that determines if the request data should be printed to the console
     /// - throws: An error if the request can't be build
     /// - returns: A new `URLRequest` with all the configurations
-    func config(withServer server: ServerConfig, logRequest: Bool) throws -> URLRequest {
+    func config(withServer server: ServerConfig) throws -> URLRequest {
         let builder = RequestBuilder(config: .init(request: self, server: server))
         let request = try builder.build()
-        if logRequest { request.log() }
+        request.log()
         return request
     }
 }

@@ -29,8 +29,8 @@ public enum Network {
         }
 
         // MARK: - Private functions
-        private func dataTaskPublisher(_ request: Requestable, logRequest: Bool, logResponse: Bool) throws -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
-            try session.dataTaskPublisher(for: request.config(withServer: server, logRequest: logRequest))
+        private func dataTaskPublisher(_ request: Requestable, logResponse: Bool) throws -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
+            try session.dataTaskPublisher(for: request.config(withServer: server))
                 .logResponse(printJSON: logResponse)
                 .receive(on: RunLoop.main)
                 .tryMap { $0 }
@@ -44,12 +44,11 @@ public extension Network.Service {
     /// Create a new publisher that contains the response data
     /// - parameters:
     ///     - request: The request to send over the network
-    ///     - logRequest: A boolean value that determines if the request data should be printed to the console. Defaults to false.
     ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with the data or an error
-    func dataPublisher(_ request: Requestable, logRequest: Bool = false, logResponse: Bool = false) throws -> AnyPublisher<Data, Error> {
-        try dataTaskPublisher(request, logRequest: logRequest, logResponse: logResponse)
+    func dataPublisher(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<Data, Error> {
+        try dataTaskPublisher(request, logResponse: logResponse)
             .map(\.data)
             .eraseToAnyPublisher()
     }
@@ -57,12 +56,11 @@ public extension Network.Service {
     /// Create a new publisher that contains a decoded data model object
     /// - parameters:
     ///     - request: The request to send over the network
-    ///     - logRequest: A boolean value that determines if the request data should be printed to the console. Defaults to false.
     ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with the given data model object or an error
-    func request<DataModel: Decodable>(_ request: Requestable, logRequest: Bool = false, logResponse: Bool = false) throws -> AnyPublisher<DataModel, Error> {
-        try dataTaskPublisher(request, logRequest: logRequest, logResponse: logResponse)
+    func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<DataModel, Error> {
+        try dataTaskPublisher(request, logResponse: logResponse)
             .map(\.data)
             .decode(type: DataModel.self, decoder: decoder)
             .eraseToAnyPublisher()
@@ -71,12 +69,11 @@ public extension Network.Service {
     /// Create a new publisher that contains a bool value if the HTTP response status code succeeds with code 200 ..< 300
     /// - parameters:
     ///     - request: The request to send over the network
-    ///     - logRequest: A boolean value that determines if the request data should be printed to the console. Defaults to false.
     ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with a bool value that determines if the request succeeded
-    func responsePublisher(_ request: Requestable, logRequest: Bool = false, logResponse: Bool = false) throws -> AnyPublisher<Bool, Error> {
-        try dataTaskPublisher(request, logRequest: logRequest, logResponse: logResponse)
+    func responsePublisher(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<Bool, Error> {
+        try dataTaskPublisher(request, logResponse: logResponse)
             .compactMap { $0.response as? HTTPURLResponse }
             .map { 200 ..< 300 ~= $0.statusCode }
             .eraseToAnyPublisher()
