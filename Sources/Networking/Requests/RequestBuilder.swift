@@ -33,11 +33,8 @@ public extension RequestBuilder {
         guard let parameters = config.parameters, !parameters.isEmpty else { return urlRequest }
 
         switch config.httpMethod {
-        case .post: return try urlRequest.jsonEncode(withParameters: parameters)
+        case .post, .put, .delete: return try urlRequest.jsonEncode(withParameters: parameters)
         case .get: return try urlRequest.urlEncode(withParameters: parameters)
-        case .delete: return try urlRequest.urlEncode(withParameters: parameters)
-        case .update: return try urlRequest.jsonEncode(withParameters: parameters)
-        case .put: return try urlRequest.jsonEncode(withParameters: parameters)
         }
     }
 }
