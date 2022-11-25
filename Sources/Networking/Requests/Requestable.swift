@@ -28,9 +28,7 @@ public protocol Requestable {
 // MARK: -
 public extension Requestable {
     /// Configure a requestable object with a server configuration
-    /// - parameters:
-    ///     - server: The given server config to use
-    ///     - logRequest: A boolean value that determines if the request data should be printed to the console
+    /// - parameter server: The given server config to use
     /// - throws: An error if the request can't be build
     /// - returns: A new `URLRequest` with all the configurations
     func config(withServer server: ServerConfig) throws -> URLRequest {
