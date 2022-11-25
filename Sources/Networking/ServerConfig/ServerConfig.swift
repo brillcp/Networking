@@ -14,8 +14,8 @@ open class ServerConfig {
 
     /// Init the server configuration
     /// - parameter baseURL: The given base URL used for this server config
-    public init(baseURL: URL) {
-        self.baseURL = baseURL
+    public init(baseURL: String) {
+        self.baseURL = baseURL.asURL()
     }
 
     /// Create a HTTP header for the requests. Defaults to `[Content-Type: application/json]`
