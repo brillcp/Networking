@@ -15,8 +15,6 @@ public enum Request {
         case query
         /// Encode parameters in the http body as json
         case json
-        /// Encode parameters in the http body as a string
-        case body
     }
 
     /// The different authorization types for a given request
