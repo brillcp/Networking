@@ -16,7 +16,7 @@ public protocol Requestable {
     /// The content type of the request
     var contentType: HTTP.ContentType { get }
     /// The request parameters
-    var parameters: HTTP.Parameters? { get }
+    var parameters: HTTP.Parameters { get }
     /// The API endpoint
     var endpoint: EndpointType { get }
     /// The request HTTP method
