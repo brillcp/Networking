@@ -18,5 +18,6 @@ public extension HTTP.Header {
         static let auth = "Authorization"
         static let bearer = "Bearer %@"
         static let basic = "Basic %@"
+        static let allow = "Allow"
     }
 }
