@@ -1,8 +1,8 @@
 //
 //  RequestConfig.swift
-//  
+//  Networking
 //
-//  Created by Viktor Gidlöf on 2022-11-25.
+//  Created by Viktor Gidlöf.
 //
 
 import Foundation

@@ -1,15 +1,15 @@
 //
 //  DefaultAuthentication.swift
-//  BeReal
+//  Networking
 //
-//  Created by Viktor Gidlöf on 2022-11-15.
+//  Created by Viktor Gidlöf.
 //
 
 import Foundation
 
 enum CredentialKey {
-    static let username = "ios.beReal.username.key"
-    static let password = "ios.beReal.password.key"
+    static let username = "ios.Networking.username.key"
+    static let password = "ios.Networking.password.key"
 }
 
 // MARK: -

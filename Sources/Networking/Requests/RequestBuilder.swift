@@ -1,8 +1,8 @@
 //
 //  URLRequestBuilder.swift
-//  BeReal
+//  Networking
 //
-//  Created by Viktor Gidlöf on 2022-11-15.
+//  Created by Viktor Gidlöf.
 //
 
 import Foundation
