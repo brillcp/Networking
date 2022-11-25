@@ -15,8 +15,11 @@ public enum HTTP {
 
     /// The HTTP methods available for requests
     public enum Method: String {
-        case post
         case get
+        case post
+        case delete
+        case update
+        case put
     }
 }
 

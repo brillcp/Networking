@@ -35,6 +35,9 @@ public extension RequestBuilder {
         switch config.httpMethod {
         case .post: return try urlRequest.jsonEncode(withParameters: parameters)
         case .get: return try urlRequest.urlEncode(withParameters: parameters)
+        case .delete: return try urlRequest.urlEncode(withParameters: parameters)
+        case .update: return try urlRequest.jsonEncode(withParameters: parameters)
+        case .put: return try urlRequest.jsonEncode(withParameters: parameters)
         }
     }
 }
