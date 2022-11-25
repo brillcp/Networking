@@ -75,7 +75,7 @@ public extension Network.Service {
     func responsePublisher(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<HTTP.StatusCode, Error> {
         try dataTaskPublisher(request, logResponse: logResponse)
             .compactMap { $0.response as? HTTPURLResponse }
-            .map { $0.status }
+            .map { HTTP.StatusCode(rawValue: $0.statusCode) ?? .unknown }
             .eraseToAnyPublisher()
     }
 }

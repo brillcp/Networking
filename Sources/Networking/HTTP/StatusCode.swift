@@ -1,5 +1,5 @@
 //
-//  HTTPStatusCode.swift
+//  StatusCode.swift
 //  
 //
 //  Created by Viktor Gidlöf.
@@ -10,11 +10,11 @@ import Foundation
 public extension HTTP {
     /// An enumeration of the status codes
     enum StatusCode: Int {
-        // 100 Informational
+        // 1xx
         case `continue` = 100
         case switchingProtocols
         case processing
-        // 200 Success
+        // 2xx
         case ok = 200
         case created
         case accepted
@@ -25,7 +25,7 @@ public extension HTTP {
         case multiStatus
         case alreadyReported
         case iMUsed = 226
-        // 300 Redirection
+        // 3xx
         case multipleChoices = 300
         case movedPermanently
         case found
@@ -35,7 +35,7 @@ public extension HTTP {
         case switchProxy
         case temporaryRedirect
         case permanentRedirect
-        // 400 Client Error
+        // 4xx
         case badRequest = 400
         case unauthorized
         case paymentRequired
@@ -64,7 +64,7 @@ public extension HTTP {
         case tooManyRequests
         case requestHeaderFieldsTooLarge = 431
         case unavailableForLegalReasons = 451
-        // 500 Server Error
+        // 5xx
         case internalServerError = 500
         case notImplemented
         case badGateway
@@ -78,9 +78,4 @@ public extension HTTP {
         case networkAuthenticationRequired
         case unknown = -1
     }
-}
-
-// MARK: -
-public extension HTTPURLResponse {
-    var status: HTTP.StatusCode { HTTP.StatusCode(rawValue: statusCode) ?? .unknown }
 }
