@@ -16,12 +16,12 @@ public enum EncodingError: LocalizedError {
 public extension URLRequest {
     /// Init a new `URLRequest` from a `RequestBuilder.Config` object
     /// - parameter requestConfig: The configuration object to use for the setup of the request
-//    init(from requestConfig: RequestBuilder.Config) {
-//        self.init(url: requestConfig.url)
-//        timeoutInterval = requestConfig.timeoutInterval
-//        httpMethod = requestConfig.httpMethod.rawValue
-//        allHTTPHeaderFields = requestConfig.header
-//    }
+    init(fromConfig config: Request.Config) {
+        self.init(url: config.url)
+        timeoutInterval = config.timeoutInterval
+        httpMethod = config.httpMethod.rawValue
+        allHTTPHeaderFields = config.header
+    }
 
     /// Encode the parameters in the http body of the request as JSON
     /// - parameter parameters: The parameters to encode
