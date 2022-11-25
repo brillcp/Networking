@@ -8,11 +8,15 @@
 import Foundation
 
 public extension RequestBuilder {
-
+    /// A structure for configuring requests
     struct Config {
         private let request: Requestable
         private let server: ServerConfig
 
+        /// Init the request config with a requestable object and a server config
+        /// - parameters:
+        ///     - request: The given request to use for configuration
+        ///     - server: The given server configuration to use
         init(request: Requestable, server: ServerConfig) {
             self.request = request
             self.server = server
