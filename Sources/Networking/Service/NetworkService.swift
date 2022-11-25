@@ -41,18 +41,6 @@ public enum Network {
 
 // MARK: -
 public extension Network.Service {
-    /// Create a new publisher that contains the response data
-    /// - parameters:
-    ///     - request: The request to send over the network
-    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
-    /// - throws: An error if the data task publisher fails for any reason
-    /// - returns: A new publisher with the data or an error
-    func dataPublisher(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<Data, Error> {
-        try dataTaskPublisher(request, logResponse: logResponse)
-            .map(\.data)
-            .eraseToAnyPublisher()
-    }
-
     /// Create a new publisher that contains a decoded data model object
     /// - parameters:
     ///     - request: The request to send over the network
@@ -63,6 +51,18 @@ public extension Network.Service {
         try dataTaskPublisher(request, logResponse: logResponse)
             .map(\.data)
             .decode(type: DataModel.self, decoder: decoder)
+            .eraseToAnyPublisher()
+    }
+
+    /// Create a new publisher that contains the response data
+    /// - parameters:
+    ///     - request: The request to send over the network
+    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
+    /// - throws: An error if the data task publisher fails for any reason
+    /// - returns: A new publisher with the data or an error
+    func dataPublisher(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<Data, Error> {
+        try dataTaskPublisher(request, logResponse: logResponse)
+            .map(\.data)
             .eraseToAnyPublisher()
     }
 
