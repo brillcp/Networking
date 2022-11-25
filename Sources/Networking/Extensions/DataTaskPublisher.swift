@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-extension URLSession.DataTaskPublisher {
+public extension URLSession.DataTaskPublisher {
     /// Log the incoming response to the console
     /// - parameter printJSON: A bool value that determines if the json respons is also printed to the console. Defaults to true.
     /// - returns: The current publisher in the pipeline

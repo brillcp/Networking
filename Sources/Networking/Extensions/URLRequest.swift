@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum EncodingError: LocalizedError {
+public enum EncodingError: LocalizedError {
     case malformedURLComponents
     case missingURL
 }
 
 // MARK: -
-extension URLRequest {
+public extension URLRequest {
     /// Init a new `URLRequest` from a `RequestBuilder.Config` object
     /// - parameter requestConfig: The configuration object to use for the setup of the request
     init(from requestConfig: RequestBuilder.Config) {
