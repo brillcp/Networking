@@ -45,7 +45,7 @@ public extension Network.Service {
     /// - parameters:
     ///     - request: The request to send over the network
     ///     - logRequest: A boolean value that determines if the request data should be printed to the console. Defaults to false.
-    ///     - printResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
+    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with the data or an error
     func dataPublisher(_ request: Requestable, logRequest: Bool = false, logResponse: Bool = false) throws -> AnyPublisher<Data, Error> {
@@ -58,7 +58,7 @@ public extension Network.Service {
     /// - parameters:
     ///     - request: The request to send over the network
     ///     - logRequest: A boolean value that determines if the request data should be printed to the console. Defaults to false.
-    ///     - printResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
+    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with the given data model object or an error
     func request<DataModel: Decodable>(_ request: Requestable, logRequest: Bool = false, logResponse: Bool = false) throws -> AnyPublisher<DataModel, Error> {
@@ -72,7 +72,7 @@ public extension Network.Service {
     /// - parameters:
     ///     - request: The request to send over the network
     ///     - logRequest: A boolean value that determines if the request data should be printed to the console. Defaults to false.
-    ///     - printResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
+    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with a bool value that determines if the request succeeded
     func responsePublisher(_ request: Requestable, logRequest: Bool = false, logResponse: Bool = false) throws -> AnyPublisher<Bool, Error> {
