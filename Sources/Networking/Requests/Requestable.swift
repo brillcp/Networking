@@ -32,15 +32,19 @@ public extension Requestable {
     /// - throws: An error if the request can't be build
     /// - returns: A new `URLRequest` with all the configurations
     func configure(withServer server: ServerConfig) throws -> URLRequest {
-        let requestConfig = Request.Config(request: self, server: server)
-        var urlRequest = URLRequest(fromConfig: requestConfig)
+        let config = Request.Config(request: self, server: server)
+        var urlRequest = URLRequest(withConfig: config)
         urlRequest.log()
 
-        guard !requestConfig.parameters.isEmpty else { return urlRequest }
+        guard !config.parameters.isEmpty else { return urlRequest }
 
-        switch requestConfig.encoding {
-        case .query: return try urlRequest.urlEncode(withParameters: parameters)
-        case .json: return try urlRequest.jsonEncode(withParameters: parameters)
+        switch config.httpMethod {
+        case .get, .delete: return try urlRequest.urlEncode(withParameters: parameters)
+        case .post, .put:
+            switch config.encoding {
+            case .json: return try urlRequest.jsonEncode(withParameters: parameters)
+            case .query: return urlRequest
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ public enum EncodingError: LocalizedError {
 public extension URLRequest {
     /// Init a new `URLRequest` from a `RequestBuilder.Config` object
     /// - parameter requestConfig: The configuration object to use for the setup of the request
-    init(fromConfig config: Request.Config) {
+    init(withConfig config: Request.Config) {
         self.init(url: config.url)
         timeoutInterval = config.timeoutInterval
         httpMethod = config.httpMethod.rawValue
