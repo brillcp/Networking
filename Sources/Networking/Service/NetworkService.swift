@@ -30,7 +30,7 @@ public enum Network {
 
         // MARK: - Private functions
         private func dataTaskPublisher(_ request: Requestable) throws -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
-            try session.dataTaskPublisher(for: request.config(with: server))
+            try session.dataTaskPublisher(for: request.config(withServer: server))
                 .logResponse(printJSON: false)
                 .receive(on: RunLoop.main)
                 .tryMap { $0 }

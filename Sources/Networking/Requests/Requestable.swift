@@ -31,7 +31,7 @@ public extension Requestable {
     /// - parameter server: The given server config to use
     /// - throws: An error if the request can't be build
     /// - returns: A new `URLRequest` with all the configurations
-    func config(with server: ServerConfig) throws -> URLRequest {
+    func config(withServer server: ServerConfig) throws -> URLRequest {
         let builder = RequestBuilder(config: .init(request: self, server: server))
         let request = try builder.build()
         request.log()
