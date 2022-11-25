@@ -15,6 +15,8 @@ public struct RequestBuilder {
     private let config: Config
 
     // MARK: - Init
+    /// Init a request builder with a config object
+    /// - parameter config: The given config object
     public init(config: Config) {
         self.config = config
     }
