@@ -8,7 +8,7 @@
 import Foundation
 
 /// An object for creating a server configuration for the backend API
-public class ServerConfig {
+open class ServerConfig {
     /// The base URL for the server
     public let baseURL: URL
 
