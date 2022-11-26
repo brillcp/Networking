@@ -20,14 +20,14 @@ public protocol Requestable {
     /// The API endpoint
     var endpoint: EndpointType { get }
     /// The request HTTP method
-    var method: HTTP.Method { get }
+    var httpMethod: HTTP.Method { get }
     /// The encoding used fot the request
     var encoding: Request.Encoding { get }
 }
 
 // MARK: -
 public extension Requestable {
-    /// Configure a requestable object with a server configuration
+    /// Configure a new `URLRequest` from a requestable object with a server configuration
     /// - parameter server: The given server config to use
     /// - throws: An error if the request can't be build
     /// - returns: A new `URLRequest` with all the configurations
@@ -36,12 +36,12 @@ public extension Requestable {
         var urlRequest = URLRequest(withConfig: config)
         urlRequest.log()
 
-        guard !config.parameters.isEmpty else { return urlRequest }
+        guard !parameters.isEmpty else { return urlRequest }
 
-        switch config.httpMethod {
+        switch httpMethod {
         case .get, .delete: return try urlRequest.urlEncode(withParameters: parameters)
         case .post, .put:
-            switch config.encoding {
+            switch encoding {
             case .json: return try urlRequest.jsonEncode(withParameters: parameters)
             case .query: return urlRequest
             }
@@ -56,5 +56,5 @@ public extension Requestable {
     var timeoutInterval: TimeInterval { 30.0 }
     var encoding: Request.Encoding { .query }
     var parameters: HTTP.Parameters { [:] }
-    var method: HTTP.Method { .get }
+    var httpMethod: HTTP.Method { .get }
 }

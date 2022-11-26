@@ -30,14 +30,8 @@ public extension Request.Config {
     var url: URL { server.baseURL.appendingPathComponent(request.endpoint.path) }
     /// The default HTTP header for the given server config and request
     var header: HTTP.Header { server.header(forRequest: request) }
-    /// The HTTP content type for the request
-//    var contentType: HTTP.ContentType { request.contentType }
     /// The timeout interval for the given request
     var timeoutInterval: TimeInterval { request.timeoutInterval }
-    /// The http parameters of the request
-    var parameters: HTTP.Parameters { request.parameters }
-    /// The encoding to use on the request parameters
-    var encoding: Request.Encoding { request.encoding }
     /// The HTTP method for the request
-    var httpMethod: HTTP.Method { request.method }
+    var httpMethod: HTTP.Method { request.httpMethod }
 }
