@@ -32,6 +32,10 @@ public extension Request.Config {
     var header: HTTP.Header { server.header(forRequest: request) }
     /// The timeout interval for the given request
     var timeoutInterval: TimeInterval { request.timeoutInterval }
+    /// The parameters for the request
+    var parameters: HTTP.Parameters { request.parameters }
+    /// The encoding for the request
+    var encoding: Request.Encoding { request.encoding }
     /// The HTTP method for the request
     var httpMethod: HTTP.Method { request.httpMethod }
 }

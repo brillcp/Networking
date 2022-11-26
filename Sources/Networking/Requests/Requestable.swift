@@ -33,28 +33,18 @@ public extension Requestable {
     /// - returns: A new `URLRequest` with all the configurations
     func configure(withServer server: ServerConfig) throws -> URLRequest {
         let config = Request.Config(request: self, server: server)
-        var urlRequest = URLRequest(withConfig: config)
+        let urlRequest = try URLRequest(withConfig: config)
         urlRequest.log()
-
-        guard !parameters.isEmpty else { return urlRequest }
-
-        switch httpMethod {
-        case .get, .delete: return try urlRequest.urlEncode(withParameters: parameters)
-        case .post, .put:
-            switch encoding {
-            case .json: return try urlRequest.jsonEncode(withParameters: parameters)
-            case .query: return urlRequest
-            }
-        }
+        return urlRequest
     }
 }
 
 // MARK: -
 public extension Requestable {
-    var contentType: HTTP.ContentType { HTTP.Header.Field.json }
+//    var contentType: HTTP.ContentType { HTTP.Header.Field.json }
     var authorization: Request.Authorization { .none }
     var timeoutInterval: TimeInterval { 30.0 }
-    var encoding: Request.Encoding { .query }
-    var parameters: HTTP.Parameters { [:] }
-    var httpMethod: HTTP.Method { .get }
+//    var encoding: Request.Encoding { .query }
+//    var parameters: HTTP.Parameters { [:] }
+//    var httpMethod: HTTP.Method { .get }
 }
