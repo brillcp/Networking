@@ -22,9 +22,7 @@ open class ServerConfig {
     /// - parameter request: The given request to set up the header with
     /// - returns: A new `HTTP.Header` dictionary
     public func header(forRequest request: Requestable) -> HTTP.Header {
-        guard let contentType = request.contentType else {
-            return HTTP.Header()
-        }
+        guard let contentType = request.contentType else { return HTTP.Header() }
         return [HTTP.Header.Field.contentType: contentType]
     }
 }
