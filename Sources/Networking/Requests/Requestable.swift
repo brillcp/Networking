@@ -11,18 +11,18 @@ import Foundation
 public protocol Requestable {
     /// The request authorization
     var authorization: Request.Authorization { get }
+    /// The content type of the request
+    var contentType: HTTP.ContentType? { get }
     /// A time interval for request timeout
     var timeoutInterval: TimeInterval { get }
-    /// The content type of the request
-    var contentType: HTTP.ContentType { get }
     /// The request parameters
     var parameters: HTTP.Parameters { get }
-    /// The API endpoint
-    var endpoint: EndpointType { get }
-    /// The request HTTP method
-    var httpMethod: HTTP.Method { get }
     /// The encoding used fot the request
     var encoding: Request.Encoding { get }
+    /// The request HTTP method
+    var httpMethod: HTTP.Method { get }
+    /// The API endpoint
+    var endpoint: EndpointType { get }
 }
 
 // MARK: -
@@ -41,10 +41,7 @@ public extension Requestable {
 
 // MARK: -
 public extension Requestable {
-//    var contentType: HTTP.ContentType { HTTP.Header.Field.json }
     var authorization: Request.Authorization { .none }
     var timeoutInterval: TimeInterval { 30.0 }
-//    var encoding: Request.Encoding { .query }
-//    var parameters: HTTP.Parameters { [:] }
-//    var httpMethod: HTTP.Method { .get }
+    var contentType: HTTP.ContentType? { nil }
 }
