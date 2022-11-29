@@ -9,11 +9,11 @@ import Foundation
 
 /// A protocol for a request type. Used to build backend API requests.
 public protocol Requestable {
-    /// The request authorization
+    /// The request authorization. Defaults to `none`.
     var authorization: Request.Authorization { get }
-    /// The content type of the request
+    /// The content type of the request. Defaults to `nil`.
     var contentType: HTTP.ContentType? { get }
-    /// A time interval for request timeout
+    /// A time interval for request timeout. Defaults to 30 seconds.
     var timeoutInterval: TimeInterval { get }
     /// The request parameters
     var parameters: HTTP.Parameters { get }

@@ -19,7 +19,7 @@ public enum Request {
 
     /// The different authorization types for a given request
     public enum Authorization {
-        case bearer(token: String)
+        case bearer
         case basic
         case none
     }
