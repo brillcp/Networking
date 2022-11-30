@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Encodable {
+public extension Encodable {
     /// Convert an encodable object to a `HTTP.Parameters` dictionary
     /// - returns: The object as a HTTP parameter dictionary
     func asParameters() -> HTTP.Parameters {
