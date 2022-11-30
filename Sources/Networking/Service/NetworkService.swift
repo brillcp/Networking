@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 public enum Network {
-    /// The main network service used to make requests to the backend.
+    /// A network service object used to make requests to the backend.
     public final class Service {
         // MARK: Private properties
         private let server: ServerConfig
