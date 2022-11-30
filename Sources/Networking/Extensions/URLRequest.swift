@@ -100,7 +100,7 @@ public extension URLRequest {
     /// - parameter parameters: The parameters to encode
     /// - throws: An error if the parameters can't serialized into valid json
     /// - returns: The new `URLRequest` with the parameters encoded in the http body
-    mutating func bodyEncode(withParameters parameters: HTTP.Parameters) throws {
+    private mutating func bodyEncode(withParameters parameters: HTTP.Parameters) throws {
         let parameterString = parameters.map { "\($0.key)=\($0.value)&" }.joined().dropLast()
         httpBody = parameterString.data(using: .utf8)
     }
