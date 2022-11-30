@@ -65,7 +65,7 @@ public extension URLRequest {
         print("\n")
     }
 
-    /// Encode the parameters in the http body of the request as JSON
+    /// Encode the parameters in the url query
     /// - parameter parameters: The parameters to encode
     /// - throws: An error if request can't be encoded
     /// - returns: The new `URLRequest` with the parameters encoded as a query in the url
@@ -96,7 +96,7 @@ public extension URLRequest {
         setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.contentType)
     }
 
-    /// Encode the parameters in the http body of the request either as a query string
+    /// Encode the parameters in the http body of the request as a query string. E.g `"foo=bar&..."`
     /// - parameter parameters: The parameters to encode
     /// - throws: An error if the parameters can't serialized into valid json
     /// - returns: The new `URLRequest` with the parameters encoded in the http body
