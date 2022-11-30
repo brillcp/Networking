@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  
+//  Encodable.swift
+//  Networking
 //
-//  Created by Viktor Gidlöf on 2022-11-30.
+//  Created by Viktor Gidlöf.
 //
 
 import Foundation

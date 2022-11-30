@@ -2,7 +2,7 @@
 //  TokenProvider.swift
 //  Networking
 //
-//  Created by Viktor Gidlöf on 2022-11-29.
+//  Created by Viktor Gidlöf.
 //
 
 import Foundation
