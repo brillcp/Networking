@@ -15,7 +15,7 @@ public protocol Requestable {
     var contentType: HTTP.ContentType? { get }
     /// A time interval for request timeout. Defaults to 30 seconds.
     var timeoutInterval: TimeInterval { get }
-    /// The request parameters
+    /// The request parameters. Defaults to an empty dictionary.
     var parameters: HTTP.Parameters { get }
     /// The encoding used fot the request
     var encoding: Request.Encoding { get }
@@ -44,4 +44,5 @@ public extension Requestable {
     var authorization: Request.Authorization { .none }
     var timeoutInterval: TimeInterval { 30.0 }
     var contentType: HTTP.ContentType? { nil }
+    var parameters: HTTP.Parameters { [:] }
 }
