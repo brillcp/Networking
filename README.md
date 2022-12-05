@@ -8,6 +8,13 @@
 
 Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com).
 
+- [Features](README.md#features)
+- [Requirements](README.md#features)
+- [Usage](README.md#features)
+- [Logging](README.md#features)
+- [Installation](README.md#features)
+- [License](README.md#features)
+
 ## Features
  - [x] Simple syntax
  - [x] Clear request and response logging
