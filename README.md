@@ -13,7 +13,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 
 
 ## Usage
-It uses `Combine`, `URLSession` and `dataTaskPublishers` for network calls and is made up of three components:
+Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network calls and is made up of three main components:
 
 + [`Network.Service`](Sources/Networking/Service/NetworkService.swift)
 + [`ServerConfig`](Sources/Networking/ServerConfig/ServerConfig.swift)
