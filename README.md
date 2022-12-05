@@ -22,7 +22,7 @@ Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network cal
 The `Network.Service` is the main component of the framework that makes the actual requests to a backend.
 It is initialzied with a server configuration that determines the API base url and any custom HTTP headers based on request parameters.
 
-Start by creating a requestable object. Typlically an `enum` that conforms to `Requestable`:
+Start by creating a requestable object. Typically an `enum` that conforms to `Requestable`:
 ```swift
 enum GitHubUserRequest: Requestable {
     case user(String)
