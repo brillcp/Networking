@@ -44,6 +44,8 @@ It is initialzied with a server configuration that determines the API base url a
 
 Start by creating a requestable object. Typically an `enum` that conforms to `Requestable`:
 ```swift
+import Networking
+
 enum GitHubUserRequest: Requestable {
     case user(String)
     // 1.
@@ -60,6 +62,8 @@ enum GitHubUserRequest: Requestable {
 
 The `EndpointType` can be defined as an `enum` that contains all the possible endpoints for an API:
 ```swift
+import Networking
+
 enum Endpoint {
     case user(String)
     case repos(String)
@@ -128,9 +132,8 @@ Content-Type: application/json; charset=utf-8
 ## Authentication
 Some times an API requires that all the requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
 It involves creating a server configuration with a token provider object:
-```
+```swift
 let server = ServerConfig(baseURL: "https://api.github.com", tokenProvider: TokenProvider())
-
 ```
 
 The `TokenProvider` object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
