@@ -124,6 +124,56 @@ Localized Status-Code: no error
 Content-Type: application/json; charset=utf-8
 ```
 
+## Authentication
+Some times an API requires that all the requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
+It involves creating a server configuration with a token provider object:
+```
+let server = ServerConfig(baseURL: "https://api.github.com", tokenProvider: TokenProvider())
+
+```
+
+The `TokenProvider` object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
+The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests that require that.
+The following implementation demonstrates how a bearer token can be retrieved from the device using `UserDefaults`, but as mentioned, it can be any persistant storage:
+```swift
+import Networking
+
+final class TokenProvider {
+    private static let tokenKey = "com.example.ios.jwt.key"
+    private let defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+    }
+}
+
+extension TokenProvider: TokenProvidable {
+
+    var token: Result<String, TokenProvidableError> {
+        guard let token = defaults.string(forKey: Self.tokenKey) else { return .failure(.missing) }
+        return .success(token)
+    }
+
+    func setToken(_ token: String) {
+        defaults.set(token, forKey: Self.tokenKey)
+    }
+
+    func reset() {
+        defaults.set(nil, forKey: Self.tokenKey)
+    }
+}
+```
+
+In order to use this authentication token just implement the `authorization` property on the requests that require authentication:
+```swift
+enum GitHubUserRequest: Requestable {
+    // ...
+    var authorization: Authorization { .bearer }
+}
+
+```
+This will authmatically add a "Authorization: Bearer [token]" HTTP heaer to the request before it is sent.
+
 ## Installation
 ### Swift Package Manager
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
