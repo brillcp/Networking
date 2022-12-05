@@ -65,7 +65,7 @@ enum GitHubUserRequest: Requestable {
 ```
 1. Define what endpoint type the request should use. More about endpoint types, read below.
 2. Define what type of encoding the request will use.
-3. Define the HTTP method to use, in this case it's `GET`.
+3. Define the HTTP method to use.
 
 The `EndpointType` can be defined as an `enum` that contains all the possible endpoints for an API:
 ```swift
