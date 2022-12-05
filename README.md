@@ -17,9 +17,10 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 - [License](README.md#license)
 
 ## Features
- - [x] Simple syntax
+ - [x] Easily build server configurations and requests for any API
  - [x] Clear request and response logging
  - [x] URL query and JSON parameter encoding
+ - [x] Simple and clean syntax
  - [x] Authentication with Basic and Bearer token
  - [x] Combine Support
  - [ ] Download Progress (coming soon…)
