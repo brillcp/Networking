@@ -50,7 +50,12 @@ import Networking
 enum GitHubUserRequest: Requestable {
     case user(String)
     // 1.
-    var endpoint: EndpointType { Endpoint.githubUsers }
+    var endpoint: EndpointType {
+        switch self {
+        case .user(let username):
+            return Endpoint.user(username)
+        }
+    }
     // 2.
     var encoding: Request.Encoding { .query }
     // 3.
@@ -58,7 +63,7 @@ enum GitHubUserRequest: Requestable {
 }
 ```
 1. Define what endpoint type the request should use. More about endpoint types, read below.
-2. Define what type of encoding the request will use (`query` will encode the `parameters` in the URL).
+2. Define what type of encoding the request will use.
 3. Define the HTTP method to use, in this case it's `GET`.
 
 The `EndpointType` can be defined as an `enum` that contains all the possible endpoints for an API:
