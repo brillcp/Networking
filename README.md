@@ -37,8 +37,8 @@ enum GithubUserRequest: Requestable {
     var httpMethod: HTTP.Method { .get }
 }
 ```
-1. Define what endpoint this request should use
-2. Define what type of encoding the request will use, `query` will encode the `parameters` in the URL
+1. Define what endpoint type this request should use
+2. Define what type of encoding the request will use (`query` will encode the `parameters` in the URL for instance)
 3. Define the HTTP method to use, in this case it's `GET`
 
 The `EndpointType` can be defined with an enum that contains all the possible endpoints for the API:
