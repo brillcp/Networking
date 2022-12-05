@@ -10,6 +10,14 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
  - [x] Combine Support
  - [ ] Download Progress (coming soon…)
 
+## Requirements
+| Platform | Minimum Swift Version | Installation
+| --- | --- | --- |
+| iOS 13.0+ | 5.3 | [SM](#Swift Package Manager) |
+| macOS 15.0+ | 5.3 | [SM](#Swift Package Manager) |
+| tvOS 11.0+ | 5.3 | [SM](#Swift Package Manager) |
+| watchOS 4.0+ | 5.3 | [SM](#Swift Package Manager) |
+
 ## Usage
 Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network calls and is made up of three main components:
 
