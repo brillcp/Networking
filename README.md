@@ -1,4 +1,4 @@
-# Networking ⚡️
+# ⚡️ Networking
 
 Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com).
 
