@@ -193,7 +193,7 @@ Once you have your Swift package set up, adding Networking as a dependency is as
 
 ```
 dependencies: [
-    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.8.8"))
 ]
 ```
 
