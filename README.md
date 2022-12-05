@@ -66,15 +66,16 @@ let networkService = Network.Service(server: serverConfig)
 let request = GitHubUserRequest.user("brillcp")
 
 do {
-    let cancellable = try networkService.request(request).sink { [weak self] (result: Result<GithubUser, Error>) in
-        switch result {
-        case .success(let user):
-            // Handle the data 
-        case .failure(let error):
-            // Handle error
-            print(error.localizedDescription)
+    let cancellable = try networkService.request(request)
+        .sink { [weak self] (result: Result<GithubUser, Error>) in
+            switch result {
+            case .success(let user):
+                // Handle the data 
+            case .failure(let error):
+                // Handle error
+                print(error.localizedDescription)
+            }
         }
-    }
 catch {
     // Handle error
 }
