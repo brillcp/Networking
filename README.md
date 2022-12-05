@@ -24,7 +24,7 @@ It is initialzied with a server configuration that determines the API base url a
 
 Start by creating a requestable object. Typlically an `enum` that conforms to `Requestable`:
 ```swift
-enum GithubUserRequest: Requestable {
+enum GitHubUserRequest: Requestable {
     case user(String)
 
     // 1.
@@ -63,7 +63,7 @@ Then simply create a server configuration and a new network service and make a r
 let serverConfig = ServerConfig(baseURL: "https://api.github.com")
 let networkService = Network.Service(server: serverConfig)
 
-let request = GithubUserRequest.user("brillcp")
+let request = GitHubUserRequest.user("brillcp")
 
 do {
     let cancellable = try networkService.request(request).sink { [weak self] (result: Result<GithubUser, Error>) in
