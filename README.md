@@ -74,6 +74,7 @@ import Networking
 enum Endpoint {
     case user(String)
     case repos(String)
+    // ...
 }
 
 extension Endpoint: EndpointType {
@@ -84,6 +85,7 @@ extension Endpoint: EndpointType {
             return "users/\(username)"
         case .repos(let username):
             return "users/\(username)/repos"
+        // ...
         }
     }
 }
