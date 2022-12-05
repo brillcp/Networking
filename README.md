@@ -5,12 +5,10 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 ## Features
  - [x] Simple syntax
  - [x] Clear request and response logging
- - [x] URL query / JSON Parameter Encoding
+ - [x] URL query and JSON parameter encoding
  - [x] Authentication with Basic and Bearer token
- - [x] HTTP Response Validation
  - [x] Combine Support
- - [ ] Download Progress Closures
-
+ - [ ] Download Progress (coming soon…)
 
 ## Usage
 Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network calls and is made up of three main components:
