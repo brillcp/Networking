@@ -6,9 +6,6 @@
 ![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
-
-
-
 Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com).
 
 ## Features
@@ -41,13 +38,10 @@ Start by creating a requestable object. Typically an `enum` that conforms to `Re
 ```swift
 enum GitHubUserRequest: Requestable {
     case user(String)
-
     // 1.
     var endpoint: EndpointType { Endpoint.githubUsers }
-    
     // 2.
     var encoding: Request.Encoding { .query }
-    
     // 3.
     var httpMethod: HTTP.Method { .get }
 }
@@ -124,7 +118,6 @@ Content-Type: application/json; charset=utf-8
 ```
 
 ## Installation
-
 ### Swift Package Manager
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 Once you have your Swift package set up, adding Networking as a dependency is as easy as adding it to the dependencies value of your Package.swift.
