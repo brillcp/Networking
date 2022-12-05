@@ -131,7 +131,7 @@ Content-Type: application/json; charset=utf-8
 
 ## Authentication
 Some times an API requires that requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
-It involves creating a server configuration with a token provider object. The `TokenProvider` object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
+It involves creating a server configuration with a token provider object. The [`TokenProvider`](Sources/Networking/Protocols/TokenProvidable.swift) object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
 The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests.
 The following implementation demonstrates how a bearer token can be retrieved from the device using `UserDefaults`, but as mentioned, it can be any persistant storage:
 ```swift
