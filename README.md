@@ -137,6 +137,7 @@ Status-Code: 200
 Localized Status-Code: no error
 Content-Type: application/json; charset=utf-8
 ```
+There is also a way to log the pure JSON response for requests in the console. By passing `logRespose: true` when making a request, the response JSON will be logged in the console. That way it is easy to debug when modeling for an API.
 
 ## Authentication
 Some times an API requires that requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
