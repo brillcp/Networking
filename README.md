@@ -1,5 +1,7 @@
 # ⚡️ Networking
 
+[![license](https://img.shields.io/github/license/brillcp/networking)](master/LICENSE)
+
 Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com).
 
 ## Features
