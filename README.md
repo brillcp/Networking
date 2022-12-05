@@ -130,9 +130,9 @@ Content-Type: application/json; charset=utf-8
 ```
 
 ## Authentication
-Some times an API requires that all the requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
+Some times an API requires that requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
 It involves creating a server configuration with a token provider object. The `TokenProvider` object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
-The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests that require that.
+The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests.
 The following implementation demonstrates how a bearer token can be retrieved from the device using `UserDefaults`, but as mentioned, it can be any persistant storage:
 ```swift
 import Networking
@@ -171,7 +171,7 @@ enum GitHubUserRequest: Requestable {
 }
 
 ```
-This will authmatically add a "Authorization: Bearer [token]" HTTP heaer to the request before it is sent. Then just add the token provider object when initializing a server configuration:
+This will automatically add a `"Authorization: Bearer [token]"` HTTP header to the request before sending it. Then just provide the token provider object when initializing a server configuration:
 ```swift
 let server = ServerConfig(baseURL: "https://api.github.com", tokenProvider: TokenProvider())
 ```
