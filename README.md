@@ -45,6 +45,7 @@ The `EndpointType` can be defined as an `enum` that contains all the possible en
 ```swift
 enum Endpoint {
     case user(String)
+    case repos(String)
 }
 
 extension Endpoint: EndpointType {
@@ -53,6 +54,8 @@ extension Endpoint: EndpointType {
         switch self {
         case .user(let username):
             return "users/\(username)"
+        case .repos(let username):
+            return "users/\(username)/repos"
         }
     }
 }
@@ -62,7 +65,6 @@ Then simply create a server configuration and a new network service and make a r
 ```swift
 let serverConfig = ServerConfig(baseURL: "https://api.github.com")
 let networkService = Network.Service(server: serverConfig)
-
 let user = GitHubUserRequest.user("brillcp")
 
 do {
@@ -81,7 +83,29 @@ catch {
 }
 ```
 
+## Logging
+Every request is logged to the console by default. This is an example of an outgoing request log:
+```
+⚡️ Outgoing request to api.github.com @ 2022-12-05 16:58:25 +0000
+GET /users/brillcp?limit=100
+Header: {
+    Content-Type: application/x-www-form-urlencoded
+}
+Body {
+}
+Parameters {
+    limit=100
+}
+```
 
+This is how the incoming responses are logged:
+```
+♻️ Incoming response from api.github.com @ 2022-12-05 16:58:32 +0000
+~ /users/brillcp?limit=100
+Status-Code: 200
+Localized Status-Code: no error
+Content-Type: application/json; charset=utf-8
+```
 
 
 
