@@ -11,7 +11,7 @@ import Foundation
 open class ServerConfig {
 
     // MARK: Private properties
-    private let tokenProvider: TokenProvider?
+    private let tokenProvider: TokenProvidable?
 
     // MARK: - Public properties
     /// The base URL for the server
@@ -19,7 +19,7 @@ open class ServerConfig {
 
     /// Init the server configuration
     /// - parameter baseURL: The given base URL used for this server config
-    public init(baseURL: String, tokenProvider: TokenProvider? = nil) {
+    public init(baseURL: String, tokenProvider: TokenProvidable? = nil) {
         self.baseURL = baseURL.asURL()
         self.tokenProvider = tokenProvider
     }

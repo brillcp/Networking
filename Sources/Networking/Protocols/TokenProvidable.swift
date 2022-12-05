@@ -1,5 +1,5 @@
 //
-//  TokenProvider.swift
+//  TokenProvidable.swift
 //  Networking
 //
 //  Created by Viktor Gidlöf.
@@ -14,7 +14,7 @@ public enum TokenProviderError: Error {
 
 // MARK: -
 /// A protocol for getting and setting JWT tokens
-public protocol TokenProvider: AnyObject {
+public protocol TokenProvidable: AnyObject {
     /// A result object containing a token used in HTTP Authorization request headers
     var token: Result<String, TokenProviderError> { get }
     /// Persist the given token to any persistant storage on device. E.g `UserDefaults`, `CoreData`, `Keychain`.
