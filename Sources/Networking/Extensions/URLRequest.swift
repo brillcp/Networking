@@ -47,18 +47,24 @@ public extension URLRequest {
             output += "Header: {\n"
             headers.forEach { output += "\t\($0): \($1)\n" }
             output += "}\n\n"
+        } else {
+            output += "Header: {}\n"
         }
 
         if let body = httpBody, let json = try? JSONSerialization.jsonObject(with: body) as? HTTP.Parameters {
             output += "Body: {\n"
             json.forEach { output += "\t\($0)\n" }
             output += "}\n"
+        } else {
+            output += "Body: {}\n"
         }
 
         if !parameters.isEmpty {
             output += "Parameters: {\n"
             parameters.forEach { output += "\t\($0)\n" }
             output += "}\n"
+        } else {
+            output += "Parameters: {}\n"
         }
 
         print(output)
