@@ -135,7 +135,5 @@ dependencies: [
 ]
 ```
 
-
-
-
-
+## License
+Networking is released under the MIT license. See [LICENSE](/LICENSE) for more details.
