@@ -8,15 +8,15 @@
 import Foundation
 
 /// An error enum for the token provider
-public enum TokenProviderError: Error {
+public enum TokenProvidableError: Error {
     case missing
 }
 
 // MARK: -
-/// A protocol for getting and setting JWT tokens
+/// A protocol for creating token providable objects. It can be tokens for basic request authentication or bearer tokens.
 public protocol TokenProvidable: AnyObject {
     /// A result object containing a token used in HTTP Authorization request headers
-    var token: Result<String, TokenProviderError> { get }
+    var token: Result<String, TokenProvidableError> { get }
     /// Persist the given token to any persistant storage on device. E.g `UserDefaults`, `CoreData`, `Keychain`.
     /// - parameter token: The token to persist
     func setToken(_ token: String)
