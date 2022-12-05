@@ -49,6 +49,7 @@ import Networking
 
 enum GitHubUserRequest: Requestable {
     case user(String)
+
     // 1.
     var endpoint: EndpointType {
         switch self {
