@@ -87,14 +87,15 @@ catch {
 Every request is logged to the console by default. This is an example of an outgoing request log:
 ```
 ⚡️ Outgoing request to api.github.com @ 2022-12-05 16:58:25 +0000
-GET /users/brillcp?limit=100
+GET /users/brillcp?foo=bar
 Header: {
-    Content-Type: application/x-www-form-urlencoded
+    Content-Type: application/json
 }
-Body {
-}
-Parameters {
-    limit=100
+
+Body: {}
+
+Parameters: {
+    foo=bar
 }
 ```
 
