@@ -63,17 +63,17 @@ Then simply create a server configuration and a new network service and make a r
 let serverConfig = ServerConfig(baseURL: "https://api.github.com")
 let networkService = Network.Service(server: serverConfig)
 
-let request = GitHubUserRequest.user("brillcp")
+let user = GitHubUserRequest.user("brillcp")
 
 do {
-    let cancellable = try networkService.request(request)
-        .sink { [weak self] (result: Result<GithubUser, Error>) in
+    let cancellable = try networkService.request(user)
+        // The response data type is inferred in the result object 
+        .sink { [weak self] (result: Result<GitHubUser, Error>) in
             switch result {
             case .success(let user):
                 // Handle the data 
             case .failure(let error):
                 // Handle error
-                print(error.localizedDescription)
             }
         }
 catch {
