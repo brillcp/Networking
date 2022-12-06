@@ -18,7 +18,9 @@ open class ServerConfig {
     public let baseURL: URL
 
     /// Init the server configuration
-    /// - parameter baseURL: The given base URL used for this server config
+    /// - parameters:
+    ///     - baseURL: The given base URL used for this server config
+    ///     - tokenProvider: An optional token provider object used to authenticate requests. Defaults to `nil`.
     public init(baseURL: String, tokenProvider: TokenProvidable? = nil) {
         self.baseURL = baseURL.asURL()
         self.tokenProvider = tokenProvider
