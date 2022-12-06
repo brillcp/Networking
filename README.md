@@ -1,6 +1,6 @@
 # ⚡️ Networking
 
-![workflow](https://github.com/brillcp/networking/actions/workflows/swift.yml/badge.svg?event=push)
+![workflow](https://img.shields.io/github/workflow/status/brillcp/networking/Networking?event=push)
 ![release](https://img.shields.io/github/v/release/brillcp/networking)
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
