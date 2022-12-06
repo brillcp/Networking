@@ -3,7 +3,7 @@
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
-![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)
+[![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](README.md#swift-package-manager)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
 Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com).
