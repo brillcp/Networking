@@ -1,5 +1,6 @@
 # ⚡️ Networking
 
+![workflow](https://github.com/brillcp/networking/actions/workflows/swift.yml/badge.svg)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
@@ -132,7 +133,7 @@ Parameters: {
 This is how the incoming responses are logged:
 ```
 ♻️ Incoming response from api.github.com @ 2022-12-05 16:58:32 +0000
-~ /users/brillcp?limit=100
+~ /users/brillcp?foo=bar
 Status-Code: 200
 Localized Status-Code: no error
 Content-Type: application/json; charset=utf-8
