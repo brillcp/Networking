@@ -1,8 +1,8 @@
 //
 //  TestUser.swift
-//  
+//  Networking
 //
-//  Created by Viktor Gidlöf on 2022-12-06.
+//  Created by Viktor Gidlöf.
 //
 
 import Foundation
