@@ -8,7 +8,6 @@
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
-
 Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com).
 
 - [Features](README.md#features)
@@ -17,9 +16,10 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 - [Logging](README.md#logging)
 - [Authentication](README.md#authentication)
 - [Installation](README.md#installation)
+- [Contribution](README.md#contribution)
 - [License](README.md#license)
 
-## Features
+## Features 📲
  - [x] Easily build server configurations and requests for any API
  - [x] Clear request and response logging
  - [x] URL query and JSON parameter encoding
@@ -28,7 +28,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
  - [x] Combine Support
  - [ ] Download Progress (coming soon…)
 
-## Requirements
+## Requirements ❗️
 | Platform | Min. Swift Version | Installation
 | --- | --- | --- |
 | iOS 13.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
@@ -36,7 +36,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 | tvOS 11.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
 | watchOS 4.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
 
-## Usage
+## Usage 🕹
 Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network calls and is made up of three main components:
 
 + [`Network.Service`](Sources/Networking/Service/NetworkService.swift)
@@ -116,7 +116,7 @@ catch {
 }
 ```
 
-## Logging
+## Logging 📝
 Every request is logged to the console by default. This is an example of an outgoing request log:
 ```
 ⚡️ Outgoing request to api.github.com @ 2022-12-05 16:58:25 +0000
@@ -142,7 +142,7 @@ Content-Type: application/json; charset=utf-8
 ```
 There is also a way to log the pure JSON response for requests in the console. By passing `logRespose: true` when making a request, the response JSON will be logged in the console. That way it is easy to debug when modeling for an API.
 
-## Authentication
+## Authentication 🔒
 Some times an API requires that requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
 It involves creating a server configuration with a token provider object. The [`TokenProvider`](Sources/Networking/Protocols/TokenProvidable.swift) object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
 The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests.
@@ -189,7 +189,7 @@ This will automatically add a `"Authorization: Bearer [token]"` HTTP header to t
 let server = ServerConfig(baseURL: "https://api.github.com", tokenProvider: TokenProvider())
 ```
 
-## Installation
+## Installation 💾
 ### Swift Package Manager
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 Once you have your Swift package set up, adding Networking as a dependency is as easy as adding it to the dependencies value of your Package.swift.
@@ -200,5 +200,14 @@ dependencies: [
 ]
 ```
 
-## License
+## Contribution 🛠
+- [Create an issue](https://github.com/brillcp/networking/issues/new) if you:
+    - Are struggling or have any questions
+    - Want to improve the framework
+
+- [Create a PR](https://github.com/brillcp/Networking/compare) if you:
+    - Find a bug
+    - Find a documentation typo
+
+## License 🏛
 Networking is released under the MIT license. See [LICENSE](/LICENSE) for more details.
