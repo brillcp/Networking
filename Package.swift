@@ -18,7 +18,17 @@ let package = Package(
     targets: [
         .target(
             name: "Networking",
-            dependencies: []),
+            dependencies: [],
+            path: "Sources",
+            sources: [
+                "Extensions",
+                "HTTP",
+                "Protocols",
+                "Requests",
+                "ServerConfig",
+                "Service"
+            ]
+        ),
         .testTarget(
             name: "NetworkingTests",
             dependencies: ["Networking"]),
