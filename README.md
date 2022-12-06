@@ -1,7 +1,7 @@
 # ⚡️ Networking
 
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
-![swift](https://img.shields.io/badge/Swift-5.3%2B-orange)
+![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
