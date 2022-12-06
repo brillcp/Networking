@@ -43,7 +43,7 @@ public extension URLRequest {
         let questionmark = parameters.isEmpty ? "" : "?"
         var output = "\(method) \(components.path)\(questionmark)\(query)\n"
 
-        if let headers = allHTTPHeaderFields {
+        if let headers = allHTTPHeaderFields, !headers.isEmpty {
             output += "Header: {\n"
             headers.forEach { output += "\t\($0): \($1)\n" }
             output += "}\n\n"
