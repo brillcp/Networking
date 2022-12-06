@@ -52,8 +52,7 @@ public extension Network.Service {
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with the given data model object or an error
     func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<DataModel, Error> {
-        try dataTaskPublisher(request, logResponse: logResponse)
-            .map(\.data)
+        try dataPublisher(request, logResponse: logResponse)
             .decode(type: DataModel.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
