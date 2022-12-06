@@ -38,7 +38,7 @@ Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network cal
 
 + [`Network.Service`](Sources/Networking/Service/NetworkService.swift)
 + [`ServerConfig`](Sources/Networking/ServerConfig/ServerConfig.swift)
-+ [`Requestable`](Sources/Networking/Requests/Requestable.swift)
++ [`Requestable`](Sources/Networking/Protocols/Requestable.swift)
 
 The `Network.Service` is the main component of the framework that makes the actual requests to a backend.
 It is initialized with a server configuration that determines the API base url and any custom HTTP headers based on request parameters.
