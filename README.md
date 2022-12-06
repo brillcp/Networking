@@ -1,9 +1,9 @@
 # ⚡️ Networking
 
-![release](https://img.shields.io/github/v/release/brillcp/networking)
 ![workflow](https://github.com/brillcp/networking/actions/workflows/swift.yml/badge.svg?event=push)
-![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
+![release](https://img.shields.io/github/v/release/brillcp/networking)
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
+![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 [![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](README.md#swift-package-manager)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
@@ -29,7 +29,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
  - [ ] Download Progress (coming soon…)
 
 ## Requirements
-| Platform | Minimum Swift Version | Installation
+| Platform | Min. Swift Version | Installation
 | --- | --- | --- |
 | iOS 13.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
 | macOS 15.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
