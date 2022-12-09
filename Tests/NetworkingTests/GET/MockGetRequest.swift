@@ -1,5 +1,5 @@
 //
-//  TestRequest.swift
+//  MockGetRequest.swift
 //  Networking
 //
 //  Created by Viktor Gidlöf.
@@ -8,14 +8,17 @@
 import Foundation
 import Networking
 
-enum TestRequest: Requestable {
-    case user(String)
+enum MockGetRequest: Requestable {
+    case user(Int)
+    case users
 
     var encoding: Request.Encoding { .query }
     var httpMethod: HTTP.Method { .get }
+
     var endpoint: EndpointType {
         switch self {
-        case .user(let username): return TestEndpoint.user(username)
+        case .user(let username): return MockEndpoint.user(username)
+        case .users: return MockEndpoint.users
         }
     }
 }
