@@ -228,9 +228,9 @@ enum Request: Requestable {
 Depedning on the `encoding` method, the parameters will either be encoded in the url query, in the HTTP body as JSON or as a string.
 The `encoding` property on a request will encode the given parameters either in the url query or the HTTP body.
 ```swift
-var encoding: Request.Encoding { .query } // Encodes parameters in the url: `.../users?page=1&username=viktor`
-var encoding: Request.Encoding { .json } // Encodes parameters as JSON in the HTTP body: `{"page":"1,"name":"viktor"}"`
-var encoding: Request.Encoding { .body } // Encodes parameters as a string in the HTTP body: `"page=1&name=viktor"`
+var encoding: Request.Encoding { .query } // Encode parameters in the url: `.../users?page=1&username=viktor`
+var encoding: Request.Encoding { .json } // Encode parameters as JSON in the HTTP body: `{"page":"1,"name":"viktor"}"`
+var encoding: Request.Encoding { .body } // Encode parameters as a string in the HTTP body: `"page=1&name=viktor"`
 
 ```
 
