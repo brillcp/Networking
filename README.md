@@ -14,7 +14,12 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 - [Requirements](#requirements-)
 - [Usage](#usage-)
 - [Logging](#logging-)
-- [Authentication](#authentication-)
+- [Advanced usage](#advanced-usage-)
+    - [Authentication](#authentication-)
+    - [Adding parameters](#adding-parameters-)
+    - [Making `POST` requests](#making-post-requests-)
+    - [Parameter encoding](#parameter-encoding-)
+    - [Converting data models](#converting-data-models-)
 - [Installation](#installation-)
 - [Contribution](#contribution-)
 - [License](#license-)
@@ -245,7 +250,7 @@ var encoding: Request.Encoding { .body } // Encodes parameters as a string in th
 
 ```
 
-### Converting data models to parameters
+### Converting data models
 If you have a custom data model that conforms to `Codable` you can use `.asParameters()` to convert the data model object to `HTTP Parameters`:
 ```swift
 struct User: Codable {
