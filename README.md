@@ -96,6 +96,8 @@ extension Endpoint: EndpointType {
 
 Then simply create a server configuration and a new network service and make a request:
 ```swift
+import Networking
+
 let serverConfig = ServerConfig(baseURL: "https://api.github.com")
 let networkService = Network.Service(server: serverConfig)
 let user = GitHubUserRequest.user("brillcp")
@@ -142,7 +144,8 @@ Content-Type: application/json; charset=utf-8
 ```
 There is also a way to log the pure JSON response for requests in the console. By passing `logRespose: true` when making a request, the response JSON will be logged in the console. That way it is easy to debug when modeling for an API.
 
-## Authentication 🔒
+## Advanced usage
+### Authentication
 Some times an API requires that requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
 It involves creating a server configuration with a token provider object. The [`TokenProvider`](Sources/Networking/Protocols/TokenProvidable.swift) object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
 The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests.
@@ -178,7 +181,9 @@ extension TokenProvider: TokenProvidable {
 
 In order to use this authentication token just implement the `authorization` property on the requests that require authentication:
 ```swift
-enum GitHubUserRequest: Requestable {
+import Networking
+
+enum AuthenticatedRequest: Requestable {
     // ...
     var authorization: Authorization { .bearer }
 }
@@ -188,6 +193,72 @@ This will automatically add a `"Authorization: Bearer [token]"` HTTP header to t
 ```swift
 let server = ServerConfig(baseURL: "https://api.github.com", tokenProvider: TokenProvider())
 ```
+
+### Adding parameters
+Adding parameters to a request is done by implementing the `parameters` property on a request:
+```swift
+import Networking
+
+enum Request: Requestable {
+    case getData(String)
+
+    // ...
+    var parameters: HTTP.Parameters {
+        switch self {
+        case .getData(let username):
+            return [
+                "page": 1,
+                "order": "desc"
+            ]
+        }
+    }
+}
+```
+
+### Making `POST` requests
+Maiking post requests to a backend API is implemented by setting the `httpMethod` property to `.post` and provide parameters:
+```swift
+import Networking
+
+enum PostRequest: Requestable {
+    case postData(String)
+
+    // ...
+    var httpMethod: HTTP.Method { .post }
+
+    var parameters: HTTP.Parameters {
+        switch self {
+        case .postData(let username):
+            return ["page": 1, "username": username]
+        }
+    }
+}
+```
+
+### Parameter encoding
+Depedning on the `encoding` method, the parameters will either be encoded in the url query, in the HTTP body as JSON or as a string.
+The `encoding` property on a request will encode the given parameters either in the url query or the HTTP body.
+```swift
+var encoding: Request.Encoding { .query } // Encodes parameters in the url: `.../users?page=1&username=viktor`
+var encoding: Request.Encoding { .json } // Encodes parameters as JSON in the HTTP body: `{"page":"1,"name":"viktor"}"`
+var encoding: Request.Encoding { .body } // Encodes parameters as a string in the HTTP body: `"page=1&name=viktor"`
+
+```
+
+### Converting data models to parameters
+If you have a custom data model that conforms to `Codable` you can use `.asParameters()` to convert the data model object to `HTTP Parameters`:
+```swift
+struct User: Codable {
+    let name: String
+    let age: Int
+}
+
+let user = User(name: "Viktor", age: 69)
+let parameters = user.asParameters()
+print(parameters) // ["name": "Viktor", "age": "69"]
+```
+This is useful if you have any data model objects that you want to send as parameters in any requests.
+
 
 ## Installation 💾
 ### Swift Package Manager
