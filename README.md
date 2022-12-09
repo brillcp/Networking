@@ -272,6 +272,9 @@ This is useful if you have any data model objects that you want to send as param
 ### Check HTTP status codes
 Sometimes it can be usefull to just check for a HTTP status code when a request comes back. Use `responsePublisher`:
 ```swift
+import Networking
+
+// ...
 let cancellable = try networkService.responsePublisher(request).sink { result in
     switch result {
     case .success(let responseCode):
