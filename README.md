@@ -221,7 +221,7 @@ enum Request: Requestable {
 ```
 
 ### Making `POST` requests
-Maiking post requests to a backend API is implemented by setting the `httpMethod` property to `.post` and provide parameters:
+Making post requests to a backend API is done by setting the `httpMethod` property to `.post` and provide parameters:
 ```swift
 import Networking
 
