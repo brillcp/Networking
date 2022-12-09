@@ -275,10 +275,11 @@ Sometimes it can be usefull to just check for a HTTP status code when a request 
 import Networking
 
 // ...
+
 let cancellable = try networkService.responsePublisher(request).sink { result in
     switch result {
     case .success(let responseCode):
-        print(responseCode == .ok) // True, if the request has HTTP status code 200
+        print(responseCode == .ok) // True, if the response has HTTP status code 200
     case .failure(let error):
         // Handle error
     }
