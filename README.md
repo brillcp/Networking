@@ -20,6 +20,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
     - [Parameter encoding](#parameter-encoding)
     - [Making POST requests](#making-post-requests)
     - [Converting data models](#converting-data-models)
+    - [Check HTTP status codes](#check-HTTP-status-codes)
 - [Installation](#installation-)
 - [Contribution](#contribution-)
 - [License](#license-)
@@ -268,6 +269,18 @@ print(parameters) // ["name": "Viktor", "age": "69"]
 ```
 This is useful if you have any data model objects that you want to send as parameters in any requests.
 
+### Check HTTP status codes
+Sometimes it can be usefull to just check for a HTTP status code when a request comes back. Use `responsePublisher`:
+```swift
+let cancellable = try networkService.responsePublisher(request).sink { result in
+    switch result {
+    case .success(let responseCode):
+        print(responseCode == .ok) // True, if the request has HTTP status code 200
+    case .failure(let error):
+        // Handle error
+    }
+}
+```
 
 ## Installation 💾
 ### Swift Package Manager
