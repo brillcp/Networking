@@ -38,7 +38,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 | Platform | Min. Swift Version | Installation
 | --- | --- | --- |
 | iOS 13.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
-| macOS 15.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
+| macOS 10.15+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
 | tvOS 11.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
 | watchOS 4.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
 
