@@ -4,7 +4,8 @@
 ![release](https://img.shields.io/github/v/release/brillcp/networking)
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
-[![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](README.md#swift-package-manager)
+[![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](#swift-package-manager)
+[![pod](https://img.shields.io/badge/pod-0.8.8-orange)](#cocoapods)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
@@ -37,10 +38,10 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 ## Requirements ❗️
 | Platform | Min. Swift Version | Installation
 | --- | --- | --- |
-| iOS 13.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
-| macOS 10.15+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
-| tvOS 11.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
-| watchOS 4.0+ | 5.4 | [Swift Package Manager](README.md#swift-package-manager) |
+| iOS 13.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
+| macOS 10.15+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
+| tvOS 11.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
+| watchOS 4.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
 
 ## Usage 🕹
 Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network calls and is made up of three main components:
@@ -295,6 +296,13 @@ Once you have your Swift package set up, adding Networking as a dependency is as
 dependencies: [
     .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.8.8"))
 ]
+```
+
+### CocoaPods
+[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Networking into your Xcode project using CocoaPods, specify it in your Podfile:
+
+```
+pod 'Networking-Swift'
 ```
 
 ## Contribution 🛠
