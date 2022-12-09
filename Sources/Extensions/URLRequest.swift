@@ -100,6 +100,7 @@ public extension URLRequest {
     private mutating func jsonEncode(withParameters parameters: HTTP.Parameters) throws {
         httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
         setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.contentType)
+        setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.accept)
     }
 
     /// Encode the parameters in the http body of the request as a query string. E.g `"foo=bar&..."`
