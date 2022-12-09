@@ -17,8 +17,8 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 - [Advanced usage](#advanced-usage-)
     - [Authentication](#authentication)
     - [Adding parameters](#adding-parameters)
-    - [Making `POST` requests](#making-post-requests)
     - [Parameter encoding](#parameter-encoding)
+    - [Making POST requests](#making-post-requests)
     - [Converting data models](#converting-data-models)
 - [Installation](#installation-)
 - [Contribution](#contribution-)
@@ -213,11 +213,22 @@ enum Request: Requestable {
         case .getData(let username):
             return [
                 "page": 1,
-                "order": "desc"
+                "order": "desc",
+                "username": username
             ]
         }
     }
 }
+```
+
+### Parameter encoding
+Depedning on the `encoding` method, the parameters will either be encoded in the url query, in the HTTP body as JSON or as a string.
+The `encoding` property on a request will encode the given parameters either in the url query or the HTTP body.
+```swift
+var encoding: Request.Encoding { .query } // Encodes parameters in the url: `.../users?page=1&username=viktor`
+var encoding: Request.Encoding { .json } // Encodes parameters as JSON in the HTTP body: `{"page":"1,"name":"viktor"}"`
+var encoding: Request.Encoding { .body } // Encodes parameters as a string in the HTTP body: `"page=1&name=viktor"`
+
 ```
 
 ### Making `POST` requests
@@ -238,16 +249,6 @@ enum PostRequest: Requestable {
         }
     }
 }
-```
-
-### Parameter encoding
-Depedning on the `encoding` method, the parameters will either be encoded in the url query, in the HTTP body as JSON or as a string.
-The `encoding` property on a request will encode the given parameters either in the url query or the HTTP body.
-```swift
-var encoding: Request.Encoding { .query } // Encodes parameters in the url: `.../users?page=1&username=viktor`
-var encoding: Request.Encoding { .json } // Encodes parameters as JSON in the HTTP body: `{"page":"1,"name":"viktor"}"`
-var encoding: Request.Encoding { .body } // Encodes parameters as a string in the HTTP body: `"page=1&name=viktor"`
-
 ```
 
 ### Converting data models
