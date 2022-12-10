@@ -273,7 +273,7 @@ print(parameters) // ["name": "Günther", "age": "69"]
 This is useful if you have any data model objects that you want to send as parameters in any requests.
 
 ### Check HTTP status codes
-Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use [`responsePublisher`](Sources/Service/NetworkService.swift#L88) to send a request and get back the status code in the response:
+Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use [`responsePublisher`](Sources/Service/NetworkService.swift#L78) to send a request and get back the status code in the response:
 ```swift
 import Networking
 
@@ -291,7 +291,7 @@ let cancellable = try networkService.responsePublisher(request).sink { result in
 Networking supports all the status codes defined in the HTTP protocol, [see here](Sources/HTTP/StatusCode.swift).
 
 ### Download progress
-Download files and track and report the download progress by using `downloadPublisher`. The progress is tracked by sinking the publisher to a result object and the `.success(.progress)` case reports the progress and when a file has finished downloading, the `.success(.destination)` case is invoked and it provides a URL to the temporary file destination on the device.
+Download files and track and report the download progress by using [`downloadPublisher`](Sources/Service/NetworkService.swift#L88). The progress is tracked by sinking the publisher to a result object and the `.success(.progress)` case reports the progress and when a file has finished downloading, the `.success(.destination)` case is invoked and it provides a URL to the temporary file destination on the device.
 ```swift
 import Networking
 
