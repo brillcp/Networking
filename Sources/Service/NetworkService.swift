@@ -81,12 +81,11 @@ public extension Network.Service {
             .map { HTTP.StatusCode(rawValue: $0.statusCode) ?? .unknown }
             .eraseToAnyPublisher()
     }
-}
 
-// MARK: -
-public extension Network.Service {
-
-    func download(url: URL) throws -> Network.Service.Downloader {
+    /// Create a new publisher that publishes file download progress and the destination of the temporary file
+    /// - parameter url: The URL to the file to download
+    /// - returns: A new download publisher with the file download progress and destination URL
+    func downloadPublisher(url: URL) -> Network.Service.Downloader {
         Network.Service.Downloader(url: url)
     }
 }
