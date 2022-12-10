@@ -5,7 +5,7 @@
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 [![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](#swift-package-manager)
-[![pod](https://img.shields.io/badge/pod-0.8.8-orange)](#cocoapods)
+[![pod](https://img.shields.io/badge/pod-v0.8.8-orange)](#cocoapods)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
