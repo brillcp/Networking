@@ -82,3 +82,11 @@ public extension Network.Service {
             .eraseToAnyPublisher()
     }
 }
+
+// MARK: -
+public extension Network.Service {
+
+    func download(url: URL) throws -> Network.Service.Downloader {
+        Network.Service.Downloader(url: url)
+    }
+}
