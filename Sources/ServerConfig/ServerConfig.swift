@@ -33,7 +33,7 @@ open class ServerConfig {
     /// - returns: A new `HTTP.Header` dictionary
     open func header(forRequest request: Requestable) -> HTTP.Header {
         var header = HTTP.Header()
-        header[HTTP.Header.Field.userAgent] = "Networking/0.8.8"
+        header[HTTP.Header.Field.userAgent] = "\(name)/\(version)"
         header[HTTP.Header.Field.host] = baseURL.host
 
         if let contentType = request.contentType {
