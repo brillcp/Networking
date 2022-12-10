@@ -51,6 +51,7 @@ private extension Network.Service {
 
             self.session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
             session.downloadTask(with: url).resume()
+            _ = subscriber.receive(.progress(0.0))
         }
 
         // MARK: - URLSessionDownloadDelegate
