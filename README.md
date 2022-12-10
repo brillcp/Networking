@@ -80,7 +80,7 @@ enum GitHubUserRequest: Requestable {
 2. Define what type of encoding the request will use.
 3. Define the HTTP method to use.
 
-The [`EndpointType`](Sources/Networking/Protocols/EndpointType.swift) can be defined as an `enum` that contains all the possible endpoints for an API:
+The [`EndpointType`](Sources/Protocols/EndpointType.swift) can be defined as an `enum` that contains all the possible endpoints for an API:
 ```swift
 import Networking
 
