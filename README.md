@@ -265,14 +265,14 @@ struct User: Codable {
     let age: Int
 }
 
-let user = User(name: "Viktor", age: 69)
+let user = User(name: "Günther", age: 69)
 let parameters = user.asParameters()
-print(parameters) // ["name": "Viktor", "age": "69"]
+print(parameters) // ["name": "Günther", "age": "69"]
 ```
 This is useful if you have any data model objects that you want to send as parameters in any requests.
 
 ### Check HTTP status codes
-Sometimes it can be usefull to just check for a HTTP status code when a request comes back. Use `responsePublisher`:
+Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use `responsePublisher` to make the send the request and get back the status code in the response:
 ```swift
 import Networking
 
