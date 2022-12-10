@@ -22,6 +22,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
     - [Making POST requests](#making-post-requests)
     - [Converting data models](#converting-data-models)
     - [Check HTTP status codes](#check-HTTP-status-codes)
+    - [Download progress](#download-progress)
 - [Installation](#installation-)
     - [Swift Package Manager](#swift-package-manager)
     - [CocoaPods](#cocoapods)
@@ -32,10 +33,10 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
  - [x] Easily build server configurations and requests for any API
  - [x] Clear request and response logging
  - [x] URL query and JSON parameter encoding
- - [x] Simple and clean syntax
  - [x] Authentication with Basic and Bearer token
+ - [x] Download files with progress
+ - [x] Simple and clean syntax
  - [x] Combine Support
- - [ ] Download Progress (coming soon…)
 
 ## Requirements ❗️
 | Platform | Min. Swift Version | Installation
@@ -289,11 +290,30 @@ let cancellable = try networkService.responsePublisher(request).sink { result in
 ```
 Networking supports all the status codes defined in the HTTP protocol, [see here](Sources/HTTP/StatusCode.swift).
 
+### Download progress
+Download files and track and report the download progress by using `downloadPublisher`. The progress is tracked by sinking the publisher to a result object and the `.success(.progress)` case reports the progress and when a file has finished downloading, the `.success(.destination)` case is invoked and it provides a URL to the temporary file destination on the device.
+```swift
+import Networking
+
+// ...
+let url = "URL to any file".asURL()
+
+let cancellable = networkService.downloadPublisher(url: url).sink { result in
+    switch result {
+    case .success(.destination(let url)):
+        // The temporary file destination: file:///var/folders/ ... /CFNetworkDownload_6JpDuF.tmp
+    case .success(.progress(let progress)):        
+        // The download progress: 0.0 ... 1.0
+    case .failure(let error):
+        // Handle error
+    }
+}
+```
+
 ## Installation 💾
 ### Swift Package Manager
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 Once you have your Swift package set up, adding Networking as a dependency is as easy as adding it to the dependencies value of your Package.swift.
-
 ```
 dependencies: [
     .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.8.8"))
@@ -302,7 +322,6 @@ dependencies: [
 
 ### CocoaPods
 [CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Networking into your Xcode project using CocoaPods, specify it in your Podfile:
-
 ```
 pod 'Networking-Swift'
 ```
