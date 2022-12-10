@@ -1,4 +1,4 @@
-![network-header](https://user-images.githubusercontent.com/15960525/206864769-6c1e6cd2-4ff3-4b5c-9d3a-a8a6035af7e2.png)
+![network-header](https://user-images.githubusercontent.com/15960525/206865264-e8a45a19-604b-4fed-aa50-ce14a01bb2b9.png)
 
 ![workflow](https://img.shields.io/github/workflow/status/brillcp/networking/Networking?event=push)
 ![release](https://img.shields.io/github/v/release/brillcp/networking)
