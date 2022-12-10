@@ -220,7 +220,6 @@ enum Request: Requestable {
         case .getData(let username):
             return [
                 "page": 1,
-                "order": "desc",
                 "username": username
             ]
         }
