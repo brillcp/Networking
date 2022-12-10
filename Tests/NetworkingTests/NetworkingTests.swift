@@ -50,4 +50,23 @@ final class NetworkingTests: XCTestCase {
         }
         waitForExpectations(timeout: 30.0)
     }
+
+    func testDownloadImageFile() {
+        let url = "https://media.viktorgidlof.com/2022/12/djunglehorse.jpg".asURL()
+        let expectation = expectation(description: "Awaiting image download progress")
+
+        cancel = networkService.downloadPublisher(url: url).sink { result in
+            switch result {
+            case .success(.destination(let url)):
+                expectation.fulfill()
+                XCTAssertTrue(url.lastPathComponent.split(separator: ".").last == "tmp")
+            case .success(.progress(let progress)):
+                print("Download progress: \(progress)")
+            case .failure(let error):
+                expectation.fulfill()
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 30.0)
+    }
 }
