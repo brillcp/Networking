@@ -49,9 +49,9 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 ## Usage 🕹
 Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network calls and is made up of three main components:
 
-+ [`Network.Service`](Sources/Networking/Service/NetworkService.swift)
-+ [`ServerConfig`](Sources/Networking/ServerConfig/ServerConfig.swift)
-+ [`Requestable`](Sources/Networking/Protocols/Requestable.swift)
++ [`Network.Service`](Sources/Service/NetworkService.swift)
++ [`ServerConfig`](Sources/ServerConfig/ServerConfig.swift)
++ [`Requestable`](Sources/Protocols/Requestable.swift)
 
 The `Network.Service` is the main component of the framework that makes the actual requests to a backend.
 It is initialized with a server configuration that determines the API base url and any custom HTTP headers based on request parameters.
@@ -160,7 +160,7 @@ let cancellable = try networkService.request(user, logResponse: true)
 ## Advanced usage
 ### Authentication
 Some times an API requires that requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
-It involves creating a server configuration with a token provider object. The [`TokenProvider`](Sources/Networking/Protocols/TokenProvidable.swift) object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
+It involves creating a server configuration with a token provider object. The [`TokenProvider`](Sources/Protocols/TokenProvidable.swift) object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
 The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests.
 The following implementation demonstrates how a bearer token can be retrieved from the device using `UserDefaults`, but as mentioned, it can be any persistant storage:
 ```swift
@@ -273,7 +273,7 @@ print(parameters) // ["name": "Günther", "age": "69"]
 This is useful if you have any data model objects that you want to send as parameters in any requests.
 
 ### Check HTTP status codes
-Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use `responsePublisher` to send a request and get back the status code in the response:
+Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use [`responsePublisher`](Sources/Service/NetworkService.swift#L88) to send a request and get back the status code in the response:
 ```swift
 import Networking
 
