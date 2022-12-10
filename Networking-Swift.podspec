@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'Networking-Swift'
   s.version          = '0.8.8'
-  s.summary          = 'Networking is a lightweight and powerful HTTP network framework written in Swift.'
+  s.summary          = 'Networking is a lightweight and powerful HTTP network framework written in Swift'
   s.description      = <<-DESC
   Networking is a lightweight and powerful HTTP network framework written in Swift. Features includes but are not limited to; easily build server configurations and requests for any API, clear request and response logging, URL query and JSON parameter encoding, authentication with Basic and Bearer token and Combine Support.
   DESC
