@@ -23,6 +23,8 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
     - [Converting data models](#converting-data-models)
     - [Check HTTP status codes](#check-HTTP-status-codes)
 - [Installation](#installation-)
+    - [Swift Package Manager](#swift-package-manager)
+    - [CocoaPods](#cocoapods)
 - [Contribution](#contribution-)
 - [License](#license-)
 
