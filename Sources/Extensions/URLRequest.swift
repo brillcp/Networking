@@ -28,7 +28,7 @@ public extension URLRequest {
         switch config.encoding {
         case .query: try urlEncode(withParameters: parameters)
         case .json: try jsonEncode(withParameters: parameters)
-        case .body: try bodyEncode(withParameters: parameters)
+        case .body: bodyEncode(withParameters: parameters)
         }
     }
 
@@ -105,9 +105,8 @@ public extension URLRequest {
 
     /// Encode the parameters in the http body of the request as a query string. E.g `"foo=bar&..."`
     /// - parameter parameters: The parameters to encode
-    /// - throws: An error if the parameters can't serialized into valid json
-    /// - returns: The new `URLRequest` with the parameters encoded in the http body
-    private mutating func bodyEncode(withParameters parameters: HTTP.Parameters) throws {
+    /// - returns: The new `URLRequest` with the parameters encoded in the http body as a string
+    private mutating func bodyEncode(withParameters parameters: HTTP.Parameters) {
         let parameterString = parameters.map { "\($0.key)=\($0.value)&" }.joined().dropLast()
         httpBody = parameterString.data(using: .utf8)
     }
