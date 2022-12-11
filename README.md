@@ -9,7 +9,7 @@
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
-Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com).
+Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com). It uses `Combine` and `URLSession` for network calls and can be used as a network layer for any REST API on iOS, macOS, tvOS and watchOS.
 
 - [Features](#features-)
 - [Requirements](#requirements-%EF%B8%8F)
@@ -47,11 +47,11 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 | watchOS 4.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
 
 ## Usage 🕹
-Networking uses `Combine`, `URLSession` and `dataTaskPublishers` for network calls and is made up of three main components:
+Networking uses `Combine`, `URLSession` and `dataTaskPublishers` and is made up of three main components:
 
-+ [`Network.Service`](Sources/Service/NetworkService.swift)
-+ [`ServerConfig`](Sources/ServerConfig/ServerConfig.swift)
-+ [`Requestable`](Sources/Protocols/Requestable.swift)
+- [`Network.Service`](Sources/Service/NetworkService.swift)
+- [`ServerConfig`](Sources/ServerConfig/ServerConfig.swift)
+- [`Requestable`](Sources/Protocols/Requestable.swift)
 
 The `Network.Service` is the main component of the framework that makes the actual requests to a backend.
 It is initialized with a server configuration that determines the API base url and any custom HTTP headers based on request parameters.
