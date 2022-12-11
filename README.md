@@ -295,15 +295,14 @@ Download files and track and report the download progress by using [`downloadPub
 ```swift
 import Networking
 
-// ...
-let url = "URL to any file".asURL()
+let url = ...
 
 let cancellable = networkService.downloadPublisher(url: url).sink { result in
     switch result {
-    case .success(.destination(let url)):
-        // The temporary file destination: file:///var/folders/ ... /CFNetworkDownload_6JpDuF.tmp
     case .success(.progress(let progress)):        
         // The download progress: 0.0 ... 1.0
+    case .success(.destination(let url)):
+        // The temporary file destination: file:///var/folders/ ... /CFNetworkDownload_6JpDuF.tmp
     case .failure(let error):
         // Handle error
     }
