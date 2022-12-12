@@ -273,7 +273,7 @@ print(parameters) // ["name": "Günther", "age": "69"]
 This is useful if you have any data model objects that you want to send as parameters in any requests.
 
 ### Check HTTP status codes
-Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use [`responsePublisher`](Sources/Service/NetworkService.swift#L78) to send a request and get back the status code in the response:
+Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use [`responsePublisher`](Sources/Service/NetworkService.swift#L81) to send a request and get back the status code in the response:
 ```swift
 import Networking
 
