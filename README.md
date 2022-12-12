@@ -43,8 +43,8 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 | --- | --- | --- |
 | iOS 13.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
 | macOS 10.15+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
-| tvOS 11.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
-| watchOS 4.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
+| tvOS 13.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
+| watchOS 6.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
 
 ## Usage 🕹
 Networking uses `Combine`, `URLSession` and `dataTaskPublishers` and is made up of three main components:
