@@ -291,7 +291,7 @@ let cancellable = try networkService.responsePublisher(request).sink { result in
 Networking supports all the status codes defined in the HTTP protocol, [see here](Sources/HTTP/StatusCode.swift).
 
 ### Download progress
-Download files and track and report the download progress by using [`downloadPublisher`](Sources/Service/NetworkService.swift#L88). The progress is tracked by sinking the publisher to a result object and the `.success(.progress)` case reports the progress and when a file has finished downloading, the `.success(.destination)` case is invoked and it provides a URL to the temporary file destination on the device.
+Download files and track and report the download progress by using [`downloadPublisher`](Sources/Service/NetworkService.swift#L91). The progress is tracked by sinking the publisher to a result object and the `.success(.progress)` case reports the progress and when a file has finished downloading, the `.success(.destination)` case is invoked and it provides a URL to the temporary file destination on the device.
 ```swift
 import Networking
 
