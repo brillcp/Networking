@@ -259,7 +259,7 @@ enum PostRequest: Requestable {
 ```
 
 ### Converting data models
-If you have a custom data model that conforms to `Codable` you can use `.asParameters()` to convert the data model object to `HTTP Parameters`:
+If you have a custom data model that conforms to `Codable` you can use [`.asParameters()`](Sources/Extensions/Encodable.swift#L13) to convert the data model object to `HTTP Parameters`:
 ```swift
 struct User: Codable {
     let name: String
