@@ -2,7 +2,7 @@
 //  PokeAPIEndpoints.swift
 //  Networking-Example
 //
-//  Created by Viktor Gidlöf on 2022-12-14.
+//  Created by Viktor Gidlöf.
 //
 
 import Foundation

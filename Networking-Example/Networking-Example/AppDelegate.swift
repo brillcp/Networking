@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Networking-Example
 //
-//  Created by Viktor Gidlöf on 2022-12-13.
+//  Created by Viktor Gidlöf.
 //
 
 import UIKit
