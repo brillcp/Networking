@@ -42,6 +42,7 @@ final class ResultViewController: UIViewController {
             .tryMap { try JSONSerialization.jsonObject(with: $0) }
             .tryMap { try JSONSerialization.data(withJSONObject: $0, options: [.prettyPrinted, .sortedKeys]) }
             .compactMap { String(data: $0, encoding: .utf8) }
+            .compactMap { $0.replacingOccurrences(of: " :", with: ":", options: .literal, range: nil) }
             .compactMap { $0.replacingOccurrences(of: "\\", with: "", options: .literal, range: nil) }
             .assertNoFailure()
             .receive(on: RunLoop.main)
