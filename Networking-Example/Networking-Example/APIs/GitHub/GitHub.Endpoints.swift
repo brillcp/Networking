@@ -22,14 +22,10 @@ extension GitHub.Endpoint: EndpointType {
 
     var path: String {
         switch self {
-        case .user(let username):
-            return "users/\(username)"
-        case .emojis:
-            return "emojis"
-        case .search:
-            return "search/users"
-        case .repos(let username):
-            return "users/\(username)/repos"
+        case .repos(let username): return "users/\(username)/repos"
+        case .user(let username):return "users/\(username)"
+        case .search: return "search/users"
+        case .emojis: return "emojis"
         }
     }
 }
