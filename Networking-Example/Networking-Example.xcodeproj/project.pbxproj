@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A961E34FB55ECF53E13AB4AC /* Pods_Networking_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D196375A04F3C3A59309AD /* Pods_Networking_Example.framework */; };
+		D536AEA7294A61B200A49DE0 /* PokeAPI.Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D536AEA6294A61B200A49DE0 /* PokeAPI.Endpoints.swift */; };
+		D536AEAA294A631900A49DE0 /* PokeAPI.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D536AEA9294A631900A49DE0 /* PokeAPI.Request.swift */; };
 		D5B7F55329493EB80090AADC /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B7F55229493EB80090AADC /* ResourceViewController.swift */; };
 		D5DFA111294951DD00727398 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA110294951DD00727398 /* ResultViewController.swift */; };
 		D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA1132949698600727398 /* GitHub.Endpoints.swift */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		4D8180ABA69291D3EF4555F9 /* Pods-Networking-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Networking-Example.debug.xcconfig"; path = "Target Support Files/Pods-Networking-Example/Pods-Networking-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		D536AEA6294A61B200A49DE0 /* PokeAPI.Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPI.Endpoints.swift; sourceTree = "<group>"; };
+		D536AEA9294A631900A49DE0 /* PokeAPI.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPI.Request.swift; sourceTree = "<group>"; };
 		D5B7F55229493EB80090AADC /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
 		D5DFA110294951DD00727398 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		D5DFA1132949698600727398 /* GitHub.Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.Endpoints.swift; sourceTree = "<group>"; };
@@ -67,6 +71,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D536AEA8294A61B800A49DE0 /* PokeAPI */ = {
+			isa = PBXGroup;
+			children = (
+				D536AEA6294A61B200A49DE0 /* PokeAPI.Endpoints.swift */,
+				D536AEA9294A631900A49DE0 /* PokeAPI.Request.swift */,
+			);
+			path = PokeAPI;
+			sourceTree = "<group>";
+		};
 		D5B7F55429493EC80090AADC /* ResourceView */ = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +99,7 @@
 		D5DFA11729496A3800727398 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				D536AEA8294A61B800A49DE0 /* PokeAPI */,
 				D5DFA11829496A3F00727398 /* GitHub */,
 			);
 			path = APIs;
@@ -265,11 +279,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D536AEA7294A61B200A49DE0 /* PokeAPI.Endpoints.swift in Sources */,
 				D5B7F55329493EB80090AADC /* ResourceViewController.swift in Sources */,
 				D5E2654229493C3400549A90 /* APIListData.swift in Sources */,
 				D5DFA11629496A2300727398 /* GitHub.Request.swift in Sources */,
 				D5E265322949301300549A90 /* APIListViewController.swift in Sources */,
 				D5E2652E2949301300549A90 /* AppDelegate.swift in Sources */,
+				D536AEAA294A631900A49DE0 /* PokeAPI.Request.swift in Sources */,
 				D5E265302949301300549A90 /* SceneDelegate.swift in Sources */,
 				D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */,
 				D5DFA111294951DD00727398 /* ResultViewController.swift in Sources */,

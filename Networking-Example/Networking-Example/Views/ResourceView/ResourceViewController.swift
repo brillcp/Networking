@@ -9,6 +9,10 @@ import UIKit
 import Combine
 import Networking_Swift
 
+protocol Titleable {
+    var title: String { get }
+}
+
 final class ResourceViewController: UIViewController, UITableViewDelegate {
 
     // MARK: Private properties
@@ -50,7 +54,7 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
             cell?.accessoryType = .disclosureIndicator
 
-            if let request = data as? GitHub.Request {
+            if let request = data as? Titleable {
                 cell?.textLabel?.text = request.title
             }
             return cell

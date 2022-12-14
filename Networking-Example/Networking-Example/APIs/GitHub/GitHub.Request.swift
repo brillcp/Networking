@@ -9,7 +9,6 @@ import Foundation
 import Networking_Swift
 
 extension GitHub {
-
     enum Request: Requestable, Hashable {
         case user(String)
         case search(String)
@@ -25,6 +24,7 @@ extension GitHub {
             default: return HTTP.Parameters()
             }
         }
+
         var endpoint: EndpointType {
             switch self {
             case .repos(let username): return GitHub.Endpoint.repos(username)
@@ -48,7 +48,7 @@ extension GitHub.Request: CaseIterable {
 }
 
 // MARK: -
-extension GitHub.Request {
+extension GitHub.Request: Titleable {
 
     var title: String {
         switch self {
