@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Networking_Swift
 
 struct APIListData {
     let id = UUID()
@@ -15,16 +14,10 @@ struct APIListData {
     let endpoints: [AnyHashable]
 }
 
+// MARK: -
 extension APIListData: Hashable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-}
-
-extension APIListData: Equatable {
-
-    static func == (lhs: APIListData, rhs: APIListData) -> Bool {
-        lhs.id == rhs.id
     }
 }
