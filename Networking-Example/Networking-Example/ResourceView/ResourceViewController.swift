@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import Combine
+import Networking_Swift
 
-final class ResourceViewController: UIViewController {
+final class ResourceViewController: UIViewController, UITableViewDelegate {
 
+    // MARK: Private properties
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: view.frame)
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -18,11 +21,13 @@ final class ResourceViewController: UIViewController {
     }()
 
     private var dataSource: UITableViewDiffableDataSource<String, AnyHashable>!
-    private let data: [AnyHashable]
+    private let service: Network.Service
+    private let apiData: APIListData
 
     // MARK: - Init
-    init(data: [AnyHashable]) {
-        self.data = data
+    init(apiData: APIListData) {
+        self.apiData = apiData
+        self.service = Network.Service(server: ServerConfig(baseURL: apiData.url))
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -34,7 +39,7 @@ final class ResourceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "navTitle"
+        title = apiData.name
         view.addSubview(tableView)
         setupData()
     }
@@ -45,50 +50,29 @@ final class ResourceViewController: UIViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
             cell?.accessoryType = .disclosureIndicator
 
-            switch data {
-            case let data as APIData:
-                cell?.textLabel?.text = data.name
-                
-            case let data as Endpoints:
-                cell?.textLabel?.text = data.rawValue
-            default:
-                break
+            if let request = data as? GitHub.Request {
+                cell?.textLabel?.text = request.title
             }
             return cell
         }
 
         var snap = NSDiffableDataSourceSnapshot<String, AnyHashable>()
         snap.appendSections(["main"])
-        snap.appendItems(data)
+        snap.appendItems(apiData.endpoints)
         dataSource.apply(snap, animatingDifferences: true)
     }
-}
 
-// MARK: -
-extension ResourceViewController: UITableViewDelegate {
-
+    // MARK: - Table View Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard let data = dataSource.itemIdentifier(for: indexPath) else { return }
-        switch data {
-        case _ as APIData:
-            let items: [Endpoints] = [.git, .user]
-            let view = ResourceViewController(data: items)
-            navigationController?.pushViewController(view, animated: true)
-            
-        case let endpoints as Endpoints:
-            print(endpoints.rawValue)
-        default:
-            break
+        guard let request = dataSource.itemIdentifier(for: indexPath) as? Requestable else { return }
+
+        do {
+            let resultView = ResultViewController(publisher: try service.dataPublisher(request))
+            navigationController?.pushViewController(resultView, animated: true)
+        } catch {
+            fatalError("Something bad happened :(")
         }
     }
-}
-
-enum Endpoints: String, CaseIterable {
-    typealias RawValue = String
-    
-    case git
-    case user
-    case home
 }

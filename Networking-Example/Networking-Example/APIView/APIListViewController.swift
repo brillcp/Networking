@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  APIListViewController.swift
 //  Networking-Example
 //
 //  Created by Viktor Gidlöf on 2022-12-13.
@@ -7,8 +7,9 @@
 
 import UIKit
 
-final class APIViewController: UIViewController {
+final class APIListViewController: UIViewController {
 
+    // MARK: Private properties
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: view.frame)
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -17,14 +18,18 @@ final class APIViewController: UIViewController {
         return table
     }()
 
-    private var dataSource: UITableViewDiffableDataSource<String, APIData>!
+    private var dataSource: UITableViewDiffableDataSource<String, APIListData>!
+    private let data: [APIListData]
 
-    private let data: [APIData] = [
-        APIData(name: "Github API", url: ""),
-        APIData(name: "PokeAPI", url: ""),
-        APIData(name: "MovieAPI", url: ""),
-        APIData(name: "Other", url: ""),
-    ]
+    // MARK: - Init
+    init(data: [APIListData]) {
+        self.data = data
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -37,14 +42,14 @@ final class APIViewController: UIViewController {
 
     // MARK: - Private functions
     private func setupData() {
-        dataSource = UITableViewDiffableDataSource<String, APIData>(tableView: tableView) { tableView, _, data in
+        dataSource = UITableViewDiffableDataSource<String, APIListData>(tableView: tableView) { tableView, _, data in
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
             cell?.accessoryType = .disclosureIndicator
             cell?.textLabel?.text = data.name
             return cell
         }
 
-        var snap = NSDiffableDataSourceSnapshot<String, APIData>()
+        var snap = NSDiffableDataSourceSnapshot<String, APIListData>()
         snap.appendSections(["main"])
         snap.appendItems(data)
         dataSource.apply(snap, animatingDifferences: true)
@@ -52,18 +57,14 @@ final class APIViewController: UIViewController {
 }
 
 // MARK: -
-extension APIViewController: UITableViewDelegate {
+extension APIListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let data: [APIData] = [
-            APIData(name: "Github API", url: ""),
-            APIData(name: "PokeAPI", url: ""),
-            APIData(name: "MovieAPI", url: ""),
-            APIData(name: "Other", url: ""),
-        ]
-        let view = ResourceViewController(data: data)
+        guard let apiData = dataSource.itemIdentifier(for: indexPath) else { return }
+
+        let view = ResourceViewController(apiData: apiData)
         navigationController?.pushViewController(view, animated: true)
     }
 }

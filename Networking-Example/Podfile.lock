@@ -1,0 +1,16 @@
+PODS:
+  - Networking-Swift (0.8.8)
+
+DEPENDENCIES:
+  - Networking-Swift
+
+SPEC REPOS:
+  trunk:
+    - Networking-Swift
+
+SPEC CHECKSUMS:
+  Networking-Swift: be0e3ab34a4395265c082ae309441f20b3a5e203
+
+PODFILE CHECKSUM: ac19480c8c53359464fc93a35cd440f5edd68ac9
+
+COCOAPODS: 1.11.3

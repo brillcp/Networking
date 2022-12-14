@@ -15,7 +15,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = scene as? UIWindowScene else { return }
 
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = UINavigationController(rootViewController: APIViewController())
+
+        let apis = [
+            APIListData(name: "GitHub API", url: "https://api.github.com", endpoints: GitHub.Request.allCases)
+        ]
+
+        let view = APIListViewController(data: apis)
+        window?.rootViewController = UINavigationController(rootViewController: view)
         window?.makeKeyAndVisible()
     }
 }
