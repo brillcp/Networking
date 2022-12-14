@@ -100,6 +100,16 @@
 			path = GitHub;
 			sourceTree = "<group>";
 		};
+		D5DFA119294977AE00727398 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D5E2654329493DB100549A90 /* APIListView */,
+				D5B7F55429493EC80090AADC /* ResourceView */,
+				D5DFA11229495C4B00727398 /* ResultView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		D5E265212949301300549A90 = {
 			isa = PBXGroup;
 			children = (
@@ -123,10 +133,8 @@
 			children = (
 				D5E2652D2949301300549A90 /* AppDelegate.swift */,
 				D5E2652F2949301300549A90 /* SceneDelegate.swift */,
+				D5DFA119294977AE00727398 /* Views */,
 				D5DFA11729496A3800727398 /* APIs */,
-				D5E2654329493DB100549A90 /* APIView */,
-				D5B7F55429493EC80090AADC /* ResourceView */,
-				D5DFA11229495C4B00727398 /* ResultView */,
 				D5E265362949301400549A90 /* Assets.xcassets */,
 				D5E265382949301400549A90 /* LaunchScreen.storyboard */,
 				D5E2653B2949301400549A90 /* Info.plist */,
@@ -134,13 +142,13 @@
 			path = "Networking-Example";
 			sourceTree = "<group>";
 		};
-		D5E2654329493DB100549A90 /* APIView */ = {
+		D5E2654329493DB100549A90 /* APIListView */ = {
 			isa = PBXGroup;
 			children = (
 				D5E265312949301300549A90 /* APIListViewController.swift */,
 				D5E2654129493C3400549A90 /* APIListData.swift */,
 			);
-			path = APIView;
+			path = APIListView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
