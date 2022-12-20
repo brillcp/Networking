@@ -1,6 +1,6 @@
 ![network-header](https://user-images.githubusercontent.com/15960525/206866384-044ca1d7-172d-4d5f-80f7-7ee234f2a363.png)
 
-![workflow](https://img.shields.io/github/workflow/status/brillcp/networking/Networking?event=push)
+![workflow](https://img.shields.io/github/actions/workflow/status/brillcp/networking/swift.yml?branch=master&event=push)
 ![release](https://img.shields.io/github/v/release/brillcp/networking)
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
