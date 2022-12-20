@@ -8,6 +8,9 @@
 import Foundation
 import Combine
 
+public let name = "Networking"
+public let version = "0.8.9"
+
 public enum Network {
     /// A network service object used to make requests to the backend.
     public final class Service {
@@ -52,8 +55,7 @@ public extension Network.Service {
     /// - throws: An error if the data task publisher fails for any reason
     /// - returns: A new publisher with the given data model object or an error
     func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = false) throws -> AnyPublisher<DataModel, Error> {
-        try dataTaskPublisher(request, logResponse: logResponse)
-            .map(\.data)
+        try dataPublisher(request, logResponse: logResponse)
             .decode(type: DataModel.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
@@ -81,5 +83,12 @@ public extension Network.Service {
             .compactMap { $0.response as? HTTPURLResponse }
             .map { HTTP.StatusCode(rawValue: $0.statusCode) ?? .unknown }
             .eraseToAnyPublisher()
+    }
+
+    /// Create a new publisher that publishes file download progress and the destination of the temporary file
+    /// - parameter url: The URL to the file to download
+    /// - returns: A new download publisher with the file download progress and destination URL
+    func downloadPublisher(url: URL) -> Network.Service.Downloader {
+        Network.Service.Downloader(url: url)
     }
 }

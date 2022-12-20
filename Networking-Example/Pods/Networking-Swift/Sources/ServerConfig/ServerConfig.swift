@@ -18,7 +18,9 @@ open class ServerConfig {
     public let baseURL: URL
 
     /// Init the server configuration
-    /// - parameter baseURL: The given base URL used for this server config
+    /// - parameters:
+    ///     - baseURL: The given base URL used for this server config
+    ///     - tokenProvider: An optional token provider object used to authenticate requests. Defaults to `nil`.
     public init(baseURL: String, tokenProvider: TokenProvidable? = nil) {
         self.baseURL = baseURL.asURL()
         self.tokenProvider = tokenProvider
@@ -31,6 +33,8 @@ open class ServerConfig {
     /// - returns: A new `HTTP.Header` dictionary
     open func header(forRequest request: Requestable) -> HTTP.Header {
         var header = HTTP.Header()
+        header[HTTP.Header.Field.userAgent] = "\(name)/\(version)"
+        header[HTTP.Header.Field.host] = baseURL.host
 
         if let contentType = request.contentType {
             header[HTTP.Header.Field.contentType] = contentType
