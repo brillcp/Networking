@@ -12,6 +12,8 @@
 		D536AEAA294A631900A49DE0 /* PokeAPI.GetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D536AEA9294A631900A49DE0 /* PokeAPI.GetRequest.swift */; };
 		D54A599C29520B7000DA8522 /* HTTPBinEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A599B29520B7000DA8522 /* HTTPBinEndpoints.swift */; };
 		D54A599E29520D9700DA8522 /* HTTPBin.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A599D29520D9700DA8522 /* HTTPBin.Request.swift */; };
+		D54A59A32952176D00DA8522 /* JSONPlaceholderEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A59A22952176D00DA8522 /* JSONPlaceholderEndpoints.swift */; };
+		D54A59A6295217B000DA8522 /* JSONPlaceholder.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A59A5295217B000DA8522 /* JSONPlaceholder.Request.swift */; };
 		D5B7F55329493EB80090AADC /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B7F55229493EB80090AADC /* ResourceViewController.swift */; };
 		D5DFA111294951DD00727398 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA110294951DD00727398 /* ResultViewController.swift */; };
 		D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA1132949698600727398 /* GitHub.Endpoints.swift */; };
@@ -30,6 +32,8 @@
 		D536AEA9294A631900A49DE0 /* PokeAPI.GetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPI.GetRequest.swift; sourceTree = "<group>"; };
 		D54A599B29520B7000DA8522 /* HTTPBinEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBinEndpoints.swift; sourceTree = "<group>"; };
 		D54A599D29520D9700DA8522 /* HTTPBin.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBin.Request.swift; sourceTree = "<group>"; };
+		D54A59A22952176D00DA8522 /* JSONPlaceholderEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholderEndpoints.swift; sourceTree = "<group>"; };
+		D54A59A5295217B000DA8522 /* JSONPlaceholder.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholder.Request.swift; sourceTree = "<group>"; };
 		D5B7F55229493EB80090AADC /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
 		D5DFA110294951DD00727398 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		D5DFA1132949698600727398 /* GitHub.Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.Endpoints.swift; sourceTree = "<group>"; };
@@ -93,6 +97,15 @@
 			path = HTTPBin;
 			sourceTree = "<group>";
 		};
+		D54A59A42952179900DA8522 /* JSONPlaceholder */ = {
+			isa = PBXGroup;
+			children = (
+				D54A59A22952176D00DA8522 /* JSONPlaceholderEndpoints.swift */,
+				D54A59A5295217B000DA8522 /* JSONPlaceholder.Request.swift */,
+			);
+			path = JSONPlaceholder;
+			sourceTree = "<group>";
+		};
 		D5B7F55429493EC80090AADC /* ResourceView */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +125,7 @@
 		D5DFA11729496A3800727398 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				D54A59A42952179900DA8522 /* JSONPlaceholder */,
 				D54A59A1295211A900DA8522 /* HTTPBin */,
 				D536AEA8294A61B800A49DE0 /* PokeAPI */,
 				D5DFA11829496A3F00727398 /* GitHub */,
@@ -293,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54A59A6295217B000DA8522 /* JSONPlaceholder.Request.swift in Sources */,
 				D536AEA7294A61B200A49DE0 /* PokeAPI.Endpoints.swift in Sources */,
 				D5B7F55329493EB80090AADC /* ResourceViewController.swift in Sources */,
 				D54A599C29520B7000DA8522 /* HTTPBinEndpoints.swift in Sources */,
@@ -303,6 +318,7 @@
 				D5E2652E2949301300549A90 /* AppDelegate.swift in Sources */,
 				D536AEAA294A631900A49DE0 /* PokeAPI.GetRequest.swift in Sources */,
 				D5E265302949301300549A90 /* SceneDelegate.swift in Sources */,
+				D54A59A32952176D00DA8522 /* JSONPlaceholderEndpoints.swift in Sources */,
 				D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */,
 				D5DFA111294951DD00727398 /* ResultViewController.swift in Sources */,
 			);
