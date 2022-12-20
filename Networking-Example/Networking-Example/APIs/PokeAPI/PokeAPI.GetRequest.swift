@@ -40,14 +40,3 @@ extension PokeAPI.GetRequest: CaseIterable {
         .pokemons
     ]
 }
-
-// MARK: -
-extension PokeAPI.GetRequest: Titleable {
-
-    var title: String {
-        switch self {
-        case .pokemon(let pokemon): return "Get Pokemon \"\(pokemon)\""
-        case .pokemons: return "Get all Pokemon"
-        }
-    }
-}

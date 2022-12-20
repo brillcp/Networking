@@ -43,15 +43,3 @@ extension GitHub.GetRequest: CaseIterable {
         .search("Apple")
     ]
 }
-
-// MARK: -
-extension GitHub.GetRequest: Titleable {
-
-    var title: String {
-        switch self {
-        case .search(let query): return "Search user \"\(query)\""
-        case .user(let user): return "Get user \"\(user)\""
-        case .repos: return "Get user repos"
-        }
-    }
-}

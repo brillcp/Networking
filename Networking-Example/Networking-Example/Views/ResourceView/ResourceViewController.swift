@@ -9,10 +9,6 @@ import UIKit
 import Combine
 import Networking_Swift
 
-protocol Titleable {
-    var title: String { get }
-}
-
 final class ResourceViewController: UIViewController, UITableViewDelegate {
 
     // MARK: Private properties
@@ -54,8 +50,8 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
             cell?.accessoryType = .disclosureIndicator
 
-            if let request = data as? Titleable {
-                cell?.textLabel?.text = request.title
+            if let request = data as? Requestable {
+                cell?.textLabel?.text = request.endpoint.path
             }
             return cell
         }

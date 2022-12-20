@@ -65,16 +65,3 @@ extension HTTPBin.Request: CaseIterable {
         .png
     ]
 }
-
-// MARK: -
-extension HTTPBin.Request: Titleable {
-
-    var title: String {
-        switch self {
-        case .get: return "Get HTTP Bin request"
-        case .post: return "Post HTTP Bin request"
-        case .jpeg: return "JPEG image"
-        case .png: return "PNG image"
-        }
-    }
-}

@@ -33,14 +33,3 @@ extension JSONPlaceholder.Request: CaseIterable {
         .posts
     ]
 }
-
-// MARK: -
-extension JSONPlaceholder.Request: Titleable {
-
-    var title: String {
-        switch self {
-        case .users: return "Get mock users"
-        case .posts: return "Get mock posts"
-        }
-    }
-}

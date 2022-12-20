@@ -40,14 +40,3 @@ extension Reqres.Request: CaseIterable {
         .users(page: 2)
     ]
 }
-
-// MARK: -
-extension Reqres.Request: Titleable {
-
-    var title: String {
-        switch self {
-        case .users: return "List users"
-        case .user: return "Get user"
-        }
-    }
-}
