@@ -35,7 +35,7 @@ final class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "JSON Response"
+        title = "Response"
         view.addSubview(textView)
 
         cancel = responsePublisher
