@@ -10,7 +10,7 @@ import Networking_Swift
 
 extension PokeAPI {
 
-    enum Request: Requestable, Hashable {
+    enum GetRequest: Requestable, Hashable {
         case pokemon(String)
         case pokemons
 
@@ -33,16 +33,16 @@ extension PokeAPI {
 }
 
 // MARK: -
-extension PokeAPI.Request: CaseIterable {
+extension PokeAPI.GetRequest: CaseIterable {
 
-    static var allCases: [PokeAPI.Request] = [
+    static var allCases: [PokeAPI.GetRequest] = [
         .pokemon("pikachu"),
         .pokemons
     ]
 }
 
 // MARK: -
-extension PokeAPI.Request: Titleable {
+extension PokeAPI.GetRequest: Titleable {
 
     var title: String {
         switch self {

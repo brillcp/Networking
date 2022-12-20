@@ -9,7 +9,7 @@ import Foundation
 import Networking_Swift
 
 extension GitHub {
-    enum Request: Requestable, Hashable {
+    enum GetRequest: Requestable, Hashable {
         case user(String)
         case search(String)
         case repos(String)
@@ -35,9 +35,9 @@ extension GitHub {
 }
 
 // MARK: -
-extension GitHub.Request: CaseIterable {
+extension GitHub.GetRequest: CaseIterable {
 
-    static var allCases: [GitHub.Request] = [
+    static var allCases: [GitHub.GetRequest] = [
         .user("brillcp"),
         .repos("brillcp"),
         .search("Apple")
@@ -45,7 +45,7 @@ extension GitHub.Request: CaseIterable {
 }
 
 // MARK: -
-extension GitHub.Request: Titleable {
+extension GitHub.GetRequest: Titleable {
 
     var title: String {
         switch self {
