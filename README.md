@@ -26,6 +26,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 - [Installation](#installation-)
     - [Swift Package Manager](#swift-package-manager)
     - [CocoaPods](#cocoapods)
+- [Sample code](#sample-code)
 - [Contribution](#contribution-)
 - [License](#license-)
 
@@ -324,6 +325,13 @@ dependencies: [
 ```
 pod 'Networking-Swift'
 ```
+
+## Sample code 📱
+The sample project is a small application that demonstrates some of the functionality of the framework. Start by cloning the repo:
+```
+git clone https://github.com/brillcp/Networking.git
+```
+Open the workspace `Networking-Example.xcworkspace` and run.
 
 ## Contribution 🛠
 - [Create an issue](https://github.com/brillcp/networking/issues/new) if you:
