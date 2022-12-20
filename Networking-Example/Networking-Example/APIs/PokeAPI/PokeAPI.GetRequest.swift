@@ -9,7 +9,6 @@ import Foundation
 import Networking_Swift
 
 extension PokeAPI {
-
     enum GetRequest: Requestable, Hashable {
         case pokemon(String)
         case pokemons

@@ -9,7 +9,6 @@ import Foundation
 import Networking_Swift
 
 extension HTTPBin {
-
     enum GetRequest: Requestable, Hashable {
         case get
 
