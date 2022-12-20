@@ -36,7 +36,7 @@ extension Reqres {
 extension Reqres.Request: CaseIterable {
 
     static var allCases: [Reqres.Request] = [
-        .user(id: 3),
-        .users(page: 2)
+        .users(page: 2),
+        .user(id: 3)
     ]
 }
