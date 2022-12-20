@@ -25,4 +25,3 @@ extension PokeAPI.Endpoint: EndpointType {
         }
     }
 }
-
