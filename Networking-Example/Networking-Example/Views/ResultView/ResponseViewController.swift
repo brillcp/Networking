@@ -12,7 +12,7 @@ final class ResponseViewController: UIViewController {
 
     private lazy var textView: UITextView = {
         let textView = UITextView(frame: view.frame)
-        textView.font = UIFont(name: "Menlo", size: 10.0)
+        textView.font = UIFont(name: "Menlo", size: 12.0)
         textView.isSelectable = false
         textView.isEditable = false
         return textView
