@@ -13,18 +13,8 @@ extension JSONPlaceholder {
         case users
         case posts
 
-        var encoding: Networking_Swift.Request.Encoding {
-            switch self {
-            case .users: return .query
-            case .posts: return .json
-            }
-        }
-
-        var httpMethod: HTTP.Method {
-            switch self {
-            case .users, .posts: return .get
-            }
-        }
+        var encoding: Networking_Swift.Request.Encoding { .query }
+        var httpMethod: HTTP.Method { .get }
 
         var endpoint: EndpointType {
             switch self {
