@@ -11,7 +11,7 @@
 
 Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com). It uses `Combine` and `URLSession` for network calls and can be used as a network layer for any REST API on iOS, macOS, tvOS and watchOS.
 
-- [Features](#features-)
+- [Features](#features)
 - [Requirements](#requirements-%EF%B8%8F)
 - [Usage](#usage-)
 - [Logging](#logging-)
@@ -26,7 +26,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 - [Installation](#installation-)
     - [Swift Package Manager](#swift-package-manager)
     - [CocoaPods](#cocoapods)
-- [Sample code](#sample-code)
+- [Sample code](#sample-code-)
 - [Contribution](#contribution-)
 - [License](#license-)
 
