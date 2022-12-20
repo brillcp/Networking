@@ -2,7 +2,7 @@
 //  ImageViewController.swift
 //  Networking-Example
 //
-//  Created by Viktor Gidlöf on 2022-12-20.
+//  Created by Viktor Gidlöf.
 //
 
 import UIKit
