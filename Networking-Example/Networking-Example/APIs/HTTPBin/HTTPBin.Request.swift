@@ -12,17 +12,18 @@ extension HTTPBin {
     enum Request: Requestable, Hashable {
         case get
         case post
+        case jpeg
 
         var encoding: Networking_Swift.Request.Encoding {
             switch self {
-            case .get: return .query
+            case .get, .jpeg: return .query
             case .post: return .json
             }
         }
 
         var httpMethod: HTTP.Method {
             switch self {
-            case .get: return .get
+            case .get, .jpeg: return .get
             case .post: return .post
             }
         }
@@ -37,6 +38,8 @@ extension HTTPBin {
                     "height": 6.9,
                     "age": 69
                 ]
+            default:
+                return HTTP.Parameters()
             }
         }
 
@@ -44,6 +47,7 @@ extension HTTPBin {
             switch self {
             case .get: return HTTPBin.Endpoint.get
             case .post: return HTTPBin.Endpoint.post
+            case .jpeg: return HTTPBin.Endpoint.jpeg
             }
         }
     }
@@ -54,7 +58,8 @@ extension HTTPBin.Request: CaseIterable {
 
     static var allCases: [HTTPBin.Request] = [
         .get,
-        .post
+        .post,
+        .jpeg
     ]
 }
 
@@ -65,6 +70,7 @@ extension HTTPBin.Request: Titleable {
         switch self {
         case .get: return "Get HTTP Bin request"
         case .post: return "Post HTTP Bin request"
+        case .jpeg: return "JPEG image"
         }
     }
 }

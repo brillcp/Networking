@@ -73,10 +73,19 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
         guard let request = dataSource.itemIdentifier(for: indexPath) as? Requestable else { return }
 
         do {
-            let resultView = ResultViewController(publisher: try service.dataPublisher(request))
-            navigationController?.pushViewController(resultView, animated: true)
+            let viewController = viewController(fromRequest: request, withPublisher: try service.dataPublisher(request))
+            navigationController?.pushViewController(viewController, animated: true)
         } catch {
             fatalError("Something bad happened :(")
+        }
+    }
+
+    // MARK: - Private functions
+    private func viewController(fromRequest request: Requestable, withPublisher publisher: AnyPublisher<Data, Error>) -> UIViewController {
+        guard let request = request as? HTTPBin.Request else { return ResultViewController(publisher: publisher) }
+        switch request {
+        case .jpeg: return ImageViewController(publisher: publisher)
+        default: return ResultViewController(publisher: publisher)
         }
     }
 }

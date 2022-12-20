@@ -14,6 +14,7 @@
 		D54A599E29520D9700DA8522 /* HTTPBin.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A599D29520D9700DA8522 /* HTTPBin.Request.swift */; };
 		D54A59A32952176D00DA8522 /* JSONPlaceholderEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A59A22952176D00DA8522 /* JSONPlaceholderEndpoints.swift */; };
 		D54A59A6295217B000DA8522 /* JSONPlaceholder.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A59A5295217B000DA8522 /* JSONPlaceholder.Request.swift */; };
+		D54A59BE29521E6600DA8522 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A59BD29521E6600DA8522 /* ImageViewController.swift */; };
 		D5B7F55329493EB80090AADC /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B7F55229493EB80090AADC /* ResourceViewController.swift */; };
 		D5DFA111294951DD00727398 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA110294951DD00727398 /* ResultViewController.swift */; };
 		D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA1132949698600727398 /* GitHub.Endpoints.swift */; };
@@ -34,6 +35,7 @@
 		D54A599D29520D9700DA8522 /* HTTPBin.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBin.Request.swift; sourceTree = "<group>"; };
 		D54A59A22952176D00DA8522 /* JSONPlaceholderEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholderEndpoints.swift; sourceTree = "<group>"; };
 		D54A59A5295217B000DA8522 /* JSONPlaceholder.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholder.Request.swift; sourceTree = "<group>"; };
+		D54A59BD29521E6600DA8522 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		D5B7F55229493EB80090AADC /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
 		D5DFA110294951DD00727398 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		D5DFA1132949698600727398 /* GitHub.Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.Endpoints.swift; sourceTree = "<group>"; };
@@ -106,6 +108,14 @@
 			path = JSONPlaceholder;
 			sourceTree = "<group>";
 		};
+		D54A59BF29521EBC00DA8522 /* ImageView */ = {
+			isa = PBXGroup;
+			children = (
+				D54A59BD29521E6600DA8522 /* ImageViewController.swift */,
+			);
+			path = ImageView;
+			sourceTree = "<group>";
+		};
 		D5B7F55429493EC80090AADC /* ResourceView */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +158,7 @@
 				D5E2654329493DB100549A90 /* APIListView */,
 				D5B7F55429493EC80090AADC /* ResourceView */,
 				D5DFA11229495C4B00727398 /* ResultView */,
+				D54A59BF29521EBC00DA8522 /* ImageView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -312,6 +323,7 @@
 				D5B7F55329493EB80090AADC /* ResourceViewController.swift in Sources */,
 				D54A599C29520B7000DA8522 /* HTTPBinEndpoints.swift in Sources */,
 				D5E2654229493C3400549A90 /* APIListData.swift in Sources */,
+				D54A59BE29521E6600DA8522 /* ImageViewController.swift in Sources */,
 				D54A599E29520D9700DA8522 /* HTTPBin.Request.swift in Sources */,
 				D5DFA11629496A2300727398 /* GitHub.GetRequest.swift in Sources */,
 				D5E265322949301300549A90 /* APIListViewController.swift in Sources */,
