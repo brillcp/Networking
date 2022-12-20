@@ -19,6 +19,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let apis = [
             APIListData(name: "GitHub API", url: "https://api.github.com", endpoints: GitHub.GetRequest.allCases),
             APIListData(name: "Pokemon API", url: "https://pokeapi.co/api/v2", endpoints: PokeAPI.GetRequest.allCases),
+            APIListData(name: "HTTPBin API", url: "https://httpbin.org", endpoints: HTTPBin.GetRequest.allCases)
         ]
 
         let view = APIListViewController(data: apis)
