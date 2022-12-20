@@ -1,5 +1,5 @@
 //
-//  ResultViewController.swift
+//  ResponseViewController.swift
 //  Networking-Example
 //
 //  Created by Viktor Gidlöf.
@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class ResultViewController: UIViewController {
+final class ResponseViewController: UIViewController {
 
     private lazy var textView: UITextView = {
         let textView = UITextView(frame: view.frame)
