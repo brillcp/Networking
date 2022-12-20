@@ -12,6 +12,7 @@ enum Reqres {
     enum Endpoint {
         case users
         case user(id: Int)
+        case register
     }
 }
 
@@ -22,6 +23,7 @@ extension Reqres.Endpoint: EndpointType {
         switch self {
         case .users: return "users"
         case .user(let id): return "users/\(id)"
+        case .register: return "register"
         }
     }
 }
