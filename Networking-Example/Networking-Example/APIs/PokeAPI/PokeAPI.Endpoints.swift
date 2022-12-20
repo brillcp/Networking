@@ -20,7 +20,7 @@ extension PokeAPI.Endpoint: EndpointType {
 
     var path: String {
         switch self {
-        case .pokemon(let pokemon):return "pokemon/\(pokemon)"
+        case .pokemon(let pokemon): return "pokemon/\(pokemon)"
         case .pokemons: return "pokemon"
         }
     }
