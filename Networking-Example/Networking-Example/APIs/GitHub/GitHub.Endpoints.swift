@@ -11,7 +11,6 @@ import Networking_Swift
 enum GitHub {
     enum Endpoint {
         case user(String)
-        case emojis
         case search
         case repos(String)
     }
@@ -25,7 +24,6 @@ extension GitHub.Endpoint: EndpointType {
         case .repos(let username): return "users/\(username)/repos"
         case .user(let username):return "users/\(username)"
         case .search: return "search/users"
-        case .emojis: return "emojis"
         }
     }
 }

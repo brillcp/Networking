@@ -12,7 +12,6 @@ extension GitHub {
     enum Request: Requestable, Hashable {
         case user(String)
         case search(String)
-        case emojis
         case repos(String)
 
         var encoding: Networking_Swift.Request.Encoding { .query }
@@ -30,7 +29,6 @@ extension GitHub {
             case .repos(let username): return GitHub.Endpoint.repos(username)
             case .user(let username): return GitHub.Endpoint.user(username)
             case .search: return GitHub.Endpoint.search
-            case .emojis: return GitHub.Endpoint.emojis
             }
         }
     }
@@ -42,8 +40,7 @@ extension GitHub.Request: CaseIterable {
     static var allCases: [GitHub.Request] = [
         .user("brillcp"),
         .repos("brillcp"),
-        .search("Apple"),
-        .emojis
+        .search("Apple")
     ]
 }
 
@@ -55,7 +52,6 @@ extension GitHub.Request: Titleable {
         case .search(let query): return "Search user \"\(query)\""
         case .user(let user): return "Get user \"\(user)\""
         case .repos: return "Get user repos"
-        case .emojis: return "Get Emojis"
         }
     }
 }
