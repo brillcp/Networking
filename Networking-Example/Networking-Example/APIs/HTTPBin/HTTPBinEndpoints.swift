@@ -13,6 +13,7 @@ enum HTTPBin {
         case get
         case post
         case jpeg
+        case png
     }
 }
 
@@ -24,6 +25,7 @@ extension HTTPBin.Endpoint: EndpointType {
         case .get: return "get"
         case .post: return "post"
         case .jpeg: return "image/jpeg"
+        case .png: return "image/png"
         }
     }
 }

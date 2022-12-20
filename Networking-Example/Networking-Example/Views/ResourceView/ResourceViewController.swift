@@ -84,7 +84,7 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
     private func viewController(fromRequest request: Requestable, withPublisher publisher: AnyPublisher<Data, Error>) -> UIViewController {
         guard let request = request as? HTTPBin.Request else { return ResultViewController(publisher: publisher) }
         switch request {
-        case .jpeg: return ImageViewController(publisher: publisher)
+        case .jpeg, .png: return ImageViewController(publisher: publisher)
         default: return ResultViewController(publisher: publisher)
         }
     }
