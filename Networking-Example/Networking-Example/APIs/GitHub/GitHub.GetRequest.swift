@@ -14,7 +14,7 @@ extension GitHub {
         case search(String)
         case repos(String)
 
-        var encoding: Networking_Swift.Request.Encoding { .query }
+        var encoding: Request.Encoding { .query }
         var httpMethod: HTTP.Method { .get }
 
         var parameters: HTTP.Parameters {

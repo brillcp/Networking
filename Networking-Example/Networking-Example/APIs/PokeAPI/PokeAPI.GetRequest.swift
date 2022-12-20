@@ -14,7 +14,7 @@ extension PokeAPI {
         case pokemon(String)
         case pokemons
 
-        var encoding: Networking_Swift.Request.Encoding { .query }
+        var encoding: Request.Encoding { .query }
         var httpMethod: HTTP.Method { .get }
 
         var parameters: HTTP.Parameters {
@@ -23,6 +23,7 @@ extension PokeAPI {
             default: return HTTP.Parameters()
             }
         }
+
         var endpoint: EndpointType {
             switch self {
             case .pokemon(let pokemon): return PokeAPI.Endpoint.pokemon(pokemon)
