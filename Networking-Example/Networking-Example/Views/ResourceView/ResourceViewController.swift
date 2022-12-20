@@ -27,7 +27,7 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
     // MARK: - Init
     init(apiData: APIListData) {
         self.apiData = apiData
-        self.service = Network.Service(server: ServerConfig(baseURL: apiData.url))
+        self.service = Network.Service(server: ServerConfig(baseURL: apiData.url.absoluteString))
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -39,7 +39,7 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = apiData.name
+        title = apiData.url.host
         view.addSubview(tableView)
         setupData()
     }
