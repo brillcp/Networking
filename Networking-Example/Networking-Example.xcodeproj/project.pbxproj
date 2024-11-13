@@ -14,16 +14,15 @@
 		D54A599E29520D9700DA8522 /* HTTPBin.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A599D29520D9700DA8522 /* HTTPBin.Request.swift */; };
 		D54A59A32952176D00DA8522 /* JSONPlaceholderEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A59A22952176D00DA8522 /* JSONPlaceholderEndpoints.swift */; };
 		D54A59A6295217B000DA8522 /* JSONPlaceholder.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A59A5295217B000DA8522 /* JSONPlaceholder.Request.swift */; };
-		D54A59BE29521E6600DA8522 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A59BD29521E6600DA8522 /* ImageViewController.swift */; };
 		D5A1C3D6295252AA004A5C90 /* ReqresEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A1C3D5295252AA004A5C90 /* ReqresEndpoints.swift */; };
 		D5A1C3D929525656004A5C90 /* Reqres.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A1C3D829525656004A5C90 /* Reqres.Request.swift */; };
-		D5B7F55329493EB80090AADC /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B7F55229493EB80090AADC /* ResourceViewController.swift */; };
-		D5DFA111294951DD00727398 /* ResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA110294951DD00727398 /* ResponseViewController.swift */; };
+		D5C726FE2CE504A90010102A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C726FD2CE504A90010102A /* ContentView.swift */; };
+		D5C727002CE507D40010102A /* ResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C726FF2CE507D40010102A /* ResourceView.swift */; };
+		D5C727022CE50B7A0010102A /* ResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C727012CE50B7A0010102A /* ResponseView.swift */; };
+		D5C727042CE523F10010102A /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C727032CE523F10010102A /* ImageView.swift */; };
 		D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA1132949698600727398 /* GitHub.Endpoints.swift */; };
 		D5DFA11629496A2300727398 /* GitHub.GetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA11529496A2300727398 /* GitHub.GetRequest.swift */; };
-		D5E2652E2949301300549A90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E2652D2949301300549A90 /* AppDelegate.swift */; };
-		D5E265302949301300549A90 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E2652F2949301300549A90 /* SceneDelegate.swift */; };
-		D5E265322949301300549A90 /* APIListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E265312949301300549A90 /* APIListViewController.swift */; };
+		D5E2652E2949301300549A90 /* NetworkingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E2652D2949301300549A90 /* NetworkingExample.swift */; };
 		D5E265372949301400549A90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5E265362949301400549A90 /* Assets.xcassets */; };
 		D5E2653A2949301400549A90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5E265382949301400549A90 /* LaunchScreen.storyboard */; };
 		D5E2654229493C3400549A90 /* APIListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E2654129493C3400549A90 /* APIListData.swift */; };
@@ -37,17 +36,16 @@
 		D54A599D29520D9700DA8522 /* HTTPBin.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBin.Request.swift; sourceTree = "<group>"; };
 		D54A59A22952176D00DA8522 /* JSONPlaceholderEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholderEndpoints.swift; sourceTree = "<group>"; };
 		D54A59A5295217B000DA8522 /* JSONPlaceholder.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholder.Request.swift; sourceTree = "<group>"; };
-		D54A59BD29521E6600DA8522 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		D5A1C3D5295252AA004A5C90 /* ReqresEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReqresEndpoints.swift; sourceTree = "<group>"; };
 		D5A1C3D829525656004A5C90 /* Reqres.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reqres.Request.swift; sourceTree = "<group>"; };
-		D5B7F55229493EB80090AADC /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
-		D5DFA110294951DD00727398 /* ResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseViewController.swift; sourceTree = "<group>"; };
+		D5C726FD2CE504A90010102A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D5C726FF2CE507D40010102A /* ResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceView.swift; sourceTree = "<group>"; };
+		D5C727012CE50B7A0010102A /* ResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseView.swift; sourceTree = "<group>"; };
+		D5C727032CE523F10010102A /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		D5DFA1132949698600727398 /* GitHub.Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.Endpoints.swift; sourceTree = "<group>"; };
 		D5DFA11529496A2300727398 /* GitHub.GetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.GetRequest.swift; sourceTree = "<group>"; };
 		D5E2652A2949301300549A90 /* Networking-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Networking-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5E2652D2949301300549A90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D5E2652F2949301300549A90 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D5E265312949301300549A90 /* APIListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIListViewController.swift; sourceTree = "<group>"; };
+		D5E2652D2949301300549A90 /* NetworkingExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingExample.swift; sourceTree = "<group>"; };
 		D5E265362949301400549A90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D5E265392949301400549A90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5E2653B2949301400549A90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -112,14 +110,6 @@
 			path = JSONPlaceholder;
 			sourceTree = "<group>";
 		};
-		D54A59BF29521EBC00DA8522 /* ImageView */ = {
-			isa = PBXGroup;
-			children = (
-				D54A59BD29521E6600DA8522 /* ImageViewController.swift */,
-			);
-			path = ImageView;
-			sourceTree = "<group>";
-		};
 		D5A1C3D72952562A004A5C90 /* Reqres */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,25 +119,10 @@
 			path = Reqres;
 			sourceTree = "<group>";
 		};
-		D5B7F55429493EC80090AADC /* ResourceView */ = {
-			isa = PBXGroup;
-			children = (
-				D5B7F55229493EB80090AADC /* ResourceViewController.swift */,
-			);
-			path = ResourceView;
-			sourceTree = "<group>";
-		};
-		D5DFA11229495C4B00727398 /* ResultView */ = {
-			isa = PBXGroup;
-			children = (
-				D5DFA110294951DD00727398 /* ResponseViewController.swift */,
-			);
-			path = ResultView;
-			sourceTree = "<group>";
-		};
 		D5DFA11729496A3800727398 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				D5E2654129493C3400549A90 /* APIListData.swift */,
 				D5DFA11829496A3F00727398 /* GitHub */,
 				D536AEA8294A61B800A49DE0 /* PokeAPI */,
 				D54A59A1295211A900DA8522 /* HTTPBin */,
@@ -164,17 +139,6 @@
 				D5DFA11529496A2300727398 /* GitHub.GetRequest.swift */,
 			);
 			path = GitHub;
-			sourceTree = "<group>";
-		};
-		D5DFA119294977AE00727398 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				D5E2654329493DB100549A90 /* APIListView */,
-				D5B7F55429493EC80090AADC /* ResourceView */,
-				D5DFA11229495C4B00727398 /* ResultView */,
-				D54A59BF29521EBC00DA8522 /* ImageView */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		D5E265212949301300549A90 = {
@@ -198,24 +162,17 @@
 		D5E2652C2949301300549A90 /* Networking-Example */ = {
 			isa = PBXGroup;
 			children = (
-				D5E2652D2949301300549A90 /* AppDelegate.swift */,
-				D5E2652F2949301300549A90 /* SceneDelegate.swift */,
-				D5DFA119294977AE00727398 /* Views */,
+				D5E2652D2949301300549A90 /* NetworkingExample.swift */,
+				D5C726FD2CE504A90010102A /* ContentView.swift */,
+				D5C726FF2CE507D40010102A /* ResourceView.swift */,
+				D5C727012CE50B7A0010102A /* ResponseView.swift */,
+				D5C727032CE523F10010102A /* ImageView.swift */,
 				D5DFA11729496A3800727398 /* APIs */,
 				D5E265362949301400549A90 /* Assets.xcassets */,
 				D5E265382949301400549A90 /* LaunchScreen.storyboard */,
 				D5E2653B2949301400549A90 /* Info.plist */,
 			);
 			path = "Networking-Example";
-			sourceTree = "<group>";
-		};
-		D5E2654329493DB100549A90 /* APIListView */ = {
-			isa = PBXGroup;
-			children = (
-				D5E265312949301300549A90 /* APIListViewController.swift */,
-				D5E2654129493C3400549A90 /* APIListData.swift */,
-			);
-			path = APIListView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,21 +291,20 @@
 			files = (
 				D54A59A6295217B000DA8522 /* JSONPlaceholder.Request.swift in Sources */,
 				D536AEA7294A61B200A49DE0 /* PokeAPI.Endpoints.swift in Sources */,
-				D5B7F55329493EB80090AADC /* ResourceViewController.swift in Sources */,
+				D5C727022CE50B7A0010102A /* ResponseView.swift in Sources */,
+				D5C727042CE523F10010102A /* ImageView.swift in Sources */,
+				D5C727002CE507D40010102A /* ResourceView.swift in Sources */,
 				D54A599C29520B7000DA8522 /* HTTPBinEndpoints.swift in Sources */,
 				D5E2654229493C3400549A90 /* APIListData.swift in Sources */,
-				D54A59BE29521E6600DA8522 /* ImageViewController.swift in Sources */,
 				D5A1C3D6295252AA004A5C90 /* ReqresEndpoints.swift in Sources */,
 				D5A1C3D929525656004A5C90 /* Reqres.Request.swift in Sources */,
 				D54A599E29520D9700DA8522 /* HTTPBin.Request.swift in Sources */,
 				D5DFA11629496A2300727398 /* GitHub.GetRequest.swift in Sources */,
-				D5E265322949301300549A90 /* APIListViewController.swift in Sources */,
-				D5E2652E2949301300549A90 /* AppDelegate.swift in Sources */,
+				D5E2652E2949301300549A90 /* NetworkingExample.swift in Sources */,
 				D536AEAA294A631900A49DE0 /* PokeAPI.GetRequest.swift in Sources */,
-				D5E265302949301300549A90 /* SceneDelegate.swift in Sources */,
+				D5C726FE2CE504A90010102A /* ContentView.swift in Sources */,
 				D54A59A32952176D00DA8522 /* JSONPlaceholderEndpoints.swift in Sources */,
 				D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */,
-				D5DFA111294951DD00727398 /* ResponseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +450,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -524,6 +481,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

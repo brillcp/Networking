@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import Networking_Swift
 
-struct APIListData {
+struct APIListData: Identifiable {
     let id = UUID()
     let url: URL?
-    let endpoints: [AnyHashable]
+    let endpoints: [Requestable]
 }
 
 // MARK: -
@@ -20,6 +21,10 @@ extension APIListData {
 
 // MARK: -
 extension APIListData: Hashable {
+    static func == (lhs: APIListData, rhs: APIListData) -> Bool {
+        lhs.id == rhs.id
+    }
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
