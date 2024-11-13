@@ -1,5 +1,5 @@
 //
-//  Downloader.swift
+//  DownloadPublisher.swift
 //  Networking
 //
 //  Created by Viktor Gidlöf.
@@ -12,14 +12,12 @@ public extension Network.Service {
     actor Downloader {
         // MARK: Private properties
         private let url: URL
-        private let session: URLSession
         private var downloadTask: URLSessionDownloadTask?
         private var progressContinuation: AsyncStream<Float>.Continuation?
 
         // MARK: - Init
-        init(url: URL, session: URLSession = .shared) {
+        init(url: URL) {
             self.url = url
-            self.session = session
         }
     }
 }

@@ -27,7 +27,7 @@ final class NetworkingTests: XCTestCase {
 
     func testDownloadImageFile() async throws {
         let url = "https://media.viktorgidlof.com/2022/12/djunglehorse.jpg".asURL()
-        let downloader = Network.Service.Downloader(url: url!)
+        let downloader = networkService.downloader(url: url!)
         let (fileURL, progress) = try await downloader.download()
 
         Task {
