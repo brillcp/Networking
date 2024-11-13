@@ -274,7 +274,7 @@ let url = ...
 
 do {
     let downloader = networkService.downloader(url: url!)
-    let (fileURL, progress) = try await downloader.download()
+    let (fileURL, progressStream) = try await downloader.download()
 
     // Track download progress
     for await progress in progressStream {
@@ -283,7 +283,7 @@ do {
     }
 
     // The final destination URL
-    print("Download completed at: \(downloadedURL)")
+    print("Download completed at: \(fileURL)")
 } catch {
     // Handle error
     print("Download failed: \(error)")
