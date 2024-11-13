@@ -2,56 +2,93 @@
 //  ServerConfig.swift
 //  Networking
 //
-//  Created by Viktor Gidlöf.
+//  Created by VG on 2024-11-13.
 //
 
 import Foundation
 
-/// An object for creating a server configuration for the backend API
-open class ServerConfig {
+public protocol ServerConfigurable {
+    var baseURL: URL { get }
+    func header(forRequest request: Requestable) -> HTTP.Header
+}
 
+// MARK: -
+public struct ServerConfig: ServerConfigurable {
     // MARK: Private properties
-    private let tokenProvider: TokenProvidable?
+    private let additionalHeaders: HTTP.Header
 
     // MARK: - Public properties
+    public let userAgent: String?
+    /// A provider for authorization tokens used to authenticate requests; `nil` if no authentication is needed.
+    public let tokenProvider: TokenProvidable?
     /// The base URL for the server
     public let baseURL: URL
 
-    /// Init the server configuration
-    /// - parameters:
-    ///     - baseURL: The given base URL used for this server config
-    ///     - tokenProvider: An optional token provider object used to authenticate requests. Defaults to `nil`.
-    public init(baseURL: String, tokenProvider: TokenProvidable? = nil) {
-        self.baseURL = baseURL.asURL()
+    // MARK: - Initialization
+    /// Initializes a new instance of `ServerConfigV2` with the specified configuration details.
+    /// - Parameters:
+    ///   - baseURL: A `String` representing the base URL for the server. This URL will be used as the primary endpoint for all requests.
+    ///   - userAgent: An optional `String` representing the user agent to include in the request headers. If not provided, it defaults to a string combining `name` and `version`.
+    ///   - additionalHeaders: An optional dictionary of additional headers to be merged into the default headers for each request. The default value is an empty dictionary.
+    ///   - tokenProvider: An optional `TokenProvidable` object used to authenticate requests. This provider supplies authorization tokens when required by a request. Defaults to `nil`, meaning no token is provided.
+    /// - Returns: A configured instance of `ServerConfigV2` with the specified parameters.
+    public init?(
+        baseURL: String,
+        userAgent: String? = "\(name)/\(version)",
+        additionalHeaders: HTTP.Header = [:],
+        tokenProvider: TokenProvidable? = nil
+    ) {
+        guard let url = baseURL.asURL() else { return nil }
+        self.baseURL = url
+        self.userAgent = userAgent
+        self.additionalHeaders = additionalHeaders
         self.tokenProvider = tokenProvider
     }
+}
 
-    /// Create a HTTP header for the requests.
-    /// Subclasses can call `super` if they need to implement the standard authentication.
-    /// Don't call `super` if you want to have a fully custom HTTP header implementation.
-    /// - parameter request: The given request to set up the header with
-    /// - returns: A new `HTTP.Header` dictionary
-    open func header(forRequest request: Requestable) -> HTTP.Header {
-        var header = HTTP.Header()
-        header[HTTP.Header.Field.userAgent] = "\(name)/\(version)"
-        header[HTTP.Header.Field.host] = baseURL.host
+// MARK: - Public functions
+public extension ServerConfig {
+    func header(forRequest request: Requestable) -> HTTP.Header {
+        var headers = HTTP.Header()
 
-        if let contentType = request.contentType {
-            header[HTTP.Header.Field.contentType] = contentType
-        }
+        // Base headers
+        if let host = baseURL.host { headers[HTTP.Header.Field.host] = host }
+        if let userAgent = userAgent { headers[HTTP.Header.Field.userAgent] = userAgent }
+        if let contentType = request.contentType { headers[HTTP.Header.Field.contentType] = contentType }
 
-        guard let tokenProvider = tokenProvider else { return header }
+        // Add any additional configured headers
+        headers.merge(additionalHeaders) { _, new in new }
+
+        guard let tokenProvider else { return headers }
 
         switch tokenProvider.token {
         case .success(let token):
-            switch request.authorization {
-            case .bearer: header[HTTP.Header.Field.auth] = String(format: HTTP.Header.Field.bearer, token)
-            case .basic: header[HTTP.Header.Field.auth] = String(format: HTTP.Header.Field.basic, token)
-            case .none: break
-            }
-        case .failure:
-            break
+            guard let authHeader = authorizationHeader(for: request.authorization, token: token) else { break }
+            headers[HTTP.Header.Field.auth] = authHeader
+        case .failure: break
         }
-        return header
+        return headers
+    }
+}
+
+// MARK: - Convenience Initializers
+public extension ServerConfig {
+    static func basic(baseURL: String) -> ServerConfig? {
+        .init(baseURL: baseURL)
+    }
+
+    static func authenticated(baseURL: String, tokenProvider: TokenProvidable) -> ServerConfig? {
+        .init(baseURL: baseURL, tokenProvider: tokenProvider)
+    }
+}
+
+// MARK: - Private functions
+private extension ServerConfig {
+    func authorizationHeader(for type: Request.Authorization, token: String) -> String? {
+        switch type {
+        case .bearer: return String(format: HTTP.Header.Field.bearer, token)
+        case .basic: return String(format: HTTP.Header.Field.basic, token)
+        case .none: return nil
+        }
     }
 }

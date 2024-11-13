@@ -1,17 +1,17 @@
 ![network-header](https://user-images.githubusercontent.com/15960525/206866384-044ca1d7-172d-4d5f-80f7-7ee234f2a363.png)
 
-![workflow](https://img.shields.io/github/workflow/status/brillcp/networking/Networking?event=push)
+![workflow](https://img.shields.io/github/actions/workflow/status/brillcp/networking/swift.yml?branch=master&event=push)
 ![release](https://img.shields.io/github/v/release/brillcp/networking)
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 [![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](#swift-package-manager)
-[![pod](https://img.shields.io/badge/pod-v0.8.9-orange)](#cocoapods)
+[![pod](https://img.shields.io/badge/pod-v0.9.0-orange)](#cocoapods)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
-Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com). It uses `Combine` and `URLSession` for network calls and can be used as a network layer for any REST API on iOS, macOS, tvOS and watchOS.
+Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com). It uses `await / async` and `URLSession` for network calls and can be used as a network layer for any REST API on iOS, macOS, tvOS and watchOS.
 
-- [Features](#features-)
+- [Features](#features)
 - [Requirements](#requirements-%EF%B8%8F)
 - [Usage](#usage-)
 - [Logging](#logging-)
@@ -26,6 +26,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 - [Installation](#installation-)
     - [Swift Package Manager](#swift-package-manager)
     - [CocoaPods](#cocoapods)
+- [Sample code](#sample-code-)
 - [Contribution](#contribution-)
 - [License](#license-)
 
@@ -36,7 +37,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
  - [x] Authentication with Basic and Bearer token
  - [x] Download files with progress
  - [x] Simple and clean syntax
- - [x] Combine Support
+ - [x] Await / async
 
 ## Requirements ❗️
 | Platform | Min. Swift Version | Installation
@@ -47,8 +48,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 | watchOS 6.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
 
 ## Usage 🕹
-Networking uses `Combine`, `URLSession` and `dataTaskPublishers` and is made up of three main components:
-
+Networking is built around three core components:
 - [`Network.Service`](Sources/Service/NetworkService.swift)
 - [`ServerConfig`](Sources/ServerConfig/ServerConfig.swift)
 - [`Requestable`](Sources/Protocols/Requestable.swift)
@@ -58,8 +58,6 @@ It is initialized with a server configuration that determines the API base url a
 
 Start by creating a requestable object. Typically an `enum` that conforms to `Requestable`:
 ```swift
-import Networking
-
 enum GitHubUserRequest: Requestable {
     case user(String)
 
@@ -82,8 +80,6 @@ enum GitHubUserRequest: Requestable {
 
 The [`EndpointType`](Sources/Protocols/EndpointType.swift) can be defined as an `enum` that contains all the possible endpoints for an API:
 ```swift
-import Networking
-
 enum Endpoint {
     case user(String)
     case repos(String)
@@ -106,8 +102,6 @@ extension Endpoint: EndpointType {
 
 Then simply create a server configuration and a new network service and make a request:
 ```swift
-import Networking
-
 let serverConfig = ServerConfig(baseURL: "https://api.github.com")
 let networkService = Network.Service(server: serverConfig)
 let user = GitHubUserRequest.user("brillcp")
@@ -164,8 +158,6 @@ It involves creating a server configuration with a token provider object. The [`
 The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests.
 The following implementation demonstrates how a bearer token can be retrieved from the device using `UserDefaults`, but as mentioned, it can be any persistant storage:
 ```swift
-import Networking
-
 final class TokenProvider {
     private static let tokenKey = "com.example.ios.jwt.key"
     private let defaults: UserDefaults
@@ -176,7 +168,6 @@ final class TokenProvider {
 }
 
 extension TokenProvider: TokenProvidable {
-
     var token: Result<String, TokenProvidableError> {
         guard let token = defaults.string(forKey: Self.tokenKey) else { return .failure(.missing) }
         return .success(token)
@@ -194,8 +185,6 @@ extension TokenProvider: TokenProvidable {
 
 In order to use this authentication token just implement the `authorization` property on the requests that require authentication:
 ```swift
-import Networking
-
 enum AuthenticatedRequest: Requestable {
     // ...
     var authorization: Authorization { .bearer }
@@ -210,8 +199,6 @@ let server = ServerConfig(baseURL: "https://api.github.com", tokenProvider: Toke
 ### Adding parameters
 Adding parameters to a request is done by implementing the `parameters` property on a request:
 ```swift
-import Networking
-
 enum Request: Requestable {
     case getData(String)
 
@@ -241,8 +228,6 @@ var encoding: Request.Encoding { .body } // Encode parameters as a string in the
 ### Making `POST` requests
 Making post requests to a backend API is done by setting the `httpMethod` property to `.post` and provide parameters:
 ```swift
-import Networking
-
 enum PostRequest: Requestable {
     case postData(String)
 
@@ -273,39 +258,35 @@ print(parameters) // ["name": "Günther", "age": "69"]
 This is useful if you have any data model objects that you want to send as parameters in any requests.
 
 ### Check HTTP status codes
-Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use [`responsePublisher`](Sources/Service/NetworkService.swift#L81) to send a request and get back the status code in the response:
+Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use [`response`](Sources/Service/NetworkService.swift#L66) to send a request and get back the status code in the response:
 ```swift
-import Networking
-
-// ...
-
-let cancellable = try networkService.responsePublisher(request).sink { result in
-    switch result {
-    case .success(let responseCode):
-        print(responseCode == .ok) // True, if the response has HTTP status code 200
-    case .failure(let error):
-        // Handle error
-    }
-}
+let usersRequest = ...
+let responseCode = try await networkService.response(usersRequest)
+print(responseCode == .ok)
 ```
 Networking supports all the status codes defined in the HTTP protocol, [see here](Sources/HTTP/StatusCode.swift).
 
 ### Download progress
-Download files and track and report the download progress by using [`downloadPublisher`](Sources/Service/NetworkService.swift#L91). The progress is tracked by sinking the publisher to a result object and the `.success(.progress)` case reports the progress and when a file has finished downloading, the `.success(.destination)` case is invoked and it provides a URL to the temporary file destination on the device.
-```swift
-import Networking
 
+You can download files and track progress asynchronously using the [`downloader.download()`](Sources/Service/NetworkService.swift#L75). This function returns a tuple containing the file’s download URL and an `AsyncStream<Float>` to observe the progress of the download. The AsyncStream will yield progress updates from 0.0 to 1.0 as the download progresses. When the download completes, the final destination URL is provided.
+```swift
 let url = ...
 
-let cancellable = networkService.downloadPublisher(url: url).sink { result in
-    switch result {
-    case .success(.progress(let progress)):        
+do {
+    let downloader = networkService.downloader(url: url!)
+    let (fileURL, progress) = try await downloader.download()
+
+    // Track download progress
+    for await progress in progressStream {
         // The download progress: 0.0 ... 1.0
-    case .success(.destination(let url)):
-        // The temporary file destination: file:///var/folders/ ... /CFNetworkDownload_6JpDuF.tmp
-    case .failure(let error):
-        // Handle error
+        print("Download progress: \(progress * 100)%")
     }
+
+    // The final destination URL
+    print("Download completed at: \(downloadedURL)")
+} catch {
+    // Handle error
+    print("Download failed: \(error)")
 }
 ```
 
@@ -315,7 +296,7 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 Once you have your Swift package set up, adding Networking as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```
 dependencies: [
-    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.8.9"))
+    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.0"))
 ]
 ```
 
@@ -324,6 +305,13 @@ dependencies: [
 ```
 pod 'Networking-Swift'
 ```
+
+## Sample code 📱
+The sample project is a small application that demonstrates some of the functionality of the framework. Start by cloning the repo:
+```
+git clone https://github.com/brillcp/Networking.git
+```
+Open the workspace `Networking-Example.xcworkspace` and run.
 
 ## Contribution 🛠
 - [Create an issue](https://github.com/brillcp/networking/issues/new) if you:
