@@ -22,12 +22,12 @@ final class ImageViewController: UIViewController {
         return spinner
     }()
 
-    private let responsePublisher: AnyPublisher<Data, Error>
+    private let responseData: Data
     private var cancel: AnyCancellable?
 
     // MARK: - Init
-    init(publisher: AnyPublisher<Data, Error>) {
-        self.responsePublisher = publisher
+    init(data: Data) {
+        self.responseData = data
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -46,10 +46,6 @@ final class ImageViewController: UIViewController {
 
         spinner.startAnimating()
 
-        cancel = responsePublisher
-            .compactMap { UIImage(data: $0) }
-            .assertNoFailure()
-            .receive(on: RunLoop.main)
-            .assign(to: \.image, on: imageView)
+        imageView.image = UIImage(data: responseData)
     }
 }

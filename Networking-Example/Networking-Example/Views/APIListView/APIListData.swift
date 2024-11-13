@@ -9,18 +9,17 @@ import Foundation
 
 struct APIListData {
     let id = UUID()
-    let url: URL
+    let url: URL?
     let endpoints: [AnyHashable]
 }
 
 // MARK: -
 extension APIListData {
-    var name: String? { url.host }
+    var name: String? { url?.host }
 }
 
 // MARK: -
 extension APIListData: Hashable {
-
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

@@ -1,5 +1,5 @@
 PODS:
-  - Networking-Swift (0.8.9)
+  - Networking-Swift (0.9.0)
 
 DEPENDENCIES:
   - Networking-Swift
@@ -9,8 +9,8 @@ SPEC REPOS:
     - Networking-Swift
 
 SPEC CHECKSUMS:
-  Networking-Swift: b3713108e9baa1e6cf07333d6cf35e483295974e
+  Networking-Swift: 86529d4a3a3123bc0d190c577f00bfb6c44bd02e
 
 PODFILE CHECKSUM: 2c5e9876a119abb0735997db7330924e72930e0a
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2

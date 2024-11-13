@@ -18,12 +18,12 @@ final class ResponseViewController: UIViewController {
         return textView
     }()
 
-    private let responsePublisher: AnyPublisher<Data, Error>
+    private let responseData: Data
     private var cancel: AnyCancellable?
 
     // MARK: - Init
-    init(publisher: AnyPublisher<Data, Error>) {
-        self.responsePublisher = publisher
+    init(data: Data) {
+        self.responseData = data
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -38,14 +38,6 @@ final class ResponseViewController: UIViewController {
         title = "Response"
         view.addSubview(textView)
 
-        cancel = responsePublisher
-            .tryMap { try JSONSerialization.jsonObject(with: $0) }
-            .tryMap { try JSONSerialization.data(withJSONObject: $0, options: [.prettyPrinted, .sortedKeys]) }
-            .compactMap { String(data: $0, encoding: .utf8) }
-            .compactMap { $0.replacingOccurrences(of: " :", with: ":") }
-            .compactMap { $0.replacingOccurrences(of: "\\", with: "") }
-            .assertNoFailure()
-            .receive(on: RunLoop.main)
-            .assign(to: \.text, on: textView)
+        textView.text = String(data: responseData, encoding: .utf8)
     }
 }

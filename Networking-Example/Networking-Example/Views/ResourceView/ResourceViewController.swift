@@ -27,7 +27,7 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
     // MARK: - Init
     init(apiData: APIListData) {
         self.apiData = apiData
-        self.service = Network.Service(server: ServerConfig(baseURL: apiData.url.absoluteString))
+        self.service = Network.Service(server: ServerConfig(baseURL: apiData.url?.absoluteString ?? "")!)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -39,7 +39,7 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = apiData.url.host
+        title = apiData.url?.host
         view.addSubview(tableView)
         setupData()
     }
@@ -68,20 +68,23 @@ final class ResourceViewController: UIViewController, UITableViewDelegate {
 
         guard let request = dataSource.itemIdentifier(for: indexPath) as? Requestable else { return }
 
-        do {
-            let viewController = viewController(fromRequest: request, withPublisher: try service.dataPublisher(request))
-            navigationController?.pushViewController(viewController, animated: true)
-        } catch {
-            fatalError("Something bad happened :(")
+        Task {
+            do {
+                let data = try await service.data(request)
+                let viewController = viewController(fromRequest: request, withData: data)
+                navigationController?.pushViewController(viewController, animated: true)
+            } catch {
+                fatalError("Something bad happened :(")
+            }
         }
     }
 
     // MARK: - Private functions
-    private func viewController(fromRequest request: Requestable, withPublisher publisher: AnyPublisher<Data, Error>) -> UIViewController {
-        guard let request = request as? HTTPBin.Request else { return ResponseViewController(publisher: publisher) }
+    private func viewController(fromRequest request: Requestable, withData data: Data) -> UIViewController {
+        guard let request = request as? HTTPBin.Request else { return ResponseViewController(data: data) }
         switch request {
-        case .jpeg, .png: return ImageViewController(publisher: publisher)
-        default: return ResponseViewController(publisher: publisher)
+        case .jpeg, .png: return ImageViewController(data: data)
+        default: return ResponseViewController(data: data)
         }
     }
 }
