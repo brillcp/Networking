@@ -34,7 +34,11 @@ public extension URLRequest {
 
     /// Print outgoing request information to the console
     func log() {
-        guard let url = url?.absoluteString, let components = URLComponents(string: url), let method = httpMethod, let host = components.host else { return }
+        guard let url = url?.absoluteString,
+              let components = URLComponents(string: url),
+              let method = httpMethod,
+              let host = components.host
+        else { return }
 
         print("⚡️ Outgoing request to \(host) @ \(Date())")
 

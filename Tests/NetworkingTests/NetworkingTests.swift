@@ -3,70 +3,38 @@ import Combine
 @testable import Networking
 
 final class NetworkingTests: XCTestCase {
-
-    private let serverConfig = ServerConfig(baseURL: "https://reqres.in/api")
+    private let serverConfig = ServerConfig(baseURL: "https://reqres.in/api")!
     private lazy var networkService = Network.Service(server: serverConfig)
-    private var cancel: AnyCancellable?
 
-    func testMockUser() throws {
+    func testMockUser() async throws {
         let user = MockGetRequest.user(1)
-        let expectation = expectation(description: "Awaiting mock user")
-
-        cancel = try networkService.request(user).sink { (result: Result<MockUserResponse, Error>) in
-            expectation.fulfill()
-            switch result {
-            case .success(let user): XCTAssertTrue(user.data.id == 1)
-            case .failure(let error): XCTFail(error.localizedDescription)
-            }
-        }
-        waitForExpectations(timeout: 30.0)
+        let response: MockUserResponse = try await networkService.request(user)
+        XCTAssertTrue(response.data.id == 1)
     }
 
-    func testMockUsers() throws {
+    func testMockUsers() async throws {
         let users = MockGetRequest.users
-        let expectation = expectation(description: "Awaiting mock users")
-
-        cancel = try networkService.request(users).sink { (result: Result<MockUsersRepsonse, Error>) in
-            expectation.fulfill()
-            switch result {
-            case .success(let user): XCTAssertTrue(!user.data.isEmpty)
-            case .failure(let error): XCTFail(error.localizedDescription)
-            }
-        }
-        waitForExpectations(timeout: 30.0)
+        let response: MockUsersRepsonse = try await networkService.request(users)
+        XCTAssertTrue(!response.data.isEmpty)
     }
 
-    func testMockPostUser() throws {
+    func testMockPostUser() async throws {
         let model = MockPostUserModel(name: "Viktor", job: "iOS Engineer")
         let users = MockPostRequest.user(model)
-        let expectation = expectation(description: "Awaiting mock post users")
-
-        cancel = try networkService.responsePublisher(users).sink { result in
-            expectation.fulfill()
-            switch result {
-            case .success(let responseCode): XCTAssertTrue(responseCode == .created)
-            case .failure(let error): XCTFail(error.localizedDescription)
-            }
-        }
-        waitForExpectations(timeout: 30.0)
+        let responseCode = try await networkService.response(users)
+        XCTAssertTrue(responseCode == .created)
     }
 
-    func testDownloadImageFile() {
+    func testDownloadImageFile() async throws {
         let url = "https://media.viktorgidlof.com/2022/12/djunglehorse.jpg".asURL()
-        let expectation = expectation(description: "Awaiting image download progress")
+        let downloader = Network.Service.Downloader(url: url!)
+        let (fileURL, progress) = try await downloader.download()
 
-        cancel = networkService.downloadPublisher(url: url).sink { result in
-            switch result {
-            case .success(.destination(let url)):
-                expectation.fulfill()
-                XCTAssertTrue(url.lastPathComponent.split(separator: ".").last == "tmp")
-            case .success(.progress(let progress)):
-                print("Download progress: \(progress)")
-            case .failure(let error):
-                expectation.fulfill()
-                XCTFail(error.localizedDescription)
+        Task {
+            for await progressValue in progress {
+                print("Download progress: \(progressValue)")
             }
         }
-        waitForExpectations(timeout: 30.0)
+        XCTAssertTrue(fileURL.lastPathComponent.split(separator: ".").last == "tmp")
     }
 }
