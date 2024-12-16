@@ -41,7 +41,7 @@ final class ResponseViewModel: ObservableObject {
 
     init(apiData: APIListData, request: Requestable) {
         self.apiData = apiData
-        let server: ServerConfig = .basic(baseURL: apiData.url?.absoluteString ?? "")!
+        let server: ServerConfig = .basic(baseURL: apiData.url)
         self.service = Network.Service(server: server)
         self.request = request
     }

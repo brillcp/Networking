@@ -32,14 +32,13 @@ public struct ServerConfig: ServerConfigurable {
     ///   - additionalHeaders: An optional dictionary of additional headers to be merged into the default headers for each request. The default value is an empty dictionary.
     ///   - tokenProvider: An optional `TokenProvidable` object used to authenticate requests. This provider supplies authorization tokens when required by a request. Defaults to `nil`, meaning no token is provided.
     /// - Returns: A configured instance of `ServerConfigV2` with the specified parameters.
-    public init?(
-        baseURL: String,
+    public init(
+        baseURL: URL,
         userAgent: String? = "\(name)/\(version)",
         additionalHeaders: HTTP.Header = [:],
         tokenProvider: TokenProvidable? = nil
     ) {
-        guard let url = baseURL.asURL() else { return nil }
-        self.baseURL = url
+        self.baseURL = baseURL
         self.userAgent = userAgent
         self.additionalHeaders = additionalHeaders
         self.tokenProvider = tokenProvider
@@ -73,11 +72,11 @@ public extension ServerConfig {
 
 // MARK: - Convenience Initializers
 public extension ServerConfig {
-    static func basic(baseURL: String) -> ServerConfig? {
+    static func basic(baseURL: URL) -> ServerConfig {
         .init(baseURL: baseURL)
     }
 
-    static func authenticated(baseURL: String, tokenProvider: TokenProvidable) -> ServerConfig? {
+    static func authenticated(baseURL: URL, tokenProvider: TokenProvidable) -> ServerConfig {
         .init(baseURL: baseURL, tokenProvider: tokenProvider)
     }
 }

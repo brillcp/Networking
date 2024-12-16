@@ -10,13 +10,13 @@ import Networking_Swift
 
 struct APIListData: Identifiable {
     let id = UUID()
-    let url: URL?
+    let url: URL
     let endpoints: [Requestable]
 }
 
 // MARK: -
 extension APIListData {
-    var name: String? { url?.host }
+    var name: String? { url.host }
 }
 
 // MARK: -
@@ -34,22 +34,22 @@ extension APIListData: Hashable {
 extension APIListData {
 
     static var github: APIListData {
-        APIListData(url: "https://api.github.com".asURL(), endpoints: GitHub.GetRequest.allCases)
+        APIListData(url: try! "https://api.github.com".asURL(), endpoints: GitHub.GetRequest.allCases)
     }
 
     static var pokeAPI: APIListData {
-        APIListData(url: "https://pokeapi.co/api/v2".asURL(), endpoints: PokeAPI.GetRequest.allCases)
+        APIListData(url: try! "https://pokeapi.co/api/v2".asURL(), endpoints: PokeAPI.GetRequest.allCases)
     }
 
     static var httpBin: APIListData {
-        APIListData(url: "https://httpbin.org".asURL(), endpoints: HTTPBin.Request.allCases)
+        APIListData(url: try! "https://httpbin.org".asURL(), endpoints: HTTPBin.Request.allCases)
     }
 
     static var placeholder: APIListData {
-        APIListData(url: "https://jsonplaceholder.typicode.com".asURL(), endpoints: JSONPlaceholder.Request.allCases)
+        APIListData(url: try! "https://jsonplaceholder.typicode.com".asURL(), endpoints: JSONPlaceholder.Request.allCases)
     }
 
     static var reqres: APIListData {
-        APIListData(url: "https://reqres.in/api".asURL(), endpoints: Reqres.Request.allCases)
+        APIListData(url: try! "https://reqres.in/api".asURL(), endpoints: Reqres.Request.allCases)
     }
 }
