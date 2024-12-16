@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 public let name = "Networking"
 public let version = "0.9.0"
@@ -85,6 +84,38 @@ private extension Network.Service {
         if logResponse {
             String.logResponse((data, response), printJSON: logResponse)
         }
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.badServerResponse(-1)
+        }
+
+        guard (HTTP.StatusCode.ok.rawValue ... HTTP.StatusCode.iMUsed.rawValue).contains(httpResponse.statusCode) else {
+            throw NetworkError.badServerResponse(httpResponse.statusCode)
+        }
+
         return (data, response)
     }
+}
+
+public extension Network.Service {
+    enum NetworkError: LocalizedError {
+        case invalidURL
+        case badServerResponse(Int)
+        case decodingError(Error)
+        case networkError(Error)
+
+        public var errorDescription: String? {
+            switch self {
+            case .invalidURL:
+                "Invalid URL"
+            case .badServerResponse(let code):
+                "Server returned status code: \(code)"
+            case .decodingError(let error):
+                "Failed to decode data: \(error.localizedDescription)"
+            case .networkError(let error):
+                "Network error: \(error.localizedDescription)"
+            }
+        }
+    }
+
 }
