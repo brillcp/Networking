@@ -3,7 +3,7 @@ import Combine
 @testable import Networking
 
 final class NetworkingTests: XCTestCase {
-    private let serverConfig = ServerConfig(baseURL: "https://reqres.in/api")!
+    private let serverConfig = ServerConfig(baseURL: try! "https://reqres.in/api".asURL())
     private lazy var networkService = Network.Service(server: serverConfig)
 
     func testMockUser() async throws {
@@ -26,8 +26,8 @@ final class NetworkingTests: XCTestCase {
     }
 
     func testDownloadImageFile() async throws {
-        let url = "https://media.viktorgidlof.com/2022/12/djunglehorse.jpg".asURL()
-        let downloader = networkService.downloader(url: url!)
+        let url = try "https://media.viktorgidlof.com/2022/12/djunglehorse.jpg".asURL()
+        let downloader = networkService.downloader(url: url)
         let (fileURL, progress) = try await downloader.download()
 
         Task {
