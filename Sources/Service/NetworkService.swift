@@ -34,7 +34,7 @@ public enum Network {
 
 // MARK: - Public functions
 extension Network.Service: NetworkServiceProtocol {
-    public func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = false) async throws -> DataModel {
+    public func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = true) async throws -> DataModel {
         let (data, _) = try await makeDataRequest(request, logResponse: logResponse)
         return try decoder.decode(DataModel.self, from: data)
     }

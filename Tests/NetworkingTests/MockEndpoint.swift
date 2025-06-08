@@ -9,8 +9,7 @@ import Foundation
 import Networking
 
 enum MockEndpoint {
-    case users
-    case user(Int)
+    case book(String)
 }
 
 // MARK: -
@@ -18,8 +17,7 @@ extension MockEndpoint: EndpointType {
 
     var path: String {
         switch self {
-        case .users: return "users"
-        case .user(let id): return "users/\(id)"
+        case .book(let id): return "volumes/\(id)"
         }
     }
 }
