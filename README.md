@@ -4,7 +4,7 @@
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 [![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](#swift-package-manager)
-[![pod](https://img.shields.io/badge/pod-v0.9.2-orange)](#cocoapods)
+[![pod](https://img.shields.io/badge/pod-v0.9.3-orange)](#cocoapods)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
@@ -287,7 +287,7 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 Once you have your Swift package set up, adding Networking as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```
 dependencies: [
-    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.2"))
+    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.3"))
 ]
 ```
 
