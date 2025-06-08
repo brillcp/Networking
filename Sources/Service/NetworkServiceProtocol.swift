@@ -8,8 +8,6 @@
 import Foundation
 
 public protocol NetworkServiceProtocol {
-    associatedtype DataModel = Decodable
-
     /// Send a request and decode the response into a data model object
     /// - parameters:
     ///     - request: The request to send over the network
