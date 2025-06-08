@@ -1,11 +1,10 @@
 ![network-header](https://user-images.githubusercontent.com/15960525/206866384-044ca1d7-172d-4d5f-80f7-7ee234f2a363.png)
-
 ![workflow](https://img.shields.io/github/actions/workflow/status/brillcp/networking/swift.yml?branch=master&event=push)
 ![release](https://img.shields.io/github/v/release/brillcp/networking)
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 [![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](#swift-package-manager)
-[![pod](https://img.shields.io/badge/pod-v0.9.1-orange)](#cocoapods)
+[![pod](https://img.shields.io/badge/pod-v0.9.2-orange)](#cocoapods)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
@@ -107,16 +106,8 @@ let networkService = Network.Service(server: serverConfig)
 let user = GitHubUserRequest.user("brillcp")
 
 do {
-    let cancellable = try networkService.request(user)
-        // The response data type is inferred in the result object 
-        .sink { [weak self] (result: Result<GitHubUser, Error>) in
-            switch result {
-            case .success(let user):
-                // Handle the data 
-            case .failure(let error):
-                // Handle error
-            }
-        }
+    let result: GitHubUser = try await networkService.request(user)
+    // Handle the data
 catch {
     // Handle error
 }
@@ -148,7 +139,7 @@ Content-Type: application/json; charset=utf-8
 ```
 There is also a way to log the pure JSON response for requests in the console. By passing `logRespose: true` when making a request, the response JSON will be logged in the console. That way it is easy to debug when modeling an API:
 ```swift
-let cancellable = try networkService.request(user, logResponse: true)
+let model = try await networkService.request(user, logResponse: true)
 ```
 
 ## Advanced usage
@@ -296,7 +287,7 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 Once you have your Swift package set up, adding Networking as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```
 dependencies: [
-    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.1"))
+    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.2"))
 ]
 ```
 

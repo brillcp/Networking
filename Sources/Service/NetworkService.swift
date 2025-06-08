@@ -8,11 +8,11 @@
 import Foundation
 
 public let name = "Networking"
-public let version = "0.9.1"
+public let version = "0.9.2"
 
 public enum Network {
     /// A network service object used to make requests to the backend.
-    public final class Service {
+    public class Service {
         // MARK: Private properties
         private let server: ServerConfig
         private let decoder: JSONDecoder
@@ -33,45 +33,24 @@ public enum Network {
 }
 
 // MARK: - Public functions
-public extension Network.Service {
-    /// Send a request and decode the response into a data model object
-    /// - parameters:
-    ///     - request: The request to send over the network
-    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
-    /// - throws: An error if the request fails for any reason
-    /// - returns: The decoded data model object
-    func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = false) async throws -> DataModel {
+extension Network.Service: NetworkServiceProtocol {
+    public func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = false) async throws -> DataModel {
         let (data, _) = try await makeDataRequest(request, logResponse: logResponse)
         return try decoder.decode(DataModel.self, from: data)
     }
 
-    /// Send a request and return the raw response data
-    /// - parameters:
-    ///     - request: The request to send over the network
-    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
-    /// - throws: An error if the request fails for any reason
-    /// - returns: The raw response data
-    func data(_ request: Requestable, logResponse: Bool = false) async throws -> Data {
+    public func data(_ request: Requestable, logResponse: Bool = false) async throws -> Data {
         let (data, _) = try await makeDataRequest(request, logResponse: logResponse)
         return data
     }
 
-    /// Send a request and return the HTTP status code
-    /// - parameters:
-    ///     - request: The request to send over the network
-    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
-    /// - throws: An error if the request fails for any reason
-    /// - returns: The HTTP status code
-    func response(_ request: Requestable, logResponse: Bool = false) async throws -> HTTP.StatusCode {
+    public func response(_ request: Requestable, logResponse: Bool = false) async throws -> HTTP.StatusCode {
         let (_, response) = try await makeDataRequest(request, logResponse: logResponse)
         guard let httpResponse = response as? HTTPURLResponse else { return .unknown }
         return HTTP.StatusCode(rawValue: httpResponse.statusCode) ?? .unknown
     }
 
-    /// Creates a new instance of `Network.Service.Downloader` configured with the specified URL.
-    /// - Parameter url: The `URL` from which the downloader will retrieve data.
-    /// - Returns: A configured `Network.Service.Downloader` instance for downloading data from the given URL.
-    func downloader(url: URL) -> Network.Service.Downloader {
+    public func downloader(url: URL) -> Network.Service.Downloader {
         Network.Service.Downloader(url: url)
     }
 }
