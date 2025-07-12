@@ -8,7 +8,7 @@
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
-Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com). It uses `await / async` and `URLSession` for network calls and can be used as a network layer for any REST API on iOS, macOS, tvOS and watchOS.
+Networking is a lightweight and powerful HTTP network framework written in Swift by [Viktor Gidlöf](https://viktorgidlof.com). It uses `async/await` and `URLSession` for network calls and can be used as a network layer for any REST API on `iOS`, `macOS`, `watchOS` and `tvOS`.
 
 - [Features](#features)
 - [Requirements](#requirements-%EF%B8%8F)
