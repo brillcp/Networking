@@ -1,6 +1,0 @@
-framework module Networking_Swift {
-  umbrella header "Networking-Swift-umbrella.h"
-
-  export *
-  module * { export * }
-}

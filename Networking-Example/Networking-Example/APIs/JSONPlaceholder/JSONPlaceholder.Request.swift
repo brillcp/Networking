@@ -6,14 +6,14 @@
 //
 
 import Foundation
-import Networking_Swift
+import Networking
 
 extension JSONPlaceholder {
     enum Request: Requestable, Hashable {
         case users
         case posts
 
-        var encoding: Networking_Swift.Request.Encoding { .query }
+        var encoding: Networking.Request.Encoding { .query }
         var httpMethod: HTTP.Method { .get }
 
         var endpoint: EndpointType {

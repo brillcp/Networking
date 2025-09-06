@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Networking_Swift
+import Networking
 
 struct APIListData: Identifiable {
     let id = UUID()

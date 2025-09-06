@@ -6,41 +6,42 @@
 //
 
 import SwiftUI
-import Networking_Swift
+import Networking
 
 struct ResourceView: View {
-    @ObservedObject private var viewModel: ResourceViewModel
+    private let viewModel: ResourceViewModel
 
     init(apiData: APIListData) {
-        self.viewModel = ResourceViewModel(apiData: apiData)
+        viewModel = ResourceViewModel(apiData: apiData)
     }
 
     var body: some View {
-        NavigationView {
-            List(viewModel.endpoints, id: \.endpoint.path) { request in
-                NavigationLink(destination: view(fromRequestable: request)) {
-                    Text(request.endpoint.path)
-                }
+        List(viewModel.endpoints, id: \.endpoint.path) { request in
+            NavigationLink(destination: view(fromRequestable: request)) {
+                Text(request.endpoint.path)
+                    .font(.caption)
             }
-            .navigationTitle(viewModel.apiData.name ?? "")
-            .navigationBarTitleDisplayMode(.inline)
-            .listStyle(.plain)
         }
+        .navigationTitle(viewModel.apiData.name ?? "")
+        .navigationBarTitleDisplayMode(.inline)
+        .listStyle(.plain)
     }
+}
 
+// MARK: - Private
+private extension ResourceView {
     @ViewBuilder
     func view(fromRequestable request: Requestable) -> some View {
-        let view = ResponseView(viewModel: .init(apiData: viewModel.apiData, request: request))
         if let request = request as? HTTPBin.Request {
             switch request {
             case .jpeg, .png:
                 let vm = ImageViewModel(apiData: viewModel.apiData, request: request)
                 ImageView(viewModel: vm)
             default:
-                view
+                ResponseView(viewModel: .init(apiData: viewModel.apiData, request: request))
             }
         } else {
-            view
+            ResponseView(viewModel: .init(apiData: viewModel.apiData, request: request))
         }
     }
 }
@@ -49,7 +50,7 @@ struct ResourceView: View {
     ResourceView(apiData: .httpBin)
 }
 
-final class ResourceViewModel: ObservableObject {
+final class ResourceViewModel {
     let endpoints: [Requestable]
     let apiData: APIListData
 

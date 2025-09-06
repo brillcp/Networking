@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Networking_Swift
+import Networking
 
 enum HTTPBin {
     enum Endpoint {

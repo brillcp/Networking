@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Networking_Swift
+import Networking
 
 struct ResponseView: View {
     @ObservedObject var viewModel: ResponseViewModel
@@ -18,10 +18,11 @@ struct ResponseView: View {
                     Task { await viewModel.load() }
                 }
         } else {
-            TextEditor(text: $viewModel.string)
-                .font(.custom("Menlo", size: 12.0))
-                .padding(.horizontal)
-                .overlay(Color.clear)
+            ScrollView {
+                Text(viewModel.string)
+                    .font(.caption2)
+                    .padding(.horizontal)
+            }
         }
     }
 }
@@ -46,10 +47,11 @@ final class ResponseViewModel: ObservableObject {
         self.request = request
     }
 
-    @MainActor func load() async {
+    @MainActor
+    func load() async {
         isLoading = true
+        defer { isLoading = false }
         guard let data = try? await service.data(request) else { return }
         string = String(data: data, encoding: .utf8) ?? "no data"
-        isLoading = false
     }
 }

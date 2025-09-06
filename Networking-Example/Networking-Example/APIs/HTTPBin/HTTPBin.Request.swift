@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Networking_Swift
+import Networking
 
 extension HTTPBin {
     enum Request: Requestable, Hashable {
@@ -15,7 +15,7 @@ extension HTTPBin {
         case jpeg
         case png
 
-        var encoding: Networking_Swift.Request.Encoding {
+        var encoding: Networking.Request.Encoding {
             switch self {
             case .get, .jpeg, .png: return .query
             case .post: return .json

@@ -17,12 +17,14 @@ struct ContentView: View {
             List(data) { data in
                 NavigationLink(destination: ResourceView(apiData: data)) {
                     Text(data.name ?? "")
+                        .font(.caption)
                 }
             }
             .navigationTitle("APIs")
             .navigationBarTitleDisplayMode(.inline)
             .listStyle(.plain)
         }
+        .monospaced()
     }
 }
 

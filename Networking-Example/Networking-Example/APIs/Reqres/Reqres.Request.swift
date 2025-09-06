@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Networking_Swift
+import Networking
 
 extension Reqres {
     enum Request: Requestable, Hashable {
@@ -14,7 +14,7 @@ extension Reqres {
         case user(id: Int)
         case register(email: String, password: String)
 
-        var encoding: Networking_Swift.Request.Encoding {
+        var encoding: Networking.Request.Encoding {
             switch self {
             case .register: return .json
             default: return .query

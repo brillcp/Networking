@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Networking_Swift
+import Networking
 
 struct ImageView: View {
     @ObservedObject var viewModel: ImageViewModel
