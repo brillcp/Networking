@@ -1,10 +1,3 @@
-//
-//  Request.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 /// A name space for request encoding and autorization

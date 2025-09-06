@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 public protocol NetworkServiceProtocol: AnyObject {

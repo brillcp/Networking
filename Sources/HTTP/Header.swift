@@ -1,10 +1,3 @@
-//
-//  Header.swift
-//  
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 public extension HTTP.Header {

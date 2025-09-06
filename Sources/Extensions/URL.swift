@@ -1,10 +1,3 @@
-//
-//  URL.swift
-//  
-//
-//  Created by Viktor Gidlöf on 2022-12-01.
-//
-
 import Foundation
 
 public extension URL {

@@ -1,10 +1,3 @@
-//
-//  RequestType.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 /// A protocol for a request type. Used to build backend API requests.

@@ -1,10 +1,3 @@
-//
-//  Encodable.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 public extension Encodable {

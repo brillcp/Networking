@@ -1,10 +1,3 @@
-//
-//  NetworkService.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 public let name = "Networking"

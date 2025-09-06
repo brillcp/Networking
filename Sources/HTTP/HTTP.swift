@@ -1,10 +1,3 @@
-//
-//  HTTP.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 /// A name space for all things HTTP

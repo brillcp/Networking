@@ -1,11 +1,3 @@
-//
-//  MockGetRequest.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
-import Foundation
 import Networking
 
 enum MockGetRequest: Requestable {

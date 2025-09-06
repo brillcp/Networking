@@ -1,10 +1,3 @@
-//
-//  TokenProvidable.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 /// An error enum for the token provider

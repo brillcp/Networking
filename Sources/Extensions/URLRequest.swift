@@ -1,10 +1,3 @@
-//
-//  URLRequest.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 public enum EncodingError: LocalizedError {
