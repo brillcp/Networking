@@ -4,7 +4,6 @@
 ![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 [![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](#swift-package-manager)
-[![pod](https://img.shields.io/badge/pod-v0.9.3-orange)](#cocoapods)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
 ![stars](https://img.shields.io/github/stars/brillcp/networking?style=social)
 
@@ -24,7 +23,6 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
     - [Download progress](#download-progress)
 - [Installation](#installation-)
     - [Swift Package Manager](#swift-package-manager)
-    - [CocoaPods](#cocoapods)
 - [Sample code](#sample-code-)
 - [Contribution](#contribution-)
 - [License](#license-)
@@ -36,15 +34,15 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
  - [x] Authentication with Basic and Bearer token
  - [x] Download files with progress
  - [x] Simple and clean syntax
- - [x] Await / async
+ - [x] Modern Swift Concurrency
 
 ## Requirements ❗️
 | Platform | Min. Swift Version | Installation
 | --- | --- | --- |
-| iOS 13.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
-| macOS 10.15+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
-| tvOS 13.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
-| watchOS 6.0+ | 5.4 | [CocoaPods](#cocoapods), [Swift Package Manager](#swift-package-manager) |
+| iOS 16.4+ | 5.4 | [Swift Package Manager](#swift-package-manager) |
+| macOS 10.15+ | 5.4 | [Swift Package Manager](#swift-package-manager) |
+| tvOS 13.0+ | 5.4 | [Swift Package Manager](#swift-package-manager) |
+| watchOS 6.0+ | 5.4 | [Swift Package Manager](#swift-package-manager) |
 
 ## Usage 🕹
 Networking is built around three core components:
@@ -289,12 +287,6 @@ Once you have your Swift package set up, adding Networking as a dependency is as
 dependencies: [
     .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.3"))
 ]
-```
-
-### CocoaPods
-[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Networking into your Xcode project using CocoaPods, specify it in your Podfile:
-```
-pod 'Networking-Swift'
 ```
 
 ## Sample code 📱
