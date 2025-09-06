@@ -14,7 +14,6 @@ enum MockEndpoint {
 
 // MARK: -
 extension MockEndpoint: EndpointType {
-
     var path: String {
         switch self {
         case .book(let id): return "volumes/\(id)"

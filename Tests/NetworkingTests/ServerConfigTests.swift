@@ -5,77 +5,80 @@
 //  Created by VG on 2024-11-13.
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Networking
 
-final class ServerConfigV2Tests: XCTestCase {
+struct ServerConfigTests {
     private let validURLString: URL = try! "https://api.example.com".asURL()
     private let tokenProviderMock = MockTokenProvider()
-    private var config: ServerConfig!
+    private var config: ServerConfig
 
-    override func setUp() {
-        super.setUp()
-        config = ServerConfig(baseURL: validURLString, tokenProvider: tokenProviderMock)
-    }
-
-    override func tearDown() {
-        config = nil
-        super.tearDown()
+    init() {
+        self.config = ServerConfig(baseURL: validURLString, tokenProvider: tokenProviderMock)
     }
 
     // MARK: - Initialization Tests
-    func testInitialization_withValidURL_shouldSucceed() {
+    @Test
+    func initializationWithValidURLShouldSucceed() {
         let config = ServerConfig(baseURL: validURLString, userAgent: "TestAgent/1.0")
-        XCTAssertEqual(config.baseURL, validURLString)
-        XCTAssertEqual(config.userAgent, "TestAgent/1.0")
+        #expect(config.baseURL == validURLString)
+        #expect(config.userAgent == "TestAgent/1.0")
     }
 
     // MARK: - Header Generation Tests
-    func testHeaderGeneration_includesBaseHeaders() {
+    @Test
+    func headerGenerationIncludesBaseHeaders() {
         let request = MockRequestable(authorization: .none)
         let headers = config.header(forRequest: request)
-        XCTAssertEqual(headers[HTTP.Header.Field.host], config.baseURL.host)
+        #expect(headers[HTTP.Header.Field.host] == config.baseURL.host)
     }
     
-    func testHeaderGeneration_includesAdditionalHeaders() {
+    @Test
+    func headerGenerationIncludesAdditionalHeaders() {
         let additionalHeaders = ["X-Custom-Header": "CustomValue"]
         let config = ServerConfig(baseURL: validURLString, additionalHeaders: additionalHeaders)
         let headers = config.header(forRequest: MockRequestable(authorization: .none))
-        XCTAssertEqual(headers["X-Custom-Header"], "CustomValue")
+        #expect(headers["X-Custom-Header"] == "CustomValue")
     }
 
-    func testHeaderGeneration_withBearerToken_includesAuthorizationHeader() {
+    @Test
+    func headerGenerationWithBearerTokenIncludesAuthorizationHeader() {
         tokenProviderMock.tokenResult = .success("sampleToken")
         let request = MockRequestable(authorization: .bearer)
         let headers = config.header(forRequest: request)
-        XCTAssertEqual(headers[HTTP.Header.Field.auth], "Bearer sampleToken")
+        #expect(headers[HTTP.Header.Field.auth] == "Bearer sampleToken")
     }
 
-    func testHeaderGeneration_withBasicToken_includesAuthorizationHeader() {
+    @Test
+    func headerGenerationWithBasicTokenIncludesAuthorizationHeader() {
         tokenProviderMock.tokenResult = .success("sampleToken")
         let request = MockRequestable(authorization: .basic)
         let headers = config.header(forRequest: request)
-        XCTAssertEqual(headers[HTTP.Header.Field.auth], "Basic sampleToken")
+        #expect(headers[HTTP.Header.Field.auth] == "Basic sampleToken")
     }
 
-    func testHeaderGeneration_withTokenProviderFailure_excludesAuthorizationHeader() {
+    @Test
+    func headerGenerationWithTokenProviderFailureExcludesAuthorizationHeader() {
         tokenProviderMock.tokenResult = .failure(.missing)
         let request = MockRequestable(authorization: .bearer)
         let headers = config.header(forRequest: request)
-        XCTAssertNil(headers[HTTP.Header.Field.auth])
+        #expect(headers[HTTP.Header.Field.auth] == nil)
     }
 
     // MARK: - Convenience Initializers Tests
-    func testBasicInitializer_createsConfigurationWithDefaultValues() {
+    @Test
+    func basicInitializerCreatesConfigurationWithDefaultValues() {
         let config = ServerConfig.basic(baseURL: validURLString)
-        XCTAssertEqual(config.baseURL, validURLString)
-        XCTAssertNil(config.tokenProvider)
+        #expect(config.baseURL == validURLString)
+        #expect(config.tokenProvider == nil)
     }
 
-    func testAuthenticatedInitializer_createsConfigurationWithTokenProvider() {
+    @Test
+    func authenticatedInitializerCreatesConfigurationWithTokenProvider() {
         let config = ServerConfig.authenticated(baseURL: validURLString, tokenProvider: tokenProviderMock)
-        XCTAssertEqual(config.baseURL, validURLString)
-        XCTAssertNotNil(config.tokenProvider)
+        #expect(config.baseURL == validURLString)
+        #expect(config.tokenProvider != nil)
     }
 }
 

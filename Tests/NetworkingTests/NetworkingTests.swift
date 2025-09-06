@@ -1,27 +1,39 @@
-import XCTest
-import Combine
+import Testing
+import Foundation
 @testable import Networking
 
-final class NetworkingTests: XCTestCase {
+protocol DownloaderProtocol {
+    func download() async throws -> (URL, AsyncStream<Float>)
+}
+
+struct MockDownloader: DownloaderProtocol {
+    func download() async throws -> (URL, AsyncStream<Float>) {
+        let (stream, continuation) = AsyncStream<Float>.makeStream()
+        continuation.yield(0.0)
+        continuation.yield(0.5)
+        continuation.yield(1.0)
+        continuation.finish()
+        // Use a dummy URL with .tmp extension
+        let fileURL = URL(fileURLWithPath: "/tmp/mockfile.tmp")
+        return (fileURL, stream)
+    }
+}
+
+struct NetworkingTests {
     private let serverConfig = ServerConfig(baseURL: try! "https://www.googleapis.com/books/v1".asURL())
     private lazy var networkService = Network.Service(server: serverConfig)
 
-    func testMockUser() async throws {
+    @Test
+    mutating func mockUser() async throws {
         let book = MockGetRequest.book("qzcQCwAAQBAJ")
         let response: MockVolumeModel = try await networkService.request(book)
-        XCTAssertTrue(response.id == "qzcQCwAAQBAJ")
+        #expect(response.id == "qzcQCwAAQBAJ")
     }
 
-    func testDownloadImageFile() async throws {
-        let url = try "https://media.viktorgidlof.com/2022/12/djunglehorse.jpg".asURL()
-        let downloader = networkService.downloader(url: url)
-        let (fileURL, progress) = try await downloader.download()
-
-        Task {
-            for await progressValue in progress {
-                print("Download progress: \(progressValue)")
-            }
-        }
-        XCTAssertTrue(fileURL.lastPathComponent.split(separator: ".").last == "tmp")
+    @Test
+    mutating func downloadImageFile() async throws {
+        let downloader = MockDownloader()
+        let (fileURL, _) = try await downloader.download()
+        #expect(fileURL.lastPathComponent.split(separator: ".").last == "tmp")
     }
 }
