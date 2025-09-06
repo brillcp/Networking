@@ -294,7 +294,7 @@ The sample project is a small application that demonstrates some of the function
 ```
 git clone https://github.com/brillcp/Networking.git
 ```
-Open the workspace `Networking-Example.xcworkspace` and run.
+Open `Networking-Example.xcodeproj` and run.
 
 ## Contribution 🛠
 - [Create an issue](https://github.com/brillcp/networking/issues/new) if you:
