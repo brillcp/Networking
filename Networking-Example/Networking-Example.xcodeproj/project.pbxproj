@@ -24,7 +24,6 @@
 		D5DFA11629496A2300727398 /* GitHub.GetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DFA11529496A2300727398 /* GitHub.GetRequest.swift */; };
 		D5E2652E2949301300549A90 /* NetworkingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E2652D2949301300549A90 /* NetworkingExample.swift */; };
 		D5E265372949301400549A90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5E265362949301400549A90 /* Assets.xcassets */; };
-		D5E2653A2949301400549A90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5E265382949301400549A90 /* LaunchScreen.storyboard */; };
 		D5E2654229493C3400549A90 /* APIListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E2654129493C3400549A90 /* APIListData.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +45,6 @@
 		D5E2652A2949301300549A90 /* Networking-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Networking-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5E2652D2949301300549A90 /* NetworkingExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingExample.swift; sourceTree = "<group>"; };
 		D5E265362949301400549A90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D5E265392949301400549A90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5E2653B2949301400549A90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5E2654129493C3400549A90 /* APIListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIListData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,7 +145,6 @@
 				D5C727032CE523F10010102A /* ImageView.swift */,
 				D5DFA11729496A3800727398 /* APIs */,
 				D5E265362949301400549A90 /* Assets.xcassets */,
-				D5E265382949301400549A90 /* LaunchScreen.storyboard */,
 				D5E2653B2949301400549A90 /* Info.plist */,
 			);
 			path = "Networking-Example";
@@ -214,7 +211,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5E2653A2949301400549A90 /* LaunchScreen.storyboard in Resources */,
 				D5E265372949301400549A90 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,17 +242,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		D5E265382949301400549A90 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D5E265392949301400549A90 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D5E2653C2949301400549A90 /* Debug */ = {
