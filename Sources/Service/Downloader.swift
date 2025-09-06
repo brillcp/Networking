@@ -1,10 +1,3 @@
-//
-//  DownloadPublisher.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 public extension Network.Service {

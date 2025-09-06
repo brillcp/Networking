@@ -1,10 +1,3 @@
-//
-//  Endpoints.swift
-//  Networking
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 
 /// A protocol for an endpoint type. Usually an enum with all the possible endpoints as cases.
