@@ -12,7 +12,7 @@ public let version = "0.9.3"
 
 public enum Network {
     /// A network service object used to make requests to the backend.
-    public class Service {
+    public actor Service {
         // MARK: Private properties
         private let server: ServerConfig
         private let decoder: JSONDecoder
@@ -24,9 +24,16 @@ public enum Network {
         ///     - server: The given server configuration
         ///     - session: The given URLSession object. Defaults to the shared instance.
         ///     - decoder: A default json decoder object
-        public init(server: ServerConfig, session: URLSession = .shared, decoder: JSONDecoder = JSONDecoder()) {
+        ///     - dateDecodingStrategy: The strategy used by the JSONDecoder to decode date values from responses. Defaults to `.iso8601`.
+        public init(
+            server: ServerConfig,
+            session: URLSession = .shared,
+            decoder: JSONDecoder = JSONDecoder(),
+            dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .iso8601
+        ) {
             self.session = session
             self.decoder = decoder
+            self.decoder.dateDecodingStrategy = dateDecodingStrategy
             self.server = server
         }
     }
@@ -50,6 +57,7 @@ extension Network.Service: NetworkServiceProtocol {
         return HTTP.StatusCode(rawValue: httpResponse.statusCode) ?? .unknown
     }
 
+    nonisolated
     public func downloader(url: URL) -> Network.Service.Downloader {
         Network.Service.Downloader(url: url)
     }
@@ -76,6 +84,7 @@ private extension Network.Service {
     }
 }
 
+// MARK: - Public network error
 public extension Network.Service {
     enum NetworkError: LocalizedError {
         case invalidURL
@@ -96,5 +105,4 @@ public extension Network.Service {
             }
         }
     }
-
 }

@@ -25,13 +25,13 @@ public struct ServerConfig: ServerConfigurable {
     public let baseURL: URL
 
     // MARK: - Initialization
-    /// Initializes a new instance of `ServerConfigV2` with the specified configuration details.
+    /// Initializes a new instance of `ServerConfig` with the specified configuration details.
     /// - Parameters:
     ///   - baseURL: A `String` representing the base URL for the server. This URL will be used as the primary endpoint for all requests.
     ///   - userAgent: An optional `String` representing the user agent to include in the request headers. If not provided, it defaults to a string combining `name` and `version`.
     ///   - additionalHeaders: An optional dictionary of additional headers to be merged into the default headers for each request. The default value is an empty dictionary.
     ///   - tokenProvider: An optional `TokenProvidable` object used to authenticate requests. This provider supplies authorization tokens when required by a request. Defaults to `nil`, meaning no token is provided.
-    /// - Returns: A configured instance of `ServerConfigV2` with the specified parameters.
+    /// - Returns: A configured instance of `ServerConfig` with the specified parameters.
     public init(
         baseURL: URL,
         userAgent: String? = "\(name)/\(version)",
