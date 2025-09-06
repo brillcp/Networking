@@ -1,7 +1,7 @@
 import Foundation
 
 public let name = "Networking"
-public let version = "0.9.3"
+public let version = "0.9.4"
 
 public enum Network {
     /// A network service object used to make requests to the backend.
