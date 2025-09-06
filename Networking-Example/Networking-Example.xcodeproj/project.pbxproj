@@ -447,7 +447,7 @@
 			repositoryURL = "https://github.com/brillcp/Networking";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.3;
+				minimumVersion = 0.9.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
