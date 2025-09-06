@@ -1,13 +1,13 @@
 import Foundation
 
-public protocol NetworkServiceProtocol: AnyObject {
+public protocol NetworkServiceProtocol {
     /// Send a request and decode the response into a data model object
     /// - parameters:
     ///     - request: The request to send over the network
     ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the request fails for any reason
     /// - returns: The decoded data model object
-    func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool) async throws -> DataModel
+    func request<DataModel: Decodable & Sendable>(_ request: Requestable, logResponse: Bool) async throws -> DataModel
     /// Send a request and return the raw response data
     /// - parameters:
     ///     - request: The request to send over the network

@@ -1,7 +1,7 @@
 import Foundation
 
 /// A protocol for a request type. Used to build backend API requests.
-public protocol Requestable {
+public protocol Requestable: Sendable {
     /// The request authorization. Defaults to `none`.
     var authorization: Request.Authorization { get }
     /// The content type of the request. Defaults to `nil`.
