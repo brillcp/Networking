@@ -1,10 +1,3 @@
-//
-//  ServerConfig.swift
-//  Networking
-//
-//  Created by VG on 2024-11-13.
-//
-
 import Foundation
 
 public protocol ServerConfigurable {
