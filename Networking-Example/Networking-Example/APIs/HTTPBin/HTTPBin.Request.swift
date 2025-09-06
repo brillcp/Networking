@@ -1,11 +1,3 @@
-//
-//  HTTPBin.Request.swift
-//  Networking-Example
-//
-//  Created by Viktor Gidlöf on 2022-12-20.
-//
-
-import Foundation
 import Networking
 
 extension HTTPBin {

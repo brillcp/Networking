@@ -1,11 +1,3 @@
-//
-//  PokeAPIEndpoints.swift
-//  Networking-Example
-//
-//  Created by Viktor Gidlöf.
-//
-
-import Foundation
 import Networking
 
 enum PokeAPI {

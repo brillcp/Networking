@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  Networking-Example
-//
-//  Created by VG on 2024-11-13.
-//
-
 import SwiftUI
 
 struct ContentView: View {

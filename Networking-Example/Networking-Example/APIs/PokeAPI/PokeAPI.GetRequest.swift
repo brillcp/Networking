@@ -1,11 +1,3 @@
-//
-//  PokeAPI.Request.swift
-//  Networking-Example
-//
-//  Created by Viktor Gidlöf.
-//
-
-import Foundation
 import Networking
 
 extension PokeAPI {

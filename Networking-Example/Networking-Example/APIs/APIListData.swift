@@ -1,10 +1,3 @@
-//
-//  APIListData.swift
-//  Networking-Example
-//
-//  Created by Viktor Gidlöf.
-//
-
 import Foundation
 import Networking
 

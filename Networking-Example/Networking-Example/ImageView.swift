@@ -1,10 +1,3 @@
-//
-//  ImageView.swift
-//  Networking-Example
-//
-//  Created by VG on 2024-11-13.
-//
-
 import SwiftUI
 import Networking
 
@@ -54,10 +47,11 @@ final class ImageViewModel: ObservableObject {
         self.request = request
     }
 
-    @MainActor func load() async {
+    @MainActor
+    func load() async {
         isLoading = true
+        defer { isLoading = false }
         guard let data = try? await service.data(request) else { return }
         imageData = data
-        isLoading = false
     }
 }
