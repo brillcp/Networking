@@ -8,6 +8,13 @@ public extension Network.Service {
         private var downloadTask: URLSessionDownloadTask?
         private var progressContinuation: AsyncStream<Float>.Continuation?
 
+        // MARK: - Public
+        public struct DownloadHandle {
+            let progress: AsyncStream<Float>
+            let finished: Task<URL, Error>
+            let cancel: @Sendable () -> Void
+        }
+
         // MARK: - Init
         init(url: URL) {
             self.url = url
@@ -17,29 +24,46 @@ public extension Network.Service {
 
 // MARK: - Public functions
 public extension Network.Service.Downloader {
-    /// Start downloading the file and track progress
-    /// - Returns: A tuple containing the downloaded file URL and an AsyncStream of progress updates
-    func download() async throws -> (URL, AsyncStream<Float>) {
-        let (stream, continuation) = AsyncStream<Float>.makeStream()
-        progressContinuation = continuation
-        continuation.yield(0.0)
+    /// Starts the download for the URL configured in the downloader and returns
+    /// a handle for observing progress, awaiting completion, or cancelling.
+    ///
+    /// - Returns: A `DownloadHandle` containing:
+    ///   - `progress`: An `AsyncStream<Float>` emitting values in `0.0...1.0`.
+    ///   - `finished`: A `Task<URL, Error>` that resolves with the downloaded file's
+    ///     temporary location.
+    ///   - `cancel`: A closure that cancels the download and completes the stream.
+    func start() -> DownloadHandle {
+        let (progressStream, progressCont) = AsyncStream<Float>.makeStream(
+            bufferingPolicy: .bufferingNewest(1)
+        )
+        progressContinuation = progressCont
+        progressCont.yield(0.0)
 
-        let downloadedURL = try await withCheckedThrowingContinuation { continuation in
-            let delegate = DownloadDelegate { [weak self] result in
-                Task { [weak self] in
-                    await self?.handleCompletion(result, continuation: continuation)
+        // Kick off the download, expose the completion via a Task
+        let finished = Task<URL, Error> {
+            try await withCheckedThrowingContinuation { (cc: CheckedContinuation<URL, Error>) in
+                let delegate = DownloadDelegate { [weak self] result in
+                    Task { [weak self] in
+                        await self?.handleCompletion(result, continuation: cc)
+                    }
+                } progressHandler: { [weak self] progress in
+                    Task { [weak self] in
+                        await self?.handleProgress(progress)
+                    }
                 }
-            } progressHandler: { [weak self] progress in
-                Task { [weak self] in
-                    await self?.handleProgress(progress)
-                }
+
+                let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
+                let task = session.downloadTask(with: url)
+                downloadTask = task
+                task.resume()
             }
-            let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
-            let task = session.downloadTask(with: url)
-            downloadTask = task
-            task.resume()
         }
-        return (downloadedURL, stream)
+
+        return DownloadHandle(
+            progress: progressStream,
+            finished: finished,
+            cancel: { [weak self] in Task { await self?.cancel() } }
+        )
     }
 
     /// Cancel the ongoing download
@@ -90,3 +114,4 @@ private final class DownloadDelegate: NSObject, URLSessionDownloadDelegate {
         }
     }
 }
+
