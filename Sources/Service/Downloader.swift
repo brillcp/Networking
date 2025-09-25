@@ -10,9 +10,9 @@ public extension Network.Service {
 
         // MARK: - Public
         public struct DownloadHandle {
-            let progress: AsyncStream<Float>
-            let finished: Task<URL, Error>
-            let cancel: @Sendable () -> Void
+            public let progress: AsyncStream<Float>
+            public let finished: Task<URL, Error>
+            public let cancel: @Sendable () -> Void
         }
 
         // MARK: - Init
