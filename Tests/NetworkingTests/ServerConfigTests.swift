@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import Networking
+@testable @preconcurrency import Networking
 
 struct ServerConfigTests {
     private let validURLString: URL = try! "https://api.example.com".asURL()
