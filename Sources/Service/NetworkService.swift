@@ -73,7 +73,11 @@ public enum Network {
 extension Network.Service: NetworkServiceProtocol {
     public func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = true) async throws -> DataModel {
         let (data, _) = try await makeDataRequest(request, logResponse: logResponse)
-        return try decoder.decode(DataModel.self, from: data)
+        do {
+            return try decoder.decode(DataModel.self, from: data)
+        } catch {
+            throw NetworkError.decodingError(error)
+        }
     }
 
     public func data(_ request: Requestable, logResponse: Bool = true) async throws -> Data {
@@ -96,8 +100,20 @@ extension Network.Service: NetworkServiceProtocol {
 // MARK: - Private functions
 private extension Network.Service {
     func makeDataRequest(_ request: Requestable, logResponse: Bool) async throws -> (Data, URLResponse) {
-        let urlRequest = try request.configure(withServer: server)
-        let (data, response) = try await session.data(for: urlRequest)
+        let urlRequest: URLRequest
+        do {
+            urlRequest = try request.configure(withServer: server)
+        } catch {
+            throw NetworkError.encodingError(error)
+        }
+        
+        let (data, response): (Data, URLResponse)
+        do {
+            (data, response) = try await session.data(for: urlRequest)
+        } catch {
+            throw NetworkError.networkError(error)
+        }
+
         if logResponse {
             String.logResponse((data, response), printJSON: logResponse)
         }
@@ -120,6 +136,7 @@ public extension Network.Service {
         case invalidURL
         case badServerResponse(Int)
         case decodingError(Error)
+        case encodingError(Error)
         case networkError(Error)
 
         public var errorDescription: String? {
@@ -130,6 +147,8 @@ public extension Network.Service {
                 "Server returned status code: \(code)"
             case .decodingError(let error):
                 "Failed to decode data: \(error.localizedDescription)"
+            case .encodingError(let error):
+                "Failed to encode data: \(error.localizedDescription)"
             case .networkError(let error):
                 "Network error: \(error.localizedDescription)"
             }
