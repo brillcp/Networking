@@ -55,7 +55,7 @@ public enum Network {
         ///     - session: The given URLSession object. Defaults to the shared instance.
         ///     - decoder: A default json decoder object
         ///     - dateDecodingStrategy: The strategy used by the JSONDecoder to decode date values from responses. Defaults to `.iso8601`.
-        ///     - logger: A logger used to record requests and responses. Defaults to a `DefaultNetworkLogger`.
+        ///     - logger: A logger used to record requests and responses. Defaults to a `NetworkLogger`.
         public init(
             server: ServerConfig,
             session: URLSession = .shared,
