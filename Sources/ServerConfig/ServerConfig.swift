@@ -38,7 +38,7 @@ public struct ServerConfig: ServerConfigurable {
     /// - Returns: A configured instance of `ServerConfig` with the specified parameters.
     public init(
         baseURL: URL,
-        userAgent: String? = "\(name)/\(version)",
+        userAgent: String? = Package.description,
         additionalHeaders: HTTP.Header = [:],
         tokenProvider: TokenProvidable? = nil
     ) {

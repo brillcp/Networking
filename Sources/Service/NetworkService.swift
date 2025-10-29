@@ -1,7 +1,13 @@
 import Foundation
 
-public let name = "Networking"
-public let version = "0.9.4"
+public enum Package {
+    public static let name = "Networking"
+    public static let version = "0.9.9"
+
+    public static var description: String {
+        "\(name)/\(version)"
+    }
+}
 
 public enum Network {
     /// A network service object used to make requests to the backend.
