@@ -137,7 +137,6 @@ private extension Network.Service {
 // MARK: - Public network error
 public extension Network.Service {
     enum NetworkError: LocalizedError {
-        case invalidURL
         case badServerResponse(Int)
         case decodingError(Error)
         case encodingError(Error)
@@ -145,8 +144,6 @@ public extension Network.Service {
 
         public var errorDescription: String? {
             switch self {
-            case .invalidURL:
-                "Invalid URL"
             case .badServerResponse(let code):
                 "Server returned status code: \(code)"
             case .decodingError(let error):
