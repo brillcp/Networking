@@ -1,7 +1,18 @@
 import Foundation
 
+/// A type that defines configuration details for communicating with a server.
+///
+/// Conforming types provide a `baseURL` for requests and a method to
+/// generate request headers, potentially including authentication and
+/// other metadata required by the server.
 public protocol ServerConfigurable {
+    /// The base URL used to construct requests to the server.
     var baseURL: URL { get }
+
+    /// Produces the HTTP headers for a given request.
+    ///
+    /// - Parameter request: The request for which to construct headers.
+    /// - Returns: A dictionary of HTTP header fields to include with the request.
     func header(forRequest request: Requestable) -> HTTP.Header
 }
 
