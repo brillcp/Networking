@@ -24,7 +24,10 @@ public extension URLRequest {
         case .body: bodyEncode(withParameters: parameters)
         }
     }
+}
 
+// MARK: - Logging request
+public extension URLRequest {
     /// Print outgoing request information to the console
     func log() {
         guard let url = url?.absoluteString,
@@ -67,13 +70,16 @@ public extension URLRequest {
         print(output)
         print("\n")
     }
+}
 
+// MARK: - Private encoding functions
+private extension URLRequest {
     /// Encode the parameters in the url query
     /// - parameter parameters: The parameters to encode
     /// - throws: An error if request can't be encoded
     /// - returns: The new `URLRequest` with the parameters encoded as a query in the url
-    private mutating func urlEncode(withParameters parameters: HTTP.Parameters) throws {
-        guard let url = url else { throw EncodingError.missingURL }
+    mutating func urlEncode(withParameters parameters: HTTP.Parameters) throws {
+        guard let url else { throw EncodingError.missingURL }
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { throw EncodingError.malformedURLComponents }
 
         let queryItems = parameters.map { URLQueryItem(name: $0.key, value: String(describing: $0.value)) }
@@ -94,7 +100,7 @@ public extension URLRequest {
     /// Encode the parameters in the http body of the request as JSON
     /// - parameter parameters: The parameters to encode
     /// - returns: The new `URLRequest` with the parameters encoded as JSON in the http body
-    private mutating func jsonEncode(withParameters parameters: HTTP.Parameters) throws {
+    mutating func jsonEncode(withParameters parameters: HTTP.Parameters) throws {
         httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
         setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.contentType)
         setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.accept)
@@ -103,7 +109,7 @@ public extension URLRequest {
     /// Encode the parameters in the http body of the request as a query string. E.g `"foo=bar&..."`
     /// - parameter parameters: The parameters to encode
     /// - returns: The new `URLRequest` with the parameters encoded in the http body as a string
-    private mutating func bodyEncode(withParameters parameters: HTTP.Parameters) {
+    mutating func bodyEncode(withParameters parameters: HTTP.Parameters) {
         let parameterString = parameters.map { "\($0.key)=\($0.value)&" }.joined().dropLast()
         httpBody = parameterString.data(using: .utf8)
     }
