@@ -9,6 +9,36 @@ public enum Package {
     }
 }
 
+// MARK: - NetworkServiceProtocol
+public protocol NetworkServiceProtocol {
+    /// Send a request and decode the response into a data model object
+    /// - parameters:
+    ///     - request: The request to send over the network
+    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to true.
+    /// - throws: An error if the request fails for any reason
+    /// - returns: The decoded data model object
+    func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool) async throws -> DataModel
+    /// Send a request and return the raw response data
+    /// - parameters:
+    ///     - request: The request to send over the network
+    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to true.
+    /// - throws: An error if the request fails for any reason
+    /// - returns: The raw response data
+    func data(_ request: Requestable, logResponse: Bool) async throws -> Data
+    /// Send a request and return the HTTP status code
+    /// - parameters:
+    ///     - request: The request to send over the network
+    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to true.
+    /// - throws: An error if the request fails for any reason
+    /// - returns: The HTTP status code
+    func response(_ request: Requestable, logResponse: Bool) async throws -> HTTP.StatusCode
+    /// Creates a new instance of `Network.Service.Downloader` configured with the specified URL.
+    /// - Parameter url: The `URL` from which the downloader will retrieve data.
+    /// - Returns: A configured `Network.Service.Downloader` instance for downloading data from the given URL.
+    func downloader(url: URL) -> Network.Service.Downloader
+}
+
+// MARK: - Network service
 public enum Network {
     /// A network service object used to make requests to the backend.
     public actor Service {
@@ -30,9 +60,10 @@ public enum Network {
             decoder: JSONDecoder = JSONDecoder(),
             dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .iso8601
         ) {
+            let configuredDecoder = decoder
+            configuredDecoder.dateDecodingStrategy = dateDecodingStrategy
+            self.decoder = configuredDecoder
             self.session = session
-            self.decoder = decoder
-            self.decoder.dateDecodingStrategy = dateDecodingStrategy
             self.server = server
         }
     }
@@ -45,12 +76,12 @@ extension Network.Service: NetworkServiceProtocol {
         return try decoder.decode(DataModel.self, from: data)
     }
 
-    public func data(_ request: Requestable, logResponse: Bool = false) async throws -> Data {
+    public func data(_ request: Requestable, logResponse: Bool = true) async throws -> Data {
         let (data, _) = try await makeDataRequest(request, logResponse: logResponse)
         return data
     }
 
-    public func response(_ request: Requestable, logResponse: Bool = false) async throws -> HTTP.StatusCode {
+    public func response(_ request: Requestable, logResponse: Bool = true) async throws -> HTTP.StatusCode {
         let (_, response) = try await makeDataRequest(request, logResponse: logResponse)
         guard let httpResponse = response as? HTTPURLResponse else { return .unknown }
         return HTTP.StatusCode(rawValue: httpResponse.statusCode) ?? .unknown
