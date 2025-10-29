@@ -1,7 +1,7 @@
 import Foundation
 
 public extension URL {
-    /// Creat a `[String: String]` dictionary from the query parameters of a URL
+    /// Create a `[String: String]` dictionary from the query parameters of a URL
     /// - returns: A new dictionary with the query items
     func queryParameters() -> [String: String] {
         guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true),

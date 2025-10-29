@@ -26,52 +26,6 @@ public extension URLRequest {
     }
 }
 
-// MARK: - Logging request
-public extension URLRequest {
-    /// Print outgoing request information to the console
-    func log() {
-        guard let url = url?.absoluteString,
-              let components = URLComponents(string: url),
-              let method = httpMethod,
-              let host = components.host
-        else { return }
-
-        print("⚡️ Outgoing request to \(host) @ \(Date())")
-
-        let query = components.query ?? ""
-        let parameters = query.split(separator: "&")
-        let questionmark = parameters.isEmpty ? "" : "?"
-        var output = "\(method) \(components.path)\(questionmark)\(query)\n"
-
-        if let headers = allHTTPHeaderFields, !headers.isEmpty {
-            output += "Header: {\n"
-            headers.forEach { output += "\t\($0): \($1)\n" }
-            output += "}\n\n"
-        } else {
-            output += "Header: {}\n"
-        }
-
-        if let body = httpBody, let json = try? JSONSerialization.jsonObject(with: body) as? HTTP.Parameters {
-            output += "Body: {\n"
-            json.forEach { output += "\t\($0)\n" }
-            output += "}\n"
-        } else {
-            output += "Body: {}\n"
-        }
-
-        if !parameters.isEmpty {
-            output += "Parameters: {\n"
-            parameters.forEach { output += "\t\($0)\n" }
-            output += "}\n"
-        } else {
-            output += "Parameters: {}\n"
-        }
-
-        print(output)
-        print("\n")
-    }
-}
-
 // MARK: - Private encoding functions
 private extension URLRequest {
     /// Encode the parameters in the url query

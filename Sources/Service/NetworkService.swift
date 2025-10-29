@@ -46,6 +46,7 @@ public enum Network {
         private let server: ServerConfig
         private let decoder: JSONDecoder
         private let session: URLSession
+        private let logger: NetworkLoggerProtocol
 
         // MARK: - Init
         /// Initialize the network service
@@ -54,17 +55,20 @@ public enum Network {
         ///     - session: The given URLSession object. Defaults to the shared instance.
         ///     - decoder: A default json decoder object
         ///     - dateDecodingStrategy: The strategy used by the JSONDecoder to decode date values from responses. Defaults to `.iso8601`.
+        ///     - logger: A logger used to record requests and responses. Defaults to a `DefaultNetworkLogger`.
         public init(
             server: ServerConfig,
             session: URLSession = .shared,
             decoder: JSONDecoder = JSONDecoder(),
-            dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .iso8601
+            dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .iso8601,
+            logger: NetworkLoggerProtocol = NetworkLogger()
         ) {
             let configuredDecoder = decoder
             configuredDecoder.dateDecodingStrategy = dateDecodingStrategy
             self.decoder = configuredDecoder
             self.session = session
             self.server = server
+            self.logger = logger
         }
     }
 }
@@ -102,7 +106,7 @@ private extension Network.Service {
     func makeDataRequest(_ request: Requestable, logResponse: Bool) async throws -> (Data, URLResponse) {
         let urlRequest: URLRequest
         do {
-            urlRequest = try request.configure(withServer: server)
+            urlRequest = try request.configure(withServer: server, using: logger)
         } catch {
             throw NetworkError.encodingError(error)
         }
@@ -115,7 +119,7 @@ private extension Network.Service {
         }
 
         if logResponse {
-            String.logResponse((data, response), printJSON: logResponse)
+            logger.logResponse(data, response)
         }
 
         guard let httpResponse = response as? HTTPURLResponse else {

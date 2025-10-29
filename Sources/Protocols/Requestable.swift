@@ -24,10 +24,10 @@ public extension Requestable {
     /// - parameter server: The given server config to use
     /// - throws: An error if the request can't be build
     /// - returns: A new `URLRequest` with all the configurations
-    func configure(withServer server: ServerConfig) throws -> URLRequest {
+    func configure(withServer server: ServerConfig, using logger: NetworkLoggerProtocol) throws -> URLRequest {
         let config = Request.Config(request: self, server: server)
         let urlRequest = try URLRequest(withConfig: config)
-        urlRequest.log()
+        logger.logRequest(urlRequest)
         return urlRequest
     }
 }

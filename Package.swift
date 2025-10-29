@@ -23,6 +23,7 @@ let package = Package(
             sources: [
                 "Extensions",
                 "HTTP",
+                "Logger",
                 "Protocols",
                 "Requests",
                 "ServerConfig",
