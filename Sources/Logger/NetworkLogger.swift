@@ -12,7 +12,7 @@ public protocol NetworkLoggerProtocol {
     /// - Parameters:
     ///   - data: The raw response payload returned by the server.
     ///   - response: The URL response containing status code and headers.
-    func logResponse(_ data: Data, _ response: URLResponse)
+    func logResponse(_ data: Data, _ response: URLResponse, printJSON: Bool)
 }
 
 // MARK: - 
@@ -61,7 +61,7 @@ public struct NetworkLogger: NetworkLoggerProtocol {
         print("\n")
     }
 
-    public func logResponse(_ data: Data, _ response: URLResponse) {
+    public func logResponse(_ data: Data, _ response: URLResponse, printJSON: Bool) {
         guard let httpResponse = response as? HTTPURLResponse,
               let url = httpResponse.url?.absoluteString,
               let comps = URLComponents(string: url),
@@ -85,10 +85,11 @@ public struct NetworkLogger: NetworkLoggerProtocol {
         }
 
         print(printOutput)
-        if let json = data.prettyPrinted {
-            print("JSON response:")
-            print(json)
-        }
+
+        guard printJSON, let json = data.prettyPrinted else { return }
+
+        print("JSON response:")
+        print(json)
     }
 }
 

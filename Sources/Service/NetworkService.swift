@@ -14,24 +14,24 @@ public protocol NetworkServiceProtocol {
     /// Send a request and decode the response into a data model object
     /// - parameters:
     ///     - request: The request to send over the network
-    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to true.
+    ///     - printJSONResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the request fails for any reason
     /// - returns: The decoded data model object
-    func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool) async throws -> DataModel
+    func request<DataModel: Decodable>(_ request: Requestable, printJSONResponse: Bool) async throws -> DataModel
     /// Send a request and return the raw response data
     /// - parameters:
     ///     - request: The request to send over the network
-    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to true.
+    ///     - printJSONResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the request fails for any reason
     /// - returns: The raw response data
-    func data(_ request: Requestable, logResponse: Bool) async throws -> Data
+    func data(_ request: Requestable, printJSONResponse: Bool) async throws -> Data
     /// Send a request and return the HTTP status code
     /// - parameters:
     ///     - request: The request to send over the network
-    ///     - logResponse: A boolean value that determines if the json response should be printed to the console. Defaults to true.
+    ///     - printJSONResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the request fails for any reason
     /// - returns: The HTTP status code
-    func response(_ request: Requestable, logResponse: Bool) async throws -> HTTP.StatusCode
+    func response(_ request: Requestable, printJSONResponse: Bool) async throws -> HTTP.StatusCode
     /// Creates a new instance of `Network.Service.Downloader` configured with the specified URL.
     /// - Parameter url: The `URL` from which the downloader will retrieve data.
     /// - Returns: A configured `Network.Service.Downloader` instance for downloading data from the given URL.
@@ -75,8 +75,8 @@ public enum Network {
 
 // MARK: - Public functions
 extension Network.Service: NetworkServiceProtocol {
-    public func request<DataModel: Decodable>(_ request: Requestable, logResponse: Bool = true) async throws -> DataModel {
-        let (data, _) = try await makeDataRequest(request, logResponse: logResponse)
+    public func request<DataModel: Decodable>(_ request: Requestable, printJSONResponse: Bool = false) async throws -> DataModel {
+        let (data, _) = try await makeRequest(request, printJSONResponse: printJSONResponse)
         do {
             return try decoder.decode(DataModel.self, from: data)
         } catch {
@@ -84,13 +84,13 @@ extension Network.Service: NetworkServiceProtocol {
         }
     }
 
-    public func data(_ request: Requestable, logResponse: Bool = true) async throws -> Data {
-        let (data, _) = try await makeDataRequest(request, logResponse: logResponse)
+    public func data(_ request: Requestable, printJSONResponse: Bool = false) async throws -> Data {
+        let (data, _) = try await makeRequest(request, printJSONResponse: printJSONResponse)
         return data
     }
 
-    public func response(_ request: Requestable, logResponse: Bool = true) async throws -> HTTP.StatusCode {
-        let (_, response) = try await makeDataRequest(request, logResponse: logResponse)
+    public func response(_ request: Requestable, printJSONResponse: Bool = false) async throws -> HTTP.StatusCode {
+        let (_, response) = try await makeRequest(request, printJSONResponse: printJSONResponse)
         guard let httpResponse = response as? HTTPURLResponse else { return .unknown }
         return HTTP.StatusCode(rawValue: httpResponse.statusCode) ?? .unknown
     }
@@ -103,7 +103,7 @@ extension Network.Service: NetworkServiceProtocol {
 
 // MARK: - Private functions
 private extension Network.Service {
-    func makeDataRequest(_ request: Requestable, logResponse: Bool) async throws -> (Data, URLResponse) {
+    func makeRequest(_ request: Requestable, printJSONResponse: Bool) async throws -> (Data, URLResponse) {
         let urlRequest: URLRequest
         do {
             urlRequest = try request.configure(withServer: server, using: logger)
@@ -118,9 +118,7 @@ private extension Network.Service {
             throw NetworkError.networkError(error)
         }
 
-        if logResponse {
-            logger.logResponse(data, response)
-        }
+        logger.logResponse(data, response, printJSON: printJSONResponse)
 
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.badServerResponse(-1)
