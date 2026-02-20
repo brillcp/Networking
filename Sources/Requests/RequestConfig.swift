@@ -7,16 +7,20 @@ public extension Request {
         private let server: ServerConfig
         /// Pre-encoded body data for JSON requests using `Encodable`. `nil` when not applicable.
         let encodedBody: Data?
+        /// Pre-encoded multipart form data and its content type. `nil` when not applicable.
+        let multipartData: (data: Data, contentType: String)?
 
         /// Init the request config with a requestable object and a server config
         /// - parameters:
         ///     - request: The given request to use for configuration
         ///     - server: The given server configuration to use
         ///     - encodedBody: Pre-encoded body data from an `Encodable` body. Defaults to `nil`.
-        init(request: Requestable, server: ServerConfig, encodedBody: Data? = nil) {
+        ///     - multipartData: Pre-encoded multipart body data and content type. Defaults to `nil`.
+        init(request: Requestable, server: ServerConfig, encodedBody: Data? = nil, multipartData: (data: Data, contentType: String)? = nil) {
             self.request = request
             self.server = server
             self.encodedBody = encodedBody
+            self.multipartData = multipartData
         }
     }
 }

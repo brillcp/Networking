@@ -10,6 +10,8 @@ public enum Request {
         case json
         /// Encode parameters as a string in the http body. E.g `{foo=bar}`
         case body
+        /// Encode using multipart/form-data for file uploads and mixed content
+        case multipart
     }
 
     /// The different authorization types for a given request

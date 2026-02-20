@@ -13,6 +13,8 @@ public protocol Requestable: Sendable {
     /// An optional `Encodable` body for JSON requests. When provided with `.json` encoding,
     /// this is encoded directly using `JSONEncoder` instead of serializing `parameters`.
     var body: (any Encodable & Sendable)? { get }
+    /// An optional multipart form data body for file uploads. Used with `.multipart` encoding.
+    var multipartBody: MultipartFormData? { get }
     /// The encoding used fot the request
     var encoding: Request.Encoding { get }
     /// The request HTTP method
@@ -34,7 +36,11 @@ public extension Requestable {
         if let body {
             encodedBody = try encoder.encode(body)
         }
-        let config = Request.Config(request: self, server: server, encodedBody: encodedBody)
+        var multipartData: (data: Data, contentType: String)?
+        if let multipartBody {
+            multipartData = (data: multipartBody.encode(), contentType: multipartBody.contentType)
+        }
+        let config = Request.Config(request: self, server: server, encodedBody: encodedBody, multipartData: multipartData)
         let urlRequest = try URLRequest(withConfig: config)
         logger.logRequest(urlRequest)
         return urlRequest
@@ -48,4 +54,5 @@ public extension Requestable {
     var contentType: HTTP.ContentType? { nil }
     var parameters: HTTP.Parameters { [:] }
     var body: (any Encodable & Sendable)? { nil }
+    var multipartBody: MultipartFormData? { nil }
 }

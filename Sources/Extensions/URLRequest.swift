@@ -36,6 +36,12 @@ public extension URLRequest {
             let parameters = config.parameters
             guard !parameters.isEmpty else { return }
             bodyEncode(withParameters: parameters)
+
+        case .multipart:
+            if let multipart = config.multipartData {
+                httpBody = multipart.data
+                setValue(multipart.contentType, forHTTPHeaderField: HTTP.Header.Field.contentType)
+            }
         }
     }
 }
