@@ -5,14 +5,18 @@ public extension Request {
     struct Config {
         private let request: Requestable
         private let server: ServerConfig
+        /// Pre-encoded body data for JSON requests using `Encodable`. `nil` when not applicable.
+        let encodedBody: Data?
 
         /// Init the request config with a requestable object and a server config
         /// - parameters:
         ///     - request: The given request to use for configuration
         ///     - server: The given server configuration to use
-        init(request: Requestable, server: ServerConfig) {
+        ///     - encodedBody: Pre-encoded body data from an `Encodable` body. Defaults to `nil`.
+        init(request: Requestable, server: ServerConfig, encodedBody: Data? = nil) {
             self.request = request
             self.server = server
+            self.encodedBody = encodedBody
         }
     }
 }

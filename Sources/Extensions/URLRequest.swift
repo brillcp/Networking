@@ -15,13 +15,27 @@ public extension URLRequest {
         httpMethod = config.httpMethod.rawValue
         allHTTPHeaderFields = config.header
 
-        let parameters = config.parameters
-        guard !parameters.isEmpty else { return }
-
         switch config.encoding {
-        case .query: try urlEncode(withParameters: parameters)
-        case .json: try jsonEncode(withParameters: parameters)
-        case .body: bodyEncode(withParameters: parameters)
+        case .query:
+            let parameters = config.parameters
+            guard !parameters.isEmpty else { return }
+            try urlEncode(withParameters: parameters)
+
+        case .json:
+            if let encodedBody = config.encodedBody {
+                httpBody = encodedBody
+                setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.contentType)
+                setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.accept)
+            } else {
+                let parameters = config.parameters
+                guard !parameters.isEmpty else { return }
+                try jsonEncode(withParameters: parameters)
+            }
+
+        case .body:
+            let parameters = config.parameters
+            guard !parameters.isEmpty else { return }
+            bodyEncode(withParameters: parameters)
         }
     }
 }

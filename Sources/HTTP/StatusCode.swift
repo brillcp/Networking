@@ -2,7 +2,7 @@ import Foundation
 
 public extension HTTP {
     /// An enumeration of the status codes
-    enum StatusCode: Int {
+    enum StatusCode: Int, Sendable {
         // 1xx
         case `continue` = 100
         case switchingProtocols
