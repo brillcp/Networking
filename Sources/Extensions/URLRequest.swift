@@ -74,11 +74,20 @@ private extension URLRequest {
         setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.accept)
     }
 
-    /// Encode the parameters in the http body of the request as a query string. E.g `"foo=bar&..."`
+    /// Encode the parameters in the http body of the request as a form-urlencoded string. E.g `"foo=bar&baz=qux"`
     /// - parameter parameters: The parameters to encode
-    /// - returns: The new `URLRequest` with the parameters encoded in the http body as a string
+    /// - returns: The new `URLRequest` with the parameters encoded in the http body as a percent-encoded string
     mutating func bodyEncode(withParameters parameters: HTTP.Parameters) {
-        let parameterString = parameters.map { "\($0.key)=\($0.value)&" }.joined().dropLast()
+        let allowed = CharacterSet.urlQueryAllowed.subtracting(.init(charactersIn: "+=&"))
+        let parameterString = parameters.map { key, value in
+            let encodedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: allowed) ?? "\(key)"
+            let encodedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: allowed) ?? "\(value)"
+            return "\(encodedKey)=\(encodedValue)"
+        }.joined(separator: "&")
         httpBody = parameterString.data(using: .utf8)
+
+        if value(forHTTPHeaderField: HTTP.Header.Field.contentType) == nil {
+            setValue(HTTP.Header.Field.urlEncoded, forHTTPHeaderField: HTTP.Header.Field.contentType)
+        }
     }
 }
