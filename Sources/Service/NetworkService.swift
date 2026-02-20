@@ -164,7 +164,20 @@ private extension Network.Service {
             do {
                 (data, response) = try await session.data(for: urlRequest)
             } catch {
-                throw NetworkError.networkError(error)
+                let networkError = NetworkError.networkError(error)
+
+                if attemptCount < maxRetryCount {
+                    var shouldRetry = false
+                    for interceptor in interceptors {
+                        if try await interceptor.retry(urlRequest, dueTo: networkError, attemptCount: attemptCount) {
+                            shouldRetry = true
+                            break
+                        }
+                    }
+                    if shouldRetry { continue }
+                }
+
+                throw networkError
             }
 
             logger.logResponse(data, response, printJSON: printJSONResponse)
