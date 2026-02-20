@@ -42,9 +42,15 @@ final class ImageViewModel: ObservableObject {
 
     init(apiData: APIListData, request: Requestable) {
         self.apiData = apiData
-        let server: ServerConfig = .basic(baseURL: apiData.url)
-        self.service = Network.Service(server: server)
         self.request = request
+
+        let server: ServerConfig
+        if let tokenProvider = apiData.tokenProvider {
+            server = .authenticated(baseURL: apiData.url, tokenProvider: tokenProvider)
+        } else {
+            server = .basic(baseURL: apiData.url)
+        }
+        self.service = Network.Service(server: server, interceptors: apiData.interceptors)
     }
 
     @MainActor

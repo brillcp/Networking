@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA00000100000001AA000001 /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000002AA000002 /* DownloadView.swift */; };
+		AA00000300000003AA000003 /* CustomHeaderInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000400000004AA000004 /* CustomHeaderInterceptor.swift */; };
+		AA00000500000005AA000005 /* InMemoryTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000600000006AA000006 /* InMemoryTokenProvider.swift */; };
 		D535265B2E6C622B00C8276B /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = D535265A2E6C622B00C8276B /* Networking */; };
 		D536AEA7294A61B200A49DE0 /* PokeAPI.Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D536AEA6294A61B200A49DE0 /* PokeAPI.Endpoints.swift */; };
 		D536AEAA294A631900A49DE0 /* PokeAPI.GetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D536AEA9294A631900A49DE0 /* PokeAPI.GetRequest.swift */; };
@@ -28,6 +31,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA00000200000002AA000002 /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
+		AA00000400000004AA000004 /* CustomHeaderInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderInterceptor.swift; sourceTree = "<group>"; };
+		AA00000600000006AA000006 /* InMemoryTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryTokenProvider.swift; sourceTree = "<group>"; };
 		D536AEA6294A61B200A49DE0 /* PokeAPI.Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPI.Endpoints.swift; sourceTree = "<group>"; };
 		D536AEA9294A631900A49DE0 /* PokeAPI.GetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPI.GetRequest.swift; sourceTree = "<group>"; };
 		D54A599B29520B7000DA8522 /* HTTPBinEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBinEndpoints.swift; sourceTree = "<group>"; };
@@ -75,6 +81,8 @@
 			children = (
 				D54A599B29520B7000DA8522 /* HTTPBinEndpoints.swift */,
 				D54A599D29520D9700DA8522 /* HTTPBin.Request.swift */,
+				AA00000400000004AA000004 /* CustomHeaderInterceptor.swift */,
+				AA00000600000006AA000006 /* InMemoryTokenProvider.swift */,
 			);
 			path = HTTPBin;
 			sourceTree = "<group>";
@@ -143,6 +151,7 @@
 				D5C726FF2CE507D40010102A /* ResourceView.swift */,
 				D5C727012CE50B7A0010102A /* ResponseView.swift */,
 				D5C727032CE523F10010102A /* ImageView.swift */,
+				AA00000200000002AA000002 /* DownloadView.swift */,
 				D5DFA11729496A3800727398 /* APIs */,
 				D5E265362949301400549A90 /* Assets.xcassets */,
 				D5E2653B2949301400549A90 /* Info.plist */,
@@ -238,6 +247,9 @@
 				D5C726FE2CE504A90010102A /* ContentView.swift in Sources */,
 				D54A59A32952176D00DA8522 /* JSONPlaceholderEndpoints.swift in Sources */,
 				D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */,
+				AA00000100000001AA000001 /* DownloadView.swift in Sources */,
+				AA00000300000003AA000003 /* CustomHeaderInterceptor.swift in Sources */,
+				AA00000500000005AA000005 /* InMemoryTokenProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,16 +453,12 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		D53526592E6C622B00C8276B /* XCRemoteSwiftPackageReference "Networking" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/brillcp/Networking";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.5;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		D53526592E6C622B00C8276B /* XCLocalSwiftPackageReference "Networking" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		D535265A2E6C622B00C8276B /* Networking */ = {

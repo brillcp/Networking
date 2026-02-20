@@ -9,9 +9,9 @@ struct ResourceView: View {
     }
 
     var body: some View {
-        List(viewModel.endpoints, id: \.endpoint.path) { request in
+        List(Array(viewModel.endpoints.enumerated()), id: \.offset) { _, request in
             NavigationLink(destination: view(fromRequestable: request)) {
-                Text(request.endpoint.path)
+                Text(label(for: request))
                     .font(.caption)
             }
         }
@@ -23,6 +23,13 @@ struct ResourceView: View {
 
 // MARK: - Private
 private extension ResourceView {
+    func label(for request: Requestable) -> String {
+        if let httpBinRequest = request as? HTTPBin.Request {
+            return httpBinRequest.displayName
+        }
+        return request.endpoint.path
+    }
+
     @ViewBuilder
     func view(fromRequestable request: Requestable) -> some View {
         if let request = request as? HTTPBin.Request {
@@ -30,6 +37,8 @@ private extension ResourceView {
             case .jpeg, .png:
                 let vm = ImageViewModel(apiData: viewModel.apiData, request: request)
                 ImageView(viewModel: vm)
+            case .download:
+                DownloadView(viewModel: DownloadViewModel(apiData: viewModel.apiData))
             default:
                 ResponseView(viewModel: .init(apiData: viewModel.apiData, request: request))
             }

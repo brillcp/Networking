@@ -5,6 +5,8 @@ struct APIListData: Identifiable {
     let id = UUID()
     let url: URL
     let endpoints: [Requestable]
+    var interceptors: [NetworkInterceptor] = []
+    var tokenProvider: TokenProvidable? = nil
 }
 
 // MARK: -
@@ -35,7 +37,14 @@ extension APIListData {
     }
 
     static var httpBin: APIListData {
-        APIListData(url: try! "https://httpbin.org".asURL(), endpoints: HTTPBin.Request.allCases)
+        let tokenProvider = InMemoryTokenProvider(token: "demo-bearer-token-12345")
+        let retryPolicy = RetryPolicy(maxRetryCount: 2, baseDelay: 0.5)
+        return APIListData(
+            url: try! "https://httpbin.org".asURL(),
+            endpoints: HTTPBin.Request.allCases,
+            interceptors: [CustomHeaderInterceptor(), retryPolicy],
+            tokenProvider: tokenProvider
+        )
     }
 
     static var placeholder: APIListData {
