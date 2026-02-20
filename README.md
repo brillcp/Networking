@@ -1,7 +1,7 @@
 ![network-header](https://user-images.githubusercontent.com/15960525/206866384-044ca1d7-172d-4d5f-80f7-7ee234f2a363.png)
 ![workflow](https://img.shields.io/github/actions/workflow/status/brillcp/networking/swift.yml?branch=master&event=push)
 ![release](https://img.shields.io/github/v/release/brillcp/networking)
-![swift](https://img.shields.io/badge/Swift-5.4%2B-orange)
+![swift](https://img.shields.io/badge/Swift-5.9%2B-orange)
 ![platforms](https://img.shields.io/badge/Platforms-iOS%20macOS%20tvOS%20watchOS-blue)
 [![spm](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-green)](#swift-package-manager)
 [![license](https://img.shields.io/github/license/brillcp/networking)](/LICENSE)
@@ -18,8 +18,13 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
     - [Adding parameters](#adding-parameters)
     - [Parameter encoding](#parameter-encoding)
     - [Making POST requests](#making-post-requests)
+    - [Encodable bodies](#encodable-bodies)
     - [Converting data models](#converting-data-models)
     - [Check HTTP status codes](#check-HTTP-status-codes)
+    - [Full response metadata](#full-response-metadata)
+    - [Interceptors](#interceptors)
+    - [Multipart uploads](#multipart-uploads)
+    - [Retry policy](#retry-policy)
     - [Download progress](#download-progress)
 - [Installation](#installation-)
     - [Swift Package Manager](#swift-package-manager)
@@ -30,19 +35,24 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 ## Features 📲
  - [x] Easy to build server configurations and requests for any REST API
  - [x] Clear request and response logging
- - [x] URL query and JSON parameter encoding
+ - [x] URL query, JSON, and form-encoded parameter encoding
+ - [x] Type-safe `Encodable` request bodies
  - [x] Authentication with Basic and Bearer token
+ - [x] Full response metadata (status code + headers) via `HTTP.Response`
+ - [x] Request interceptors and middleware
+ - [x] Multipart form data uploads
+ - [x] Retry policy with exponential backoff
  - [x] Download files with progress
  - [x] Simple and clean syntax
- - [x] Modern Swift Concurrency
+ - [x] Swift 6 concurrency support
 
 ## Requirements ❗️
 | Platform | Min. Swift Version | Installation
 | --- | --- | --- |
-| iOS 16.4+ | 5.4 | [Swift Package Manager](#swift-package-manager) |
-| macOS 10.15+ | 5.4 | [Swift Package Manager](#swift-package-manager) |
-| tvOS 13.0+ | 5.4 | [Swift Package Manager](#swift-package-manager) |
-| watchOS 6.0+ | 5.4 | [Swift Package Manager](#swift-package-manager) |
+| iOS 16.4+ | 5.9 | [Swift Package Manager](#swift-package-manager) |
+| macOS 10.15+ | 5.9 | [Swift Package Manager](#swift-package-manager) |
+| tvOS 13.0+ | 5.9 | [Swift Package Manager](#swift-package-manager) |
+| watchOS 6.0+ | 5.9 | [Swift Package Manager](#swift-package-manager) |
 
 ## Usage 🕹
 Networking is built around three core components:
@@ -135,14 +145,14 @@ Status-Code: 200
 Localized Status-Code: no error
 Content-Type: application/json; charset=utf-8
 ```
-There is also a way to log the pure JSON response for requests in the console. By passing `logRespose: true` when making a request, the response JSON will be logged in the console. That way it is easy to debug when modeling an API:
+There is also a way to log the pure JSON response for requests in the console. By passing `printJSONResponse: true` when making a request, the response JSON will be logged in the console. That way it is easy to debug when modeling an API:
 ```swift
-let model = try await networkService.request(user, logResponse: true)
+let model = try await networkService.request(user, printJSONResponse: true)
 ```
 
 ## Advanced usage
 ### Authentication
-Some times an API requires that requests are authenticated. Networking currently supports basic authentication and bearer token authentication. 
+Some times an API requires that requests are authenticated. Networking currently supports basic authentication and bearer token authentication.
 It involves creating a server configuration with a token provider object. The [`TokenProvider`](Sources/Protocols/TokenProvidable.swift) object can be any type of data storage, `UserDefaults`, `Keychain`, `CoreData` or other.
 The point of the token provider is to persist an authentication token on the device and then use that token to authenticate requests.
 The following implementation demonstrates how a bearer token can be retrieved from the device using `UserDefaults`, but as mentioned, it can be any persistant storage:
@@ -208,10 +218,10 @@ enum Request: Requestable {
 Depedning on the `encoding` method, the parameters will either be encoded in the url query, in the HTTP body as JSON or as a string.
 The `encoding` property on a request will encode the given parameters either in the url query or the HTTP body.
 ```swift
-var encoding: Request.Encoding { .query } // Encode parameters in the url: `.../users?page=1&username=viktor`
-var encoding: Request.Encoding { .json } // Encode parameters as JSON in the HTTP body: `{"page":"1,"name":"viktor"}"`
-var encoding: Request.Encoding { .body } // Encode parameters as a string in the HTTP body: `"page=1&name=viktor"`
-
+var encoding: Request.Encoding { .query }      // Encode parameters in the url: `.../users?page=1&username=viktor`
+var encoding: Request.Encoding { .json }       // Encode parameters as JSON in the HTTP body: `{"page":"1,"name":"viktor"}"`
+var encoding: Request.Encoding { .body }       // Encode parameters as a string in the HTTP body: `"page=1&name=viktor"`
+var encoding: Request.Encoding { .multipart }  // Encode using multipart/form-data (see Multipart uploads below)
 ```
 
 ### Making `POST` requests
@@ -232,7 +242,34 @@ enum PostRequest: Requestable {
 }
 ```
 
+### Encodable bodies
+For type-safe request bodies, use the `body` property instead of `parameters`. This encodes a `Codable` struct directly as JSON in the HTTP body:
+```swift
+struct CreateUser: Codable, Sendable {
+    let name: String
+    let age: Int
+}
+
+enum UserRequest: Requestable {
+    case create(CreateUser)
+
+    var endpoint: EndpointType { Endpoint.users }
+    var encoding: Request.Encoding { .json }
+    var httpMethod: HTTP.Method { .post }
+
+    var body: (any Encodable & Sendable)? {
+        switch self {
+        case .create(let user):
+            return user
+        }
+    }
+}
+```
+When `body` is provided with `.json` encoding, it takes priority over `parameters`.
+
 ### Converting data models
+> **Deprecated:** Prefer using the `body` property (see [Encodable bodies](#encodable-bodies)) for sending data models in requests.
+
 If you have a custom data model that conforms to `Codable` you can use [`.asParameters()`](Sources/Extensions/Encodable.swift#L13) to convert the data model object to `HTTP Parameters`:
 ```swift
 struct User: Codable {
@@ -244,7 +281,6 @@ let user = User(name: "Günther", age: 69)
 let parameters = user.asParameters()
 print(parameters) // ["name": "Günther", "age": "69"]
 ```
-This is useful if you have any data model objects that you want to send as parameters in any requests.
 
 ### Check HTTP status codes
 Sometimes it can be useful to just check for a HTTP status code when a response comes back. Use [`response`](Sources/Service/NetworkService.swift#L66) to send a request and get back the status code in the response:
@@ -255,28 +291,115 @@ print(responseCode == .ok)
 ```
 Networking supports all the status codes defined in the HTTP protocol, [see here](Sources/HTTP/StatusCode.swift).
 
-### Download progress
-
-You can download files and track progress asynchronously using the [`downloader.download()`](Sources/Service/NetworkService.swift#L75). This function returns a tuple containing the file’s download URL and an `AsyncStream<Float>` to observe the progress of the download. The AsyncStream will yield progress updates from 0.0 to 1.0 as the download progresses. When the download completes, the final destination URL is provided.
+### Full response metadata
+Use `send()` to get the full response including the decoded body, HTTP status code, and response headers:
 ```swift
-let url = ...
+let request = GitHubUserRequest.user("brillcp")
 
-do {
-    let downloader = networkService.downloader(url: url!)
-    let (fileURL, progressStream) = try await downloader.download()
+// Decoded model with metadata
+let response: HTTP.Response<GitHubUser> = try await networkService.send(request)
+print(response.body)       // The decoded GitHubUser
+print(response.statusCode) // .ok
+print(response.headers)    // ["Content-Type": "application/json", ...]
 
-    // Track download progress
-    for await progress in progressStream {
-        // The download progress: 0.0 ... 1.0
-        print("Download progress: \(progress * 100)%")
+// Raw data with metadata
+let dataResponse: HTTP.Response<Data> = try await networkService.send(request)
+print(dataResponse.body)       // Raw Data
+print(dataResponse.statusCode) // .ok
+```
+
+### Interceptors
+Interceptors allow you to adapt outgoing requests and control retry behavior. Create a type conforming to [`NetworkInterceptor`](Sources/Protocols/NetworkInterceptor.swift):
+```swift
+struct AuthInterceptor: NetworkInterceptor {
+    func adapt(_ request: URLRequest) async throws -> URLRequest {
+        var request = request
+        let token = try await fetchToken()
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return request
     }
 
-    // The final destination URL
+    func retry(_ request: URLRequest, dueTo error: Network.Service.NetworkError, attemptCount: Int) async throws -> Bool {
+        // Retry once on 401 after refreshing the token
+        if case .badServerResponse(.unauthorized, _) = error, attemptCount == 0 {
+            try await refreshToken()
+            return true
+        }
+        return false
+    }
+}
+```
+
+Pass interceptors when creating the network service:
+```swift
+let service = Network.Service(server: serverConfig, interceptors: [AuthInterceptor()])
+```
+Interceptors are called in order. `adapt` runs before each request attempt, and `retry` is consulted when a request fails.
+
+### Multipart uploads
+For file uploads and mixed content, use multipart form data encoding:
+```swift
+enum UploadRequest: Requestable {
+    case avatar(Data)
+
+    var endpoint: EndpointType { Endpoint.upload }
+    var encoding: Request.Encoding { .multipart }
+    var httpMethod: HTTP.Method { .post }
+
+    var multipartBody: MultipartFormData? {
+        switch self {
+        case .avatar(let imageData):
+            var form = MultipartFormData()
+            form.append(value: "profile", name: "type")
+            form.append(data: imageData, name: "file", fileName: "avatar.jpg", mimeType: "image/jpeg")
+            return form
+        }
+    }
+}
+```
+The `MultipartFormData` builder handles boundary generation and encoding automatically.
+
+### Retry policy
+[`RetryPolicy`](Sources/Service/RetryPolicy.swift) is a built-in interceptor that retries failed requests with exponential backoff:
+```swift
+let retryPolicy = RetryPolicy(
+    maxRetryCount: 3,
+    retryableStatusCodes: RetryPolicy.defaultRetryableStatusCodes, // 408, 429, 500, 502, 503, 504
+    retryOnNetworkError: true,
+    baseDelay: 1.0 // seconds, doubles on each retry
+)
+
+let service = Network.Service(server: serverConfig, interceptors: [retryPolicy])
+```
+You can combine it with other interceptors:
+```swift
+let service = Network.Service(server: serverConfig, interceptors: [AuthInterceptor(), retryPolicy])
+```
+
+### Download progress
+
+You can download files and track progress asynchronously using the [`Downloader`](Sources/Service/Downloader.swift). Call `start()` to get a `DownloadHandle` with progress stream, completion task, and cancellation:
+```swift
+let url = URL(string: "https://example.com/file.zip")!
+
+let downloader = networkService.downloader(url: url)
+let handle = await downloader.start()
+
+// Track download progress
+for await progress in handle.progress {
+    print("Download progress: \(progress * 100)%")
+}
+
+do {
+    // Await the final file URL
+    let fileURL = try await handle.finished.value
     print("Download completed at: \(fileURL)")
 } catch {
-    // Handle error
     print("Download failed: \(error)")
 }
+
+// Cancel if needed
+handle.cancel()
 ```
 
 ## Installation 💾
@@ -285,7 +408,7 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 Once you have your Swift package set up, adding Networking as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```
 dependencies: [
-    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.6"))
+    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.13"))
 ]
 ```
 
