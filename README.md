@@ -26,6 +26,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
     - [Multipart uploads](#multipart-uploads)
     - [Retry policy](#retry-policy)
     - [Download progress](#download-progress)
+    - [Upload progress](#upload-progress)
 - [Installation](#installation-)
     - [Swift Package Manager](#swift-package-manager)
 - [Sample code](#sample-code-)
@@ -43,6 +44,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
  - [x] Multipart form data uploads
  - [x] Retry policy with exponential backoff
  - [x] Download files with progress
+ - [x] Upload files with progress
  - [x] Simple and clean syntax
  - [x] Swift 6 concurrency support
 
@@ -401,6 +403,31 @@ do {
 // Cancel if needed
 handle.cancel()
 ```
+
+### Upload progress
+
+For uploads that need progress tracking, use the [`Uploader`](Sources/Service/Uploader.swift). Build it from a `Requestable` and call `start()` to get an `UploadHandle`:
+```swift
+let uploader = try await networkService.uploader(for: uploadRequest)
+let handle = await uploader.start()
+
+// Track upload progress
+for await progress in handle.progress {
+    print("Upload progress: \(progress * 100)%")
+}
+
+do {
+    // Await the server response
+    let responseData = try await handle.finished.value
+    print("Upload completed: \(String(data: responseData, encoding: .utf8) ?? "")")
+} catch {
+    print("Upload failed: \(error)")
+}
+
+// Cancel if needed
+handle.cancel()
+```
+The `Uploader` uses `URLSessionUploadTask` under the hood and reports byte-level progress via its delegate. The request must use `.multipart` encoding with a `multipartBody` (see [Multipart uploads](#multipart-uploads)).
 
 ## Installation 💾
 ### Swift Package Manager

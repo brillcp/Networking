@@ -9,7 +9,7 @@ public extension Network.Service {
         private var progressContinuation: AsyncStream<Float>.Continuation?
 
         // MARK: - Public
-        public struct DownloadHandle {
+        public struct DownloadHandle: Sendable {
             public let progress: AsyncStream<Float>
             public let finished: Task<URL, Error>
             public let cancel: @Sendable () -> Void

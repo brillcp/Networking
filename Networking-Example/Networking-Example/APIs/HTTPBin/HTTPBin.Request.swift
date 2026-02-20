@@ -123,7 +123,7 @@ extension HTTPBin.Request {
         case .post: return "POST /post (Encodable body)"
         case .patch: return "PATCH /patch"
         case .head: return "HEAD /get"
-        case .upload: return "POST /post (Multipart upload)"
+        case .upload: return "POST /post (Upload)"
         case .authGet: return "GET /get (Bearer auth)"
         case .retryDemo: return "GET /status/503 (Retry demo)"
         case .jpeg: return "GET /image/jpeg"

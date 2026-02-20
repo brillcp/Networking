@@ -39,6 +39,8 @@ private extension ResourceView {
                 ImageView(viewModel: vm)
             case .download:
                 DownloadView(viewModel: DownloadViewModel(apiData: viewModel.apiData))
+            case .upload:
+                UploadView(viewModel: UploadViewModel(apiData: viewModel.apiData, request: request))
             default:
                 ResponseView(viewModel: .init(apiData: viewModel.apiData, request: request))
             }

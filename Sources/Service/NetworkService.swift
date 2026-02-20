@@ -36,6 +36,10 @@ public protocol NetworkServiceProtocol {
     /// - Parameter url: The `URL` from which the downloader will retrieve data.
     /// - Returns: A configured `Network.Service.Downloader` instance for downloading data from the given URL.
     func downloader(url: URL) -> Network.Service.Downloader
+    /// Creates a new instance of `Network.Service.Uploader` configured for the specified request.
+    /// - Parameter request: The `Requestable` describing the upload endpoint, encoding, and body data.
+    /// - Returns: A configured `Network.Service.Uploader` instance ready to upload data with progress tracking.
+    func uploader(for request: Requestable) async throws -> Network.Service.Uploader
     /// Send a request and return the full response including the decoded body, status code, and headers.
     /// - parameters:
     ///     - request: The request to send over the network
@@ -137,6 +141,12 @@ extension Network.Service: NetworkServiceProtocol {
     nonisolated
     public func downloader(url: URL) -> Network.Service.Downloader {
         Network.Service.Downloader(url: url)
+    }
+
+    public func uploader(for request: Requestable) async throws -> Network.Service.Uploader {
+        let urlRequest = try request.configure(withServer: server, using: logger, encoder: encoder)
+        let data = urlRequest.httpBody ?? Data()
+        return Network.Service.Uploader(request: urlRequest, data: data)
     }
 }
 

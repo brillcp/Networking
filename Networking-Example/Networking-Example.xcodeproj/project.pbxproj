@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AA00000100000001AA000001 /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000200000002AA000002 /* DownloadView.swift */; };
+		BB00000100000001BB000001 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000200000002BB000002 /* UploadView.swift */; };
 		AA00000300000003AA000003 /* CustomHeaderInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000400000004AA000004 /* CustomHeaderInterceptor.swift */; };
 		AA00000500000005AA000005 /* InMemoryTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000600000006AA000006 /* InMemoryTokenProvider.swift */; };
 		D535265B2E6C622B00C8276B /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = D535265A2E6C622B00C8276B /* Networking */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		AA00000200000002AA000002 /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
+		BB00000200000002BB000002 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		AA00000400000004AA000004 /* CustomHeaderInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderInterceptor.swift; sourceTree = "<group>"; };
 		AA00000600000006AA000006 /* InMemoryTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryTokenProvider.swift; sourceTree = "<group>"; };
 		D536AEA6294A61B200A49DE0 /* PokeAPI.Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPI.Endpoints.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				D5C727012CE50B7A0010102A /* ResponseView.swift */,
 				D5C727032CE523F10010102A /* ImageView.swift */,
 				AA00000200000002AA000002 /* DownloadView.swift */,
+				BB00000200000002BB000002 /* UploadView.swift */,
 				D5DFA11729496A3800727398 /* APIs */,
 				D5E265362949301400549A90 /* Assets.xcassets */,
 				D5E2653B2949301400549A90 /* Info.plist */,
@@ -248,6 +251,7 @@
 				D54A59A32952176D00DA8522 /* JSONPlaceholderEndpoints.swift in Sources */,
 				D5DFA1142949698600727398 /* GitHub.Endpoints.swift in Sources */,
 				AA00000100000001AA000001 /* DownloadView.swift in Sources */,
+				BB00000100000001BB000001 /* UploadView.swift in Sources */,
 				AA00000300000003AA000003 /* CustomHeaderInterceptor.swift in Sources */,
 				AA00000500000005AA000005 /* InMemoryTokenProvider.swift in Sources */,
 			);
