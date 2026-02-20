@@ -62,6 +62,8 @@ public enum Network {
         private let encoder: JSONEncoder
         private let session: URLSession
         private let logger: NetworkLoggerProtocol
+        private let interceptors: [any NetworkInterceptor]
+        private let maxRetryCount = 2
 
         // MARK: - Init
         /// Initialize the network service
@@ -71,6 +73,7 @@ public enum Network {
         ///     - decoder: A default json decoder object
         ///     - encoder: A default json encoder object used for encoding `Encodable` request bodies.
         ///     - dateDecodingStrategy: The strategy used by the JSONDecoder to decode date values from responses. Defaults to `.iso8601`.
+        ///     - interceptors: An ordered array of interceptors that can adapt requests and handle retries. Defaults to none.
         ///     - logger: A logger used to record requests and responses. Defaults to a `NetworkLogger`.
         public init(
             server: ServerConfig,
@@ -78,6 +81,7 @@ public enum Network {
             decoder: JSONDecoder = JSONDecoder(),
             encoder: JSONEncoder = JSONEncoder(),
             dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .iso8601,
+            interceptors: [any NetworkInterceptor] = [],
             logger: NetworkLoggerProtocol = NetworkLogger()
         ) {
             let configuredDecoder = decoder
@@ -86,6 +90,7 @@ public enum Network {
             self.encoder = encoder
             self.session = session
             self.server = server
+            self.interceptors = interceptors
             self.logger = logger
         }
     }
@@ -138,33 +143,60 @@ extension Network.Service: NetworkServiceProtocol {
 // MARK: - Private functions
 private extension Network.Service {
     func makeRequest(_ request: Requestable, printJSONResponse: Bool) async throws -> (Data, URLResponse) {
-        let urlRequest: URLRequest
+        var baseRequest: URLRequest
         do {
-            urlRequest = try request.configure(withServer: server, using: logger, encoder: encoder)
+            baseRequest = try request.configure(withServer: server, using: logger, encoder: encoder)
         } catch {
             throw NetworkError.encodingError(error)
         }
 
-        let (data, response): (Data, URLResponse)
-        do {
-            (data, response) = try await session.data(for: urlRequest)
-        } catch {
-            throw NetworkError.networkError(error)
+        for attemptCount in 0...maxRetryCount {
+            var urlRequest = baseRequest
+            do {
+                for interceptor in interceptors {
+                    urlRequest = try await interceptor.adapt(urlRequest)
+                }
+            } catch {
+                throw NetworkError.encodingError(error)
+            }
+
+            let (data, response): (Data, URLResponse)
+            do {
+                (data, response) = try await session.data(for: urlRequest)
+            } catch {
+                throw NetworkError.networkError(error)
+            }
+
+            logger.logResponse(data, response, printJSON: printJSONResponse)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.badServerResponse(.unknown, Data())
+            }
+
+            let statusCode = HTTP.StatusCode(rawValue: httpResponse.statusCode) ?? .unknown
+
+            guard (HTTP.StatusCode.ok.rawValue ... HTTP.StatusCode.iMUsed.rawValue).contains(httpResponse.statusCode) else {
+                let error = NetworkError.badServerResponse(statusCode, data)
+
+                if attemptCount < maxRetryCount {
+                    var shouldRetry = false
+                    for interceptor in interceptors {
+                        if try await interceptor.retry(urlRequest, dueTo: error, attemptCount: attemptCount) {
+                            shouldRetry = true
+                            break
+                        }
+                    }
+                    if shouldRetry { continue }
+                }
+
+                throw error
+            }
+
+            return (data, response)
         }
 
-        logger.logResponse(data, response, printJSON: printJSONResponse)
-
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.badServerResponse(.unknown, Data())
-        }
-
-        let statusCode = HTTP.StatusCode(rawValue: httpResponse.statusCode) ?? .unknown
-
-        guard (HTTP.StatusCode.ok.rawValue ... HTTP.StatusCode.iMUsed.rawValue).contains(httpResponse.statusCode) else {
-            throw NetworkError.badServerResponse(statusCode, data)
-        }
-
-        return (data, response)
+        // Unreachable — the loop always returns or throws
+        throw NetworkError.networkError(URLError(.unknown))
     }
 
     func buildResponse<Body: Sendable>(body: Body, urlResponse: URLResponse) -> HTTP.Response<Body> {
