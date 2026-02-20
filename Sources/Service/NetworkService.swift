@@ -17,7 +17,7 @@ public protocol NetworkServiceProtocol {
     ///     - printJSONResponse: A boolean value that determines if the json response should be printed to the console. Defaults to false.
     /// - throws: An error if the request fails for any reason
     /// - returns: The decoded data model object
-    func request<DataModel: Decodable>(_ request: Requestable, printJSONResponse: Bool) async throws -> DataModel
+    func request<DataModel: Decodable & Sendable>(_ request: Requestable, printJSONResponse: Bool) async throws -> DataModel
     /// Send a request and return the raw response data
     /// - parameters:
     ///     - request: The request to send over the network
@@ -98,7 +98,7 @@ public enum Network {
 
 // MARK: - Public functions
 extension Network.Service: NetworkServiceProtocol {
-    public func request<DataModel: Decodable>(_ request: Requestable, printJSONResponse: Bool = false) async throws -> DataModel {
+    public func request<DataModel: Decodable & Sendable>(_ request: Requestable, printJSONResponse: Bool = false) async throws -> DataModel {
         let (data, _) = try await makeRequest(request, printJSONResponse: printJSONResponse)
         do {
             return try decoder.decode(DataModel.self, from: data)

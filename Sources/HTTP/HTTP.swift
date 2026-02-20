@@ -7,7 +7,7 @@ public enum HTTP {
     public typealias ContentType = String
 
     /// The HTTP methods available for requests
-    public enum Method: String {
+    public enum Method: String, Sendable {
         case get
         case post
         case delete

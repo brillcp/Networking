@@ -90,10 +90,10 @@ private extension Network.Service.Downloader {
 
 // MARK: - Download Delegate
 private final class DownloadDelegate: NSObject, URLSessionDownloadDelegate {
-    private let completionHandler: (Result<URL, Error>) -> Void
-    private let progressHandler: (Float) -> Void
-    
-    init(completionHandler: @escaping (Result<URL, Error>) -> Void, progressHandler: @escaping (Float) -> Void) {
+    private let completionHandler: @Sendable (Result<URL, Error>) -> Void
+    private let progressHandler: @Sendable (Float) -> Void
+
+    init(completionHandler: @escaping @Sendable (Result<URL, Error>) -> Void, progressHandler: @escaping @Sendable (Float) -> Void) {
         self.completionHandler = completionHandler
         self.progressHandler = progressHandler
         super.init()
@@ -114,4 +114,3 @@ private final class DownloadDelegate: NSObject, URLSessionDownloadDelegate {
         }
     }
 }
-

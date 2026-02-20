@@ -3,7 +3,7 @@ import Foundation
 /// A name space for request encoding and autorization
 public enum Request {
     /// Encoding types for parameters for requests
-    public enum Encoding {
+    public enum Encoding: Sendable {
         /// Encode parameters in the URL of a request. E.g `.../api/v1/endpoint?foo=bar`
         case query
         /// Encode parameters in the http body as json
@@ -15,7 +15,7 @@ public enum Request {
     }
 
     /// The different authorization types for a given request
-    public enum Authorization {
+    public enum Authorization: Sendable {
         case bearer
         case basic
         case none
