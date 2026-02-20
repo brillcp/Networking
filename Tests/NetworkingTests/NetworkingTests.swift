@@ -20,18 +20,16 @@ struct MockDownloader: DownloaderProtocol {
 }
 
 struct NetworkingTests {
-    private let serverConfig = ServerConfig(baseURL: try! "https://www.googleapis.com/books/v1".asURL())
-    private lazy var networkService = Network.Service(server: serverConfig)
-
     @Test
-    mutating func mockUser() async throws {
+    func mockUser() async throws {
+        let service = Network.Service(server: ServerConfig(baseURL: try "https://www.googleapis.com/books/v1".asURL()))
         let book = MockGetRequest.book("qzcQCwAAQBAJ")
-        let response: MockVolumeModel = try await networkService.request(book)
+        let response: MockVolumeModel = try await service.request(book)
         #expect(response.id == "qzcQCwAAQBAJ")
     }
 
     @Test
-    mutating func downloadImageFile() async throws {
+    func downloadImageFile() async throws {
         let downloader = MockDownloader()
         let (fileURL, _) = try await downloader.download()
         #expect(fileURL.lastPathComponent.split(separator: ".").last == "tmp")

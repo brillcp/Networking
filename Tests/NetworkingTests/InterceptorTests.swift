@@ -3,12 +3,10 @@ import Foundation
 @testable import Networking
 
 struct InterceptorTests {
-    private let serverConfig = ServerConfig(baseURL: try! "https://www.googleapis.com/books/v1".asURL())
-
     @Test
-    mutating func adaptInterceptorModifiesRequest() async throws {
+    func adaptInterceptorModifiesRequest() async throws {
         let interceptor = HeaderInterceptor(name: "X-Custom", value: "test-value")
-        let service = Network.Service(server: serverConfig, interceptors: [interceptor])
+        let service = Network.Service(server: ServerConfig(baseURL: try "https://www.googleapis.com/books/v1".asURL()), interceptors: [interceptor])
 
         // If adapt runs, the request succeeds with the added header.
         // We verify by making a real request — if it doesn't crash, adapt ran.

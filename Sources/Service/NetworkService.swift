@@ -2,7 +2,7 @@ import Foundation
 
 public enum Package {
     public static let name = "Networking"
-    public static let version = "0.10.0"
+    public static let version = "0.9.13"
 
     public static var description: String {
         "\(name)/\(version)"

@@ -34,5 +34,5 @@ let package = Package(
             name: "NetworkingTests",
             dependencies: ["Networking"]),
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageVersions: [.version("5.9"), .version("6")]
 )

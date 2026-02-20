@@ -53,22 +53,22 @@ private enum MockBodyEndpoint: EndpointType {
     var path: String { "test" }
 }
 
-private struct MockBodyRequest: Requestable {
+private struct MockBodyRequest: Requestable, @unchecked Sendable {
     var encoding: Request.Encoding { .body }
     var httpMethod: HTTP.Method { .post }
     var endpoint: EndpointType { MockBodyEndpoint.test }
-    let parameters: HTTP.Parameters
+    nonisolated(unsafe) let parameters: HTTP.Parameters
 
     init(parameters: HTTP.Parameters) {
         self.parameters = parameters
     }
 }
 
-private struct MockQueryRequest: Requestable {
+private struct MockQueryRequest: Requestable, @unchecked Sendable {
     var encoding: Request.Encoding { .query }
     var httpMethod: HTTP.Method { .get }
     var endpoint: EndpointType { MockBodyEndpoint.test }
-    let parameters: HTTP.Parameters
+    nonisolated(unsafe) let parameters: HTTP.Parameters
 
     init(parameters: HTTP.Parameters) {
         self.parameters = parameters
