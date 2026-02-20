@@ -153,15 +153,14 @@ extension Network.Service: NetworkServiceProtocol {
 // MARK: - Private functions
 private extension Network.Service {
     func makeRequest(_ request: Requestable, printJSONResponse: Bool) async throws -> (Data, URLResponse) {
-        var baseRequest: URLRequest
-        do {
-            baseRequest = try request.configure(withServer: server, using: logger, encoder: encoder)
-        } catch {
-            throw NetworkError.encodingError(error)
-        }
-
         for attemptCount in 0...maxRetryCount {
-            var urlRequest = baseRequest
+            var urlRequest: URLRequest
+            do {
+                urlRequest = try request.configure(withServer: server, using: logger, encoder: encoder)
+            } catch {
+                throw NetworkError.encodingError(error)
+            }
+
             do {
                 for interceptor in interceptors {
                     urlRequest = try await interceptor.adapt(urlRequest)

@@ -15,6 +15,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
 - [Logging](#logging-)
 - [Advanced usage](#advanced-usage)
     - [Authentication](#authentication)
+        - [JWT token refresh](#jwt-token-refresh)
     - [Adding parameters](#adding-parameters)
     - [Parameter encoding](#parameter-encoding)
     - [Making POST requests](#making-post-requests)
@@ -39,6 +40,7 @@ Networking is a lightweight and powerful HTTP network framework written in Swift
  - [x] URL query, JSON, and form-encoded parameter encoding
  - [x] Type-safe `Encodable` request bodies
  - [x] Authentication with Basic and Bearer token
+ - [x] Automatic JWT token refresh via interceptors
  - [x] Full response metadata (status code + headers) via `HTTP.Response`
  - [x] Request interceptors and middleware
  - [x] Multipart form data uploads
@@ -195,6 +197,44 @@ enum AuthenticatedRequest: Requestable {
 This will automatically add a `"Authorization: Bearer [token]"` HTTP header to the request before sending it. Then just provide the token provider object when initializing a server configuration:
 ```swift
 let server = ServerConfig(baseURL: "https://api.github.com", tokenProvider: TokenProvider())
+```
+
+#### JWT token refresh
+When a JWT expires the server responds with a `401 Unauthorized`. You can use an [interceptor](#interceptors) to automatically refresh the token and retry the request. The framework re-builds the request on each retry attempt, so the refreshed token from your `TokenProvider` is picked up automatically:
+```swift
+struct JWTRefreshInterceptor: NetworkInterceptor {
+    let tokenProvider: TokenProvider
+
+    func retry(_ request: URLRequest, dueTo error: Network.Service.NetworkError, attemptCount: Int) async throws -> Bool {
+        // Only retry once on 401
+        guard case .badServerResponse(.unauthorized, _) = error, attemptCount == 0 else {
+            return false
+        }
+
+        // Call your refresh endpoint
+        let newToken = try await refreshToken()
+        tokenProvider.setToken(newToken)
+
+        // Return true — the request is rebuilt with the new token and retried
+        return true
+    }
+
+    private func refreshToken() async throws -> String {
+        let url = URL(string: "https://api.example.com/auth/refresh")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let response = try JSONDecoder().decode(TokenResponse.self, from: data)
+        return response.accessToken
+    }
+}
+```
+
+Pass it as an interceptor when creating the service:
+```swift
+let tokenProvider = TokenProvider()
+let server = ServerConfig(baseURL: "https://api.example.com", tokenProvider: tokenProvider)
+let service = Network.Service(server: server, interceptors: [JWTRefreshInterceptor(tokenProvider: tokenProvider)])
 ```
 
 ### Adding parameters
