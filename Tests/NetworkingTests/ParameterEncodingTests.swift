@@ -31,6 +31,19 @@ struct ParameterEncodingTests {
 
         #expect(urlRequest.value(forHTTPHeaderField: "Content-Type") == "application/x-www-form-urlencoded")
     }
+
+    @Test
+    func queryEncodingHandlesSpecialCharactersInURL() throws {
+        let request = MockQueryRequest(parameters: ["q": "hello world", "filter": "a&b"])
+        let urlRequest = try request.configure(withServer: server, using: NetworkLogger())
+
+        let url = try #require(urlRequest.url)
+        let query = try #require(url.query)
+
+        // URLComponents percent-encodes values in query items
+        #expect(query.contains("q=hello%20world") || query.contains("q=hello+world"))
+        #expect(query.contains("filter=a%26b"))
+    }
 }
 
 // MARK: - Mocks
@@ -43,6 +56,17 @@ private enum MockBodyEndpoint: EndpointType {
 private struct MockBodyRequest: Requestable {
     var encoding: Request.Encoding { .body }
     var httpMethod: HTTP.Method { .post }
+    var endpoint: EndpointType { MockBodyEndpoint.test }
+    let parameters: HTTP.Parameters
+
+    init(parameters: HTTP.Parameters) {
+        self.parameters = parameters
+    }
+}
+
+private struct MockQueryRequest: Requestable {
+    var encoding: Request.Encoding { .query }
+    var httpMethod: HTTP.Method { .get }
     var endpoint: EndpointType { MockBodyEndpoint.test }
     let parameters: HTTP.Parameters
 

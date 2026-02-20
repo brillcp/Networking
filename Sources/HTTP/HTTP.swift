@@ -12,5 +12,7 @@ public enum HTTP {
         case post
         case delete
         case put
+        case patch
+        case head
     }
 }
