@@ -475,7 +475,7 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 Once you have your Swift package set up, adding Networking as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```
 dependencies: [
-    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.13"))
+    .package(url: "https://github.com/brillcp/Networking.git", .upToNextMajor(from: "0.9.14"))
 ]
 ```
 

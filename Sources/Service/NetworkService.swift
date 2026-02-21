@@ -2,7 +2,7 @@ import Foundation
 
 public enum Package {
     public static let name = "Networking"
-    public static let version = "0.9.13"
+    public static let version = "0.9.14"
 
     public static var description: String {
         "\(name)/\(version)"
@@ -145,7 +145,7 @@ extension Network.Service: NetworkServiceProtocol {
 
     public func uploader(for request: Requestable) async throws -> Network.Service.Uploader {
         let urlRequest = try request.configure(withServer: server, using: logger, encoder: encoder)
-        let data = urlRequest.httpBody ?? Data()
+        let data = request.multipartBody?.encode() ?? Data()
         return Network.Service.Uploader(request: urlRequest, data: data)
     }
 }

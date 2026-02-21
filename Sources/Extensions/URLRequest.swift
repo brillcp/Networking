@@ -39,7 +39,6 @@ public extension URLRequest {
 
         case .multipart:
             if let multipart = config.multipartData {
-                httpBody = multipart.data
                 setValue(multipart.contentType, forHTTPHeaderField: HTTP.Header.Field.contentType)
             }
         }
