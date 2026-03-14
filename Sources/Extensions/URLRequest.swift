@@ -18,25 +18,20 @@ public extension URLRequest {
         switch config.encoding {
         case .query:
             let parameters = config.parameters
-            guard !parameters.isEmpty else { return }
+            guard !parameters.isEmpty else { break }
             try urlEncode(withParameters: parameters)
-
         case .json:
             if let encodedBody = config.encodedBody {
-                httpBody = encodedBody
-                setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.contentType)
-                setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.accept)
+                jsonEncode(withData: encodedBody)
             } else {
                 let parameters = config.parameters
-                guard !parameters.isEmpty else { return }
+                guard !parameters.isEmpty else { break }
                 try jsonEncode(withParameters: parameters)
             }
-
         case .body:
             let parameters = config.parameters
-            guard !parameters.isEmpty else { return }
+            guard !parameters.isEmpty else { break }
             bodyEncode(withParameters: parameters)
-
         case .multipart:
             if let multipart = config.multipartData {
                 setValue(multipart.contentType, forHTTPHeaderField: HTTP.Header.Field.contentType)
@@ -75,6 +70,12 @@ private extension URLRequest {
     /// - returns: The new `URLRequest` with the parameters encoded as JSON in the http body
     mutating func jsonEncode(withParameters parameters: HTTP.Parameters) throws {
         httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.contentType)
+        setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.accept)
+    }
+
+    mutating func jsonEncode(withData data: Data) {
+        httpBody = data
         setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.contentType)
         setValue(HTTP.Header.Field.json, forHTTPHeaderField: HTTP.Header.Field.accept)
     }
