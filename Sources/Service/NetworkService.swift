@@ -2,7 +2,7 @@ import Foundation
 
 public enum Package {
     public static let name = "Networking"
-    public static let version = "0.9.15"
+    public static let version = "0.10.1"
 
     public static var description: String {
         "\(name)/\(version)"
@@ -144,8 +144,13 @@ extension Network.Service: NetworkServiceProtocol {
     }
 
     public func uploader(for request: Requestable) async throws -> Network.Service.Uploader {
+        // `urlRequest.httpBody` already holds the encoded multipart payload
+        // (assigned by `URLRequest.init(withConfig:)`). Reuse it so the
+        // Content-Type's boundary matches the uploaded bytes — calling
+        // `multipartBody.encode()` again here would generate a new boundary
+        // and break server-side parsing.
         let urlRequest = try request.configure(withServer: server, using: logger, encoder: encoder)
-        let data = request.multipartBody?.encode() ?? Data()
+        let data = urlRequest.httpBody ?? Data()
         return Network.Service.Uploader(request: urlRequest, data: data)
     }
 }
