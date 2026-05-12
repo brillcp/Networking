@@ -15,6 +15,12 @@ public extension URLRequest {
         httpMethod = config.httpMethod.rawValue
         allHTTPHeaderFields = config.header
 
+        // Apply additive URL query first — independent of body encoding so a
+        // request can send `?grant_type=…` alongside a JSON or multipart body.
+        if !config.query.isEmpty {
+            try urlEncode(withParameters: config.query)
+        }
+
         switch config.encoding {
         case .query:
             let parameters = config.parameters

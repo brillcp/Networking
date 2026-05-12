@@ -10,6 +10,11 @@ public protocol Requestable: Sendable {
     var timeoutInterval: TimeInterval { get }
     /// The request parameters. Defaults to an empty dictionary.
     var parameters: HTTP.Parameters { get }
+    /// URL query parameters appended regardless of `encoding`. Lets a
+    /// request send `?key=value` alongside a JSON or multipart body — e.g.
+    /// endpoints that route by query string but expect a structured body.
+    /// Defaults to an empty dictionary.
+    var query: HTTP.Parameters { get }
     /// An optional `Encodable` body for JSON requests. When provided with `.json` encoding,
     /// this is encoded directly using `JSONEncoder` instead of serializing `parameters`.
     var body: (any Encodable & Sendable)? { get }
@@ -53,6 +58,7 @@ public extension Requestable {
     var timeoutInterval: TimeInterval { 30.0 }
     var contentType: HTTP.ContentType? { nil }
     var parameters: HTTP.Parameters { [:] }
+    var query: HTTP.Parameters { [:] }
     var body: (any Encodable & Sendable)? { nil }
     var multipartBody: MultipartFormData? { nil }
 }

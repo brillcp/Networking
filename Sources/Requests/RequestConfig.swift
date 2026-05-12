@@ -35,6 +35,8 @@ public extension Request.Config {
     var timeoutInterval: TimeInterval { request.timeoutInterval }
     /// The parameters for the request
     var parameters: HTTP.Parameters { request.parameters }
+    /// URL query parameters applied regardless of `encoding`.
+    var query: HTTP.Parameters { request.query }
     /// The encoding for the request
     var encoding: Request.Encoding { request.encoding }
     /// The HTTP method for the request
