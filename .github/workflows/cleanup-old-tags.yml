@@ -1,0 +1,41 @@
+name: Cleanup Old Tags and Releases
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Delete old releases and tags (keep latest two)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Delete releases first with --cleanup-tag to avoid orphaned drafts
+          gh release list --json tagName -q '.[].tagName' | tail -n +3 | while read -r TAG; do
+            [ -z "$TAG" ] && continue
+            echo "Deleting release and tag: $TAG"
+            gh release delete "$TAG" --yes --cleanup-tag 2>/dev/null || true
+          done
+
+          # Clean up any remaining orphaned tags (tags without releases)
+          git fetch --tags
+          ALL_TAGS=$(git tag --sort=-v:refname)
+          echo "$ALL_TAGS" | tail -n +3 | while read -r TAG; do
+            [ -z "$TAG" ] && continue
+            echo "Deleting orphaned tag: $TAG"
+            git push origin --delete "$TAG" 2>/dev/null || true
+          done
+
+      - name: Summary
+        run: |
+          echo "Remaining tags:"
+          git tag --sort=-v:refname

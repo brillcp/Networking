@@ -1,0 +1,63 @@
+name: Auto Tag and Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  tag_and_release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Bump version (custom minor/patch logic)
+        id: bump
+        run: |
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${{ steps.get_tag.outputs.tag }}"
+
+          if [ "$PATCH" -lt 9 ]; then
+            PATCH=$((PATCH + 1))
+          else
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          fi
+
+          NEW_TAG="$MAJOR.$MINOR.$PATCH"
+          echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
+
+      - name: Create tag
+        run: |
+          git tag ${{ steps.bump.outputs.new_tag }}
+          git push origin ${{ steps.bump.outputs.new_tag }}
+
+      - name: Delete old releases and tags (keep latest two)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Delete releases first (with --cleanup-tag to also remove their git tags)
+          # This avoids orphaning releases into drafts by deleting tags first
+          gh release list --json tagName -q '.[].tagName' | tail -n +2 | while read -r TAG; do
+            [ -z "$TAG" ] && continue
+            echo "Deleting release and tag: $TAG"
+            gh release delete "$TAG" --yes --cleanup-tag 2>/dev/null || true
+          done
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.bump.outputs.new_tag }}
+          name: Release ${{ steps.bump.outputs.new_tag }}
+          generate_release_notes: true
